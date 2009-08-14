@@ -1,6 +1,6 @@
 Package: R.filesets
-Version: 0.5.2
-Date: 2009-06-08
+Version: 0.5.3
+Date: 2009-09-12
 Title: Easy handling of and access to files organized in structured
         directories
 Author: Henrik Bengtsson <henrikb@braju.com>
@@ -28,6 +28,6 @@ LazyLoad: TRUE
 biocViews: Infrastructure, DataImport
 Repository: CRAN
 Repository/R-Forge/Project: r-dots
-Repository/R-Forge/Revision: 247
-Date/Publication: 2009-06-09 10:02:18
-Packaged: 2009-06-09 03:01:30 UTC; rforge
+Repository/R-Forge/Revision: 251
+Date/Publication: 2009-08-14 20:23:48
+Packaged: 2009-08-12 20:11:39 UTC; rforge
