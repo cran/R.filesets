@@ -1,6 +1,50 @@
 Package: R.filesets
 ===================
 
+Version: 0.6.5 [2009-10-30]
+o ROBUSTIFICATION: Now translateFullName() of FullNameInterface 
+  throws an exception if some fullnames were translated into NA.
+o ROBUSTIFICATION: Now translateColumnNames() of GenericTabularFile 
+  throws an exception if some fullnames were translated into NA.
+o BUG FIX: After doing append() to a GenericDataFileSet, the
+  total file size reported would remain the same.
+o BUG FIX: Appending empty data sets using append() of GenericDataFileSet
+  would give error Error in this$files[[1]] : subscript out of bounds.
+
+
+Version: 0.6.4 [2009-10-25]
+o Added get- and setExtensionPattern() to FullNameInterface.
+o Added getExtension() to GenericDataFile.
+
+
+Version: 0.6.3 [2009-10-23]
+o Added appendFullNameTranslatorBylist() which makes it possible to do
+  setup a sequence of fullnames translators fnt1, fnt2, fnt3 by calling
+  setFullNameTranslator(..., list(fnt1, fnt2, fnt3)).
+
+
+Version: 0.6.2 [2009-10-22]
+o Added support for having a sequence of fullname translator 
+  functions.  These can be added using appendFullNameTranslator().
+o Added an example() to FullNameInterface.
+
+
+Version: 0.6.1 [2009-10-06]
+o Added subsetting via [() to TabularTextFile.
+
+
+Version: 0.6.0 [2009-10-02]
+o Added the FullNameInterface, which is the interface class that
+  defines what fullnames, names, tags etc are.
+o Now setFullName*s*Translator() for GenericDataFileSet dispatches 
+  on the 'by' argument.  If that is not possible, it call 
+  setFullNameTranslator() for each file in the set (as before).
+o CLEAN UP: Renamed fromFiles() to byPath().  For backward 
+  compatibility the former calls the latter. 
+o CLEAN UP: GenericDataFile and GenericDataFileSet implements
+  the FullNameInterface, which mean less redundant code.
+
+
 Version: 0.5.3 [2009-08-12]
 o Now findByName() of GenericDataFileSet follows Windows Shortcut 
   links also for subdirectories.
@@ -25,6 +69,5 @@ o A fullname translator function for a GenericDataFile should accept
 
 
 Version: 0.5.0 [2009-05-17]
-o Added NAMESPACE.
 o Extracted several classes and methods from the aroma.core package.
 o Created package.
