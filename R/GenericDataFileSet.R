@@ -52,7 +52,7 @@ setConstructorS3("GenericDataFileSet", function(files=NULL, tags="*", alias=NULL
   }
 
 
-  this <- extend(Object(), "GenericDataFileSet",
+  this <- extend(Object(), c("GenericDataFileSet", uses("FullNameInterface")),
     files = as.list(files),
     .alias = NULL,
     .tags = NULL
@@ -182,126 +182,6 @@ setMethodS3("validate", "GenericDataFileSet", function(this, ...) {
 
 
 
-###########################################################################/**
-# @RdocMethod getFullName
-#
-# @title "Gets the full name of the file set"
-#
-# \description{
-#   @get "title", that is the name of the directory without parent directories.
-# }
-#
-# @synopsis
-#
-# \arguments{
-#  \item{parent}{The number of generations up in the directory tree the
-#    directory name should be retrieved.  By default the current directory
-#    is used.}
-#  \item{translate}{If @TRUE, an a fullname translator is set, the fullname
-#     is translated before returned.} 
-#  \item{...}{Not used.}
-# }
-#
-# \value{
-#   Returns a @character.
-# }
-#
-# \details{
-#  By default, the full name of a file set is the name of the directory 
-#  containing all the files, e.g. the name of file set \code{path/to,a,b/*} 
-#  is \code{to,a,b}.
-#  Argument \code{parent=1} specifies that the parent directory should be
-#  used, and so on.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seeclass
-# }
-#*/###########################################################################
-setMethodS3("getFullName", "GenericDataFileSet", function(this, parent=1, translate=TRUE, ...) {
-  # Argument 'parent':
-  parent <- Arguments$getInteger(parent, range=c(0,32));
-
-  # The name of a file set is inferred from the pathname of the directory
-  # of the set assuming path/to/<fullname>/<something>/<subdir>/
-
-  # Get the path of this file set
-  path <- getPath(this);
-  if (is.na(path))
-    return(NA);
-
-  while (parent > 0) {
-    # path/to/<fullname>/<something>
-    path <- dirname(path);
-    parent <- parent - 1;
-  }
-
-  # <fullname>
-  fullname <- basename(path);
-
-  # Translate?
-  if (translate) {
-    fullname <- translateFullName(this, fullname);
-  } 
-
-  fullname;
-})
-
-
-###########################################################################/**
-# @RdocMethod getName
-#
-# @title "Gets the name of the file set"
-#
-# \description{
-#   @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#  \item{...}{Additional arguments passed to @seemethod "getFullName", if
-#    the name is inferred from the pathname.}
-# }
-#
-# \value{
-#   Returns a @character.
-# }
-#
-# \details{
-#  If a name alias has not been set explicitly, the name is inferred from 
-#  the pathname of the file set.
-#  The \emph{name} of a file set is the part of the directory name that 
-#  preceeds the first comma, if any.
-#  For instance, the name of the file set named \code{foo,a,b} is \code{foo}.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seemethod "getAlias".
-#   @seemethod "getFullName".
-#   @seemethod "getTags".
-#   @seeclass
-# }
-#*/###########################################################################
-setMethodS3("getName", "GenericDataFileSet", function(this, ...) {
-  # Use name alias, if specified
-  name <- getAlias(this);
-  if (is.null(name)) {
-    # ...otherwise, infer from pathname.
-    name <- getFullName(this, ...);
-
-    # Keep anything before the first comma
-    name <- gsub("[,].*$", "", name);
-  }
-  
-  name;
-})
-
-
 
 
 ###########################################################################/**
@@ -326,8 +206,6 @@ setMethodS3("getName", "GenericDataFileSet", function(this, ...) {
 # @author
 #
 # \seealso{
-#   @seemethod "setAlias".
-#   @seemethod "getName".
 #   @seeclass
 # }
 #*/###########################################################################
@@ -365,8 +243,6 @@ setMethodS3("getAlias", "GenericDataFileSet", function(this, ...) {
 # @author
 #
 # \seealso{
-#   @seemethod "getAlias".
-#   @seemethod "getName".
 #   @seeclass
 # }
 #*/###########################################################################
@@ -387,143 +263,11 @@ setMethodS3("setAlias", "GenericDataFileSet", function(this, alias=NULL, ...) {
 
 
 
-###########################################################################/**
-# @RdocMethod getTags
-#
-# @title "Gets the tags of the file set"
-#
-# \description{
-#   @get "title".
-#   Any tag equals \code{"*"} is replaced by the comma separated tags part of
-#   the file-set pathname.
-# }
-#
-# @synopsis
-#
-# \arguments{
-#  \item{collapse}{A @character string used to concatenate the tags. 
-#     If @NULL, the tags are not concatenated.}
-#  \item{...}{Not used.}
-# }
-#
-# \value{
-#   Returns a @character @vector or @NULL.
-# }
-#
-# \details{
-#  The \emph{tags} of a file set are the comma separated parts of the
-#  filename that follows the the first comma, if any, and that preceeds the
-#  last period (the filename extension).
-#  For instance, the tags of \code{path/to/foo,a.2,b.ext} are 
-#  \code{a.2} and \code{b}.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seemethod "setTags".
-#   @seemethod "getName".
-#   @seeclass
-# }
-#*/###########################################################################
-setMethodS3("getTags", "GenericDataFileSet", function(this, collapse=NULL, ...) {
-  tags <- this$.tags;
-
-  if ("*" %in% tags) {
-    name <- getFullName(this, ...);
-
-    # File-set name is anything before the first comma
-    fsName <- gsub("[,].*$", "", name);
-
-    # Keep anything after the file set name (and the separator).
-    name <- substring(name, nchar(fsName)+2);
-  
-    filenameTags <- unlist(strsplit(name, split=","));
-
-    pos <- whichVector("*" == tags);
-    tags <- tags[-pos];
-    if (length(filenameTags) > 0) {
-      if (length(tags) == 0) {
-        tags <- filenameTags;
-      } else {
-        tags <- R.utils::insert.default(tags, pos[1], filenameTags); 
-      }
-    }
-  }
-
-  # Collapsed or split?
-  if (!is.null(collapse)) {
-    tags <- paste(tags, collapse=collapse);
-  } else {
-    tags <- unlist(strsplit(tags, split=","));
-  }
-
-  if (length(tags) == 0)
-    tags <- NULL;
-
-  tags;
-})
 
 
-setMethodS3("hasTags", "GenericDataFileSet", function(this, tags, ...) {
-  tags <- strsplit(tags, split=",", fixed=TRUE);
-  tags <- unlist(tags, use.names=FALSE);
-  all(tags %in% getTags(this));
-})
-
-
-setMethodS3("hasTag", "GenericDataFileSet", function(this, tag, ...) {
-  hasTags(this, tags=tag, ...);
-})
-
-
-
-###########################################################################/**
-# @RdocMethod setTags
-#
-# @title "Sets the tags of the file set"
-#
-# \description{
-#   @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#  \item{tags}{A @character @vector of tags.}
-#  \item{...}{Not used.}
-# }
-#
-# \value{
-#   Returns nothing.
-# }
-#
-# \details{
-#   See @seemethod "getTags" for so called \emph{special tags}.
-# }
-#
-# @author
-#
-# \seealso{
-#   @seemethod "getTags".
-#   @seeclass
-# }
-#*/###########################################################################
-setMethodS3("setTags", "GenericDataFileSet", function(this, tags="*", ...) {
-  # Argument 'tags':
-  if (!is.null(tags)) {
-    tags <- Arguments$getCharacters(tags);
-    tags <- trim(unlist(strsplit(tags, split=",")));
-    tags <- tags[nchar(tags) > 0];
-  }
-  
-  this$.tags <- tags;
-})
-
-
-setMethodS3("getFileSize", "GenericDataFileSet", function(this, ...) {
+setMethodS3("getFileSize", "GenericDataFileSet", function(this, ..., force=FALSE) {
   fileSize <- this$.fileSize;
-  if (is.null(fileSize)) {
+  if (force || is.null(fileSize)) {
     fileSize <- sum(unlist(lapply(this, FUN=getFileSize), use.names=FALSE));
     this$.fileSize <-  fileSize;
   }
@@ -869,25 +613,34 @@ setMethodS3("appendFiles", "GenericDataFileSet", function(this, files, clone=TRU
 
 
   verbose && enter(verbose, "Appending ", length(files), " files");
-  # Validate classes
-  verbose && enter(verbose, "Validating file classes");
-  className <- class(this$files[[1]])[1];
-  isValid <- unlist(lapply(files, FUN=inherits, className));
-  if (!all(isValid)) {
-    throw("Some of the elements in argument 'files' are not '", 
-      className, "'");
-  }
-  verbose && exit(verbose);
+  if (length(files) == 0) {
+    verbose && cat(verbose, "No files to append. Skipping.");
+  } else {
+    # Validate classes?
+    if (nbrOfFiles(this) > 0) {
+      verbose && enter(verbose, "Validating file classes");
+      className <- class(this$files[[1]])[1];
+      isValid <- unlist(lapply(files, FUN=inherits, className));
+      if (!all(isValid)) {
+        throw("Some of the elements in argument 'files' are not '", 
+          className, "'");
+      }
+      verbose && exit(verbose);
+    }
 
-  # Clone file objects?
-  if (clone) {
-    verbose && enter(verbose, "Cloning files");
-    files <- base::lapply(files, FUN=function(file) clone(file));    
-    verbose && exit(verbose);
-  }
+    # Clone file objects?
+    if (clone) {
+      verbose && enter(verbose, "Cloning files");
+      files <- base::lapply(files, FUN=function(file) clone(file));    
+      verbose && exit(verbose);
+    }
 
-  # Append
-  this$files <- append(this$files, files);
+    # Append
+    this$files <- append(this$files, files);
+
+    # Some cached values are incorrect now.
+    clearCache(this);
+  }
 
   verbose && exit(verbose);
 
@@ -951,7 +704,9 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ...) {
 
   res <- clone(this);
   res$files <- this$files[files];
-  clearCache(res);  # Some cached values are incorrect now.
+
+  # Some cached values are incorrect now.
+  clearCache(res);
 
   res;
 })
@@ -962,6 +717,12 @@ setMethodS3("clearCache", "GenericDataFileSet", function(this, ...) {
   # Clear the cache of all files
   lapply(this, clearCache);
 
+  # Clear cached values
+  fields <- c(".fileSize");
+  for (field in fields) {
+    this[[field]] <- NULL;
+  }
+
   # Then for this object
   NextMethod("clearCache", this);
 })
@@ -970,9 +731,10 @@ setMethodS3("clearCache", "GenericDataFileSet", function(this, ...) {
 
 
 ###########################################################################/**
-# @RdocMethod fromFiles
+# @RdocMethod byPath
+# @aliasmethod fromFiles
 #
-# @title "Defines an GenericDataFileSet object by searching for files"
+# @title "Defines a GenericDataFileSet by searching for files in a directory"
 #
 # \description{
 #   @get "title".
@@ -981,7 +743,7 @@ setMethodS3("clearCache", "GenericDataFileSet", function(this, ...) {
 # @synopsis
 #
 # \arguments{
-#  \item{path}{The path where to search for files.}
+#  \item{path}{The directory where to search for files.}
 #  \item{pattern}{The filename pattern for match files. 
 #     If @NULL, filename extensions corresponding to known subclasses
 #     of the abstract @see "GenericDataFile" class are search for.}
@@ -1007,7 +769,7 @@ setMethodS3("clearCache", "GenericDataFileSet", function(this, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("fromFiles", "GenericDataFileSet", function(static, path=NULL, pattern=NULL, recursive=FALSE, fileClass=getFileClass(static), ..., .validate=FALSE, verbose=FALSE) {
+setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=NULL, recursive=FALSE, fileClass=getFileClass(static), ..., .validate=FALSE, verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1015,8 +777,9 @@ setMethodS3("fromFiles", "GenericDataFileSet", function(static, path=NULL, patte
   path <- Arguments$getReadablePath(path, mustExist=TRUE);
 
   # Argument 'pattern':
-  if (!is.null(pattern))
+  if (!is.null(pattern)) {
     pattern <- Arguments$getRegularExpression(pattern);
+  }
 
   # Argument 'fileClass':
   clazz <- Class$forName(fileClass);
@@ -1106,6 +869,11 @@ setMethodS3("fromFiles", "GenericDataFileSet", function(static, path=NULL, patte
 }, static=TRUE)
 
 
+setMethodS3("fromFiles", "GenericDataFileSet", function(static, ...) {
+  byPath(static, ...);
+}, static=TRUE, protected=TRUE)
+
+
 setMethodS3("copyTo", "GenericDataFileSet", function(this, path=NULL, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
@@ -1133,7 +901,7 @@ setMethodS3("copyTo", "GenericDataFileSet", function(this, path=NULL, ..., verbo
   }
 
   # Return new instance
-  res <- fromFiles(this, path=path, ...);
+  res <- byPath(this, path=path, ...);
 
   verbose && exit(verbose);
 
@@ -1257,7 +1025,7 @@ setMethodS3("byName", "GenericDataFileSet", function(static, name, tags=NULL, su
   })
 
   suppressWarnings({
-    fromFiles(static, path=path, ...);
+    byPath(static, path=path, ...);
   })
 }, static=TRUE) 
 
@@ -1333,105 +1101,169 @@ setMethodS3("equals", "GenericDataFileSet", function(this, other, ..., verbose=F
 })
 
 
-setMethodS3("setFullName", "GenericDataFileSet", function(this, fullname=NULL, ...) {
-  # Argument 'fullname':
-  if (!is.null(fullname)) {
-    fullname <- Arguments$getCharacter(fullname);
-  }
-
-  if (is.null(fullname)) {
-    # Clear the fullname translator.
-    setFullNameTranslator(this, NULL);
-  } else {
-    # Set a translator function that always returns the same name
-    setFullNameTranslator(this, function(...) { fullname });
-  }
-}, protected=TRUE)
-
-
-# Sets the name part of the fullname, leaving the tags untouched.
-setMethodS3("setName", "GenericDataFileSet", function(this, name=NULL, ...) {
-  # Argument 'name':
-  if (!is.null(name)) {
-    name <- Arguments$getCharacter(name);
-  }
-
-  if (is.null(name)) {
-    # Clear the name translator.
-    setFullNameTranslator(this, NULL);
-  } else {
-    # Set a translator function that always returns the same name
-    setFullNameTranslator(this, function(fullname, ...) {
-      parts <- strsplit(fullname, split=",", fixed=TRUE)[[1]];
-      parts[1] <- name;
-      fullname <- paste(parts, collapse=",");
-      fullname;
-    });
-  }
-}, protected=TRUE)
-
-
-
-
-setMethodS3("setFullNameTranslator", "GenericDataFileSet", function(this, fcn, ...) {
-  # Arguments 'fcn':
-  if (is.null(fcn)) {
-  } else if (!is.function(fcn)) {
-    throw("Argument 'fcn' is not a function: ", class(fcn)[1]);
-  }
-
-  # Sanity check
-  if (!is.null(fcn)) {
-    names <- c("foo bar");
-    names <- fcn(names, set=this);
-  }
-
-  this$.fullNameTranslator <- fcn;
-
-  # Allow the file set to update itself according to these new rules.
-  update2(this, ...);
-
-  invisible(this);
-}, protected=TRUE)
-
-
-setMethodS3("getFullNameTranslator", "GenericDataFileSet", function(this, ...) {
-  this$.fullNameTranslator;
-}, protected=TRUE) 
-
-
-setMethodS3("translateFullName", "GenericDataFileSet", function(this, name, ...) {
-  nameTranslator <- getFullNameTranslator(this);	
-  if (!is.null(nameTranslator)) {
-    name <- nameTranslator(name, set=this);
-    if (identical(attr(name, "isFinal"), TRUE))
-      return(name);
-  }
-
-  # Do nothing
-  name;
-}, private=TRUE)
-
-
-
-setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) {
-  # Apply the fullname translator for each of the files
-  dummy <- sapply(this, setFullNameTranslator, ...);
-
-  # Allow the file set to update itself according to these new rules.
-  update2(this, ...);
-
-  invisible(this);
-})
-
 
 setMethodS3("update2", "GenericDataFileSet", function(this, ...) {
 }, protected=TRUE)
 
 
 
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# FULLNAME TRANSLATORS
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+###########################################################################/**
+# @RdocMethod getDefaultFullName
+#
+# @title "Gets the default full name of the file set"
+#
+# \description{
+#   @get "title", that is the name of the directory without parent directories.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{parent}{The number of generations up in the directory tree the
+#    directory name should be retrieved.  By default the current directory
+#    is used.}
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a @character.
+# }
+#
+# \details{
+#  By default, the full name of a file set is the name of the directory 
+#  containing all the files, e.g. the name of file set \code{path/to,a,b/*} 
+#  is \code{to,a,b}.
+#  Argument \code{parent=1} specifies that the parent directory should be
+#  used, and so on.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/###########################################################################
+setMethodS3("getDefaultFullName", "GenericDataFileSet", function(this, parent=1, ...) {
+  # Argument 'parent':
+  parent <- Arguments$getInteger(parent, range=c(0,32));
+
+  # The name of a file set is inferred from the pathname of the directory
+  # of the set assuming path/to/<fullname>/<something>/<subdir>/
+
+  # Get the path of this file set
+  path <- getPath(this);
+  if (is.na(path))
+    return(NA);
+
+  while (parent > 0) {
+    # path/to/<fullname>/<something>
+    path <- dirname(path);
+    parent <- parent - 1;
+  }
+
+  # <fullname>
+  fullname <- basename(path);
+
+  fullname;
+})
+
+
+setMethodS3("updateFullName", "GenericDataFileSet", function(this, ...) {
+  update2(this, ...);
+}, protected=TRUE)
+
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# FULLNAME*S* TRANSLATORS
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+setMethodS3("updateFullNames", "GenericDataFileSet", function(this, ...) {
+  updateFullName(this, ...);
+}, protected=TRUE)
+
+
+setMethodS3("clearFullNamesTranslator", "GenericDataFileSet", function(this, ...) {
+  sapply(this, clearFullNameTranslator, ...);
+  invisible(this);
+}, protected=TRUE)
+
+setMethodS3("appendFullNamesTranslatorByNULL", "GenericDataFileSet", function(this, ...) {
+  sapply(this, appendFullNameTranslatorByNULL, NULL, ...);
+  invisible(this);
+}, protected=TRUE)
+
+
+setMethodS3("appendFullNamesTranslatorByfunction", "GenericDataFileSet", function(this, fcn, ...) {
+  sapply(this, appendFullNameTranslatorByfunction, fcn, ...);
+  invisible(this);
+}, protected=TRUE)
+
+
+setMethodS3("appendFullNamesTranslatorBylist", "GenericDataFileSet", function(this, fcn, ...) {
+  sapply(this, appendFullNameTranslatorBylist, fcn, ...);
+  invisible(this);
+}, protected=TRUE)
+
+
+setMethodS3("appendFullNamesTranslator", "GenericDataFileSet", function(this, by, ...) {
+  # Arguments 'by':
+  classNames <- class(by);
+  methodNames <- sprintf("appendFullNamesTranslatorBy%s", classNames);
+
+  # Dispatch on the 'by' argument...
+  keep <- sapply(methodNames, FUN=exists, mode="function");
+  methodNames <- methodNames[keep];
+
+  if (length(methodNames) > 0) {
+    methodName <- methodNames[1];
+    fcn <- get(methodName, mode="function");
+    res <- fcn(this, by, ...);
+  } else {
+    # ...otherwise, apply the fullname translator to each file
+    res <- sapply(this, appendFullNameTranslator, by, ...);
+  }
+
+  # Allow the object to update itself according to these new rules.
+  updateFullNames(this);
+
+  invisible(res);
+}, protected=TRUE)
+
+
+setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) {
+  clearFullNamesTranslator(this);
+  appendFullNamesTranslator(this, ...);
+}, protected=TRUE)
+
+
+
+
 ############################################################################
 # HISTORY:
+# 2009-10-30
+# o BUG FIX: Appending empty data sets using append() of GenericDataFileSet
+#   would give error Error in this$files[[1]] : subscript out of bounds.
+# o Now append() clears the cache.
+# o Now clearCache() of GenericDataFileSet clears the total file size.
+# o Added argument 'force=FALSE' to getFileSize() of GenericDataFileSet.
+# 2009-10-23
+# o Added hasExtension() and getDefaultFullNameAndExtension().
+# 2009-10-22
+# o Rename previous setFullNamesNnn() to appendFullNamesNnn().
+# 2009-10-02
+# o CLEAN UP: Renamed fromFiles() to byPath().  For backward compatibility
+#   the former calls the latter.
+# o Now setFullNamesTranslator() for GenericDataFileSet dispatches on the
+#   'by' argument.  If that is not possible, it call setFullNameTranslator()
+#   for each file in the set (as before).
+# o CLEAN UP: Removed setFullName() for GenericDataFileSet, because there
+#   is not a "default" on.
 # 2009-08-12
 # o Now findByName() of GenericDataFileSet follows Windows Shortcut links
 #   also for subdirectories.

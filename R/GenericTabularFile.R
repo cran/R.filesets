@@ -72,7 +72,18 @@ setMethodS3("setColumnNameTranslator", "GenericTabularFile", function(this, fcn,
 setMethodS3("translateColumnNames", "GenericTabularFile", function(this, names, ...) {
   nameTranslator <- getColumnNameTranslator(this);	
   if (!is.null(nameTranslator)) {
-    names <- nameTranslator(names);
+    names2 <- nameTranslator(names);
+
+    # Sanity check
+    if (any(is.na(names2))) {
+      throw("Failed to translate names. Some names were translated to NA:s ", 
+            paste(head(names[is.na(names2)]), collapse=", "));
+    }
+    if (length(names2) != length(names)) {
+      throw(sprintf("Failed to translate column names. The translator is erroneous, because it drops/adds some names (passed %d names but got %d names).", length(names), length(names2)));
+    }
+    names <- names2;
+
     if (identical(attr(names, "isFinal"), TRUE))
       return(names);
   }
@@ -146,6 +157,9 @@ setMethodS3("extractMatrix", "GenericTabularFile", function(this, column=1, drop
 
 ############################################################################
 # HISTORY:
+# 2009-10-30
+# o ROBUSTIFICATION: Now translateColumnNames() of GenericTabularFile throws
+#   an exception if some fullnames were translated into NA.
 # 2008-05-12
 # o Added extractMatrix().
 # o BUG FIX: getReadArguments() did not infer column classes if there was
