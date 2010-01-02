@@ -31,7 +31,7 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
 
 
 
-  An GenericDataFileSet object represents a set of \code{\link{GenericDataFile}}s.
+  A GenericDataFileSet object represents a set of \code{\link{GenericDataFile}}s.
  }
 
  \usage{GenericDataFileSet(files=NULL, tags="*", alias=NULL, ...)}
@@ -68,7 +68,7 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
  \tab \code{\link[R.filesets:getPath.GenericDataFileSet]{getPath}} \tab Gets the path (directory) of the file set.\cr
  \tab \code{\link[R.filesets:getPathnames.GenericDataFileSet]{getPathnames}} \tab Gets the pathnames of the files in the file set.\cr
  \tab \code{hasFile} \tab  -\cr
- \tab \code{indexOf} \tab  -\cr
+ \tab \code{\link[R.filesets:indexOf.GenericDataFileSet]{indexOf}} \tab Finds indices of a subset of files.\cr
  \tab \code{\link[R.filesets:lapply.GenericDataFileSet]{lapply}} \tab Applies a function to each of the data files.\cr
  \tab \code{nbrOfFiles} \tab  -\cr
  \tab \code{sapply} \tab  -\cr
@@ -86,6 +86,55 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach
 
 
  }
+
+ \examples{
+# Setup a file set
+path <- system.file(package="R.filesets")
+ds <- GenericDataFileSet$byPath(path)
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Data set
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+cat("Path of data set:\n")
+print(getPath(ds))
+
+cat("Fullname of data set:\n")
+print(getFullName(ds))
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Data files
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+cat("Pathnames:\n")
+print(getPathnames(ds))
+
+cat("Filenames:\n")
+print(sapply(ds, getFilename))
+
+cat("Extensions:\n")
+print(sapply(ds, getExtension))
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Subsetting
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+n <- length(ds)
+ds2 <- extract(ds, 1:n)
+print(ds2)
+
+ds3 <- extract(ds, n:1)
+print(ds3)
+
+stopifnot(identical(rev(getPathnames(ds3)), getPathnames(ds2)))
+
+idxs <- c(1,2,NA,n,NA)
+ds4 <- extract(ds, idxs, onMissing="NA")
+print(ds4)
+print(getFullNames(ds4))
+print(getFiles(ds4))
+
+stopifnot(identical(is.na(idxs), unname(is.na(getPathnames(ds4)))))
+}
 
  \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 \keyword{classes}
