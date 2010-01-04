@@ -179,6 +179,8 @@ setMethodS3("getName", "FullNameInterface", function(this, ...) {
 #  \item{collapse}{A @character string used to concatenate the tags. 
 #     If @NULL, the tags are not concatenated.}
 #  \item{...}{Not used.}
+#  \item{na.rm}{If @TRUE and the fullname is @NA, then @NULL is returned,
+#     otherwise (character) @NA is returned.}
 # }
 #
 # \value{
@@ -202,8 +204,18 @@ setMethodS3("getName", "FullNameInterface", function(this, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("getTags", "FullNameInterface", function(this, pattern=NULL, collapse=NULL, ...) {
+setMethodS3("getTags", "FullNameInterface", function(this, pattern=NULL, collapse=NULL, ..., na.rm=TRUE, useCustomTags=TRUE) {
   fullname <- getFullName(this, ...);
+
+  # If NA, return NA or NULL?
+  if (is.na(fullname)) {
+    if (na.rm) {
+      return(NULL);
+    } else {
+      naValue <- as.character(NA);
+      return(naValue);
+    }
+  }
 
   # The name is anything before the first comma
   name <- gsub("[,].*$", "", fullname);
@@ -212,25 +224,28 @@ setMethodS3("getTags", "FullNameInterface", function(this, pattern=NULL, collaps
   tags <- substring(fullname, nchar(name)+2);  
   tags <- unlist(strsplit(tags, split=","));
 
-  # Are there custom tags?
-  customTags <- this$.tags;
-  if (length(customTags) > 0) {
-    # Replace asterisk custom tags?
-    if (is.element("*", customTags)) {
-      pos <- whichVector("*" == customTags);
-      customTags <- customTags[-pos];
-      
-      asteriskTags <- tags;
-      if (length(asteriskTags) > 0) {
-        if (length(customTags) == 0) {
-          customTags <- asteriskTags;
-        } else {
-          customTags <- R.utils::insert.default(customTags, pos[1], asteriskTags); 
+  if (useCustomTags) {
+    # Are there custom tags?
+    customTags <- this$.tags;
+    if (length(customTags) > 0) {
+      # Replace asterisk custom tags?
+      hasAsteriskTags <- is.element("*", customTags);
+      if (hasAsteriskTags) {
+        pos <- whichVector("*" == customTags);
+        customTags <- customTags[-pos];
+        
+        asteriskTags <- tags;
+        if (length(asteriskTags) > 0) {
+          if (length(customTags) == 0) {
+            customTags <- asteriskTags;
+          } else {
+            customTags <- R.utils::insert.default(customTags, pos[1], asteriskTags); 
+          }
         }
-      }
-    }
-    tags <- customTags;
-  }
+      } # if (hasAsteriskTags)
+      tags <- customTags;
+    } # if (length(customTags) > 0)
+  } # if (useCustomTags)
 
   # Keep only those matching a regular expression?
   if (!is.null(pattern)) {
@@ -496,6 +511,8 @@ setMethodS3("updateFullName", "FullNameInterface", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2009-10-31
+# o Now getTags(..., na.rm=TRUE) returns NULL in case the file is missing.
 # 2009-10-30
 # o ROBUSTIFICATION: Now translateFullName() of FullNameInterface throws
 #   an exception if some fullnames were translated into NA.

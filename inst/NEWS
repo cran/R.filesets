@@ -1,11 +1,37 @@
 Package: R.filesets
 ===================
 
+Version: 0.7.0 [2010-01-02]
+o Added protected as.data.frame() to GenericDataFileSetList.
+o Now GenericDataFile(NA, mustExist=FALSE) is a valid object.  
+  Made all methods aware of such missing files.
+o Now extract(ds, c(1,2,NA,4), onMissing="NA") returns a valid
+  GenericDataFileSet where missing files are returned as missing
+  GenericDataFile:s.
+o Added na.rm=TRUE to all getTags() so that it returns NULL in case
+  the file is missing.
+o copyTo() of GenericDataFileSet quietly ignores missing files.
+o Added Rd help for indexOf() of GenericDataFileSet.
+o ROBUSTNESS: Using new Arguments$getInstanceOf() were possible.
+o ROBUSTNESS: Now all index arguments are validated correctly 
+  using the new 'max' argument of Arguments$getIndices().  Before
+  the case where "max == 0" was not handled correctly.
+o BUG FIX: Changed the default to 'parent=0' for getDefaultFullName() 
+  of GenericDataFileSet to be consistent with the documentation.
+o BUG FIX: Now GenericDataFile(pathname) throws an error if 'pathname'
+  is referring to a directory.
+o BUG FIX: getPath() and getDefaultFullName() of GenericDataFileSet 
+  would return a *logical* instead of *character* value.
+o BUG FIX: indexOf(ds, names) of GenericDataFileSet would return a
+  *logical* instead of an *integer* vector of NA:s if none of the 
+  names existed.
+
+
 Version: 0.6.5 [2009-10-30]
 o ROBUSTIFICATION: Now translateFullName() of FullNameInterface 
-  throws an exception if some fullnames were translated into NA.
-o ROBUSTIFICATION: Now translateColumnNames() of GenericTabularFile 
-  throws an exception if some fullnames were translated into NA.
+  and translateColumnNames() of GenericTabularFile throw an 
+  exception if some fullnames were translated into NA.  They
+  also assert that no names were dropped or added in the process.
 o BUG FIX: After doing append() to a GenericDataFileSet, the
   total file size reported would remain the same.
 o BUG FIX: Appending empty data sets using append() of GenericDataFileSet
