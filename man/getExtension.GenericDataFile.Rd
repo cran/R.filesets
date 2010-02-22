@@ -6,23 +6,24 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getPathname.GenericDataFile}
-\alias{getPathname.GenericDataFile}
-\alias{GenericDataFile.getPathname}
-\alias{getPathname.GenericDataFile}
-\alias{getPathname,GenericDataFile-method}
+\name{getExtension.GenericDataFile}
+\alias{getExtension.GenericDataFile}
+\alias{GenericDataFile.getExtension}
+\alias{getExtension.GenericDataFile}
+\alias{getExtension,GenericDataFile-method}
 
 
-\title{Gets the pathname of the file}
+\title{Gets the filename extension}
 
 \description{
-  Gets the pathname of the file.
+  Gets the filename extension.
 }
 
-\usage{\method{getPathname}{GenericDataFile}(this, ...)}
+\usage{\method{getExtension}{GenericDataFile}(this, ...)}
 
 \arguments{
- \item{...}{Not used.}
+ \item{...}{Arguments passed to \code{\link[R.filesets:getFilename.GenericDataFile]{*getFilename}()} and
+    \code{\link[R.filesets:getDefaultFullName.GenericDataFile]{*getDefaultFullName}()}.}
 }
 
 \value{
