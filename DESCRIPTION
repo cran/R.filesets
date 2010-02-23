@@ -1,6 +1,6 @@
 Package: R.filesets
-Version: 0.7.0
-Date: 2010-01-02
+Version: 0.8.0
+Date: 2010-02-22
 Title: Easy handling of and access to files organized in structured
         directories
 Author: Henrik Bengtsson <henrikb@braju.com>
@@ -22,10 +22,10 @@ Description: A file set refers to a set of files located in one or more
         if you decide to build on top of this package, please contact
         the author first.
 License: LGPL (>= 2.1)
-URL: http://www.braju.com/R/aroma.affymetrix/
+URL: http://www.aroma-project.org/
 PatchURL: http://www.braju.com/R/
 LazyLoad: TRUE
 biocViews: Infrastructure, DataImport
-Packaged: 2010-01-03 16:59:30 UTC; hb
+Packaged: 2010-02-22 18:51:02 UTC; hb
 Repository: CRAN
-Date/Publication: 2010-01-04 17:50:10
+Date/Publication: 2010-02-23 07:33:20

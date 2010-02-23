@@ -6,32 +6,33 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getPathname.GenericDataFile}
-\alias{getPathname.GenericDataFile}
-\alias{GenericDataFile.getPathname}
-\alias{getPathname.GenericDataFile}
-\alias{getPathname,GenericDataFile-method}
+\name{getLastAccessedOn.GenericDataFile}
+\alias{getLastAccessedOn.GenericDataFile}
+\alias{GenericDataFile.getLastAccessedOn}
+\alias{getLastAccessedOn.GenericDataFile}
+\alias{getLastAccessedOn,GenericDataFile-method}
 
 
-\title{Gets the pathname of the file}
+\title{Gets when the file was last accessed}
 
 \description{
-  Gets the pathname of the file.
+  Gets when the file was last accessed.
 }
 
-\usage{\method{getPathname}{GenericDataFile}(this, ...)}
+\usage{\method{getLastAccessedOn}{GenericDataFile}(this, ...)}
 
 \arguments{
  \item{...}{Not used.}
 }
 
 \value{
-  Returns a \code{\link[base]{character}} string.
+  Returns a \code{POSIXct} time stamp.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
+  \code{\link[base]{file.info}}().
   For more information see \code{\link{GenericDataFile}}.
 }
 \keyword{internal}

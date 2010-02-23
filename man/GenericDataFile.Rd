@@ -37,7 +37,7 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
   \code{\link[R.filesets:fromFile.GenericDataFile]{*fromFile}()} method.
  }
 
- \usage{GenericDataFile(filename=NULL, path=NULL, mustExist=TRUE, ...)}
+ \usage{GenericDataFile(filename=NULL, path=NULL, mustExist=TRUE, ..., .onUnknownArgs=c("error", "warning", "ignore"))}
 
  \arguments{
    \item{filename}{The filename of the file.}
@@ -45,29 +45,26 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
    \item{mustExist}{If \code{\link[base:logical]{TRUE}}, an exception is thrown if the file does
      not exists, otherwise not.}
    \item{...}{Not used.}
+   \item{.onUnknownArgs}{A \code{\link[base]{character}} string specifying what should occur
+      if there are unknown arguments in \code{...}.}
  }
 
  \section{Fields and Methods}{
   \bold{Methods:}\cr
 \tabular{rll}{
- \tab \code{compareChecksum} \tab  -\cr
- \tab \code{equals} \tab  -\cr
- \tab \code{fromFile} \tab  -\cr
- \tab \code{getAlias} \tab  -\cr
- \tab \code{getChecksum} \tab  -\cr
- \tab \code{getExtension} \tab  -\cr
- \tab \code{getExtensionPattern} \tab  -\cr
+ \tab \code{\link[R.filesets:compareChecksum.GenericDataFile]{compareChecksum}} \tab Compares the file checksum with the value of the checksum file.\cr
+ \tab \code{\link[R.filesets:equals.GenericDataFile]{equals}} \tab Checks if a file equals another.\cr
+ \tab \code{\link[R.filesets:fromFile.GenericDataFile]{fromFile}} \tab Defines a GenericDataFile from a pathname.\cr
+ \tab \code{\link[R.filesets:getChecksum.GenericDataFile]{getChecksum}} \tab Gets the checksum of a file.\cr
+ \tab \code{\link[R.filesets:getExtension.GenericDataFile]{getExtension}} \tab Gets the filename extension.\cr
  \tab \code{\link[R.filesets:getFilename.GenericDataFile]{getFilename}} \tab Gets the filename of the file.\cr
- \tab \code{getFileSize} \tab  -\cr
+ \tab \code{\link[R.filesets:getFileSize.GenericDataFile]{getFileSize}} \tab Gets the size of a file.\cr
  \tab \code{\link[R.filesets:getFileType.GenericDataFile]{getFileType}} \tab Gets the file type of a file.\cr
  \tab \code{\link[R.filesets:getPath.GenericDataFile]{getPath}} \tab Gets the path (directory) of the file.\cr
  \tab \code{\link[R.filesets:getPathname.GenericDataFile]{getPathname}} \tab Gets the pathname of the file.\cr
- \tab \code{isFile} \tab  -\cr
- \tab \code{readChecksum} \tab  -\cr
- \tab \code{setAlias} \tab  -\cr
- \tab \code{setExtensionPattern} \tab  -\cr
- \tab \code{validateChecksum} \tab  -\cr
- \tab \code{writeChecksum} \tab  -\cr
+ \tab \code{\link[R.filesets:isFile.GenericDataFile]{isFile}} \tab Checks if this is an existing file.\cr
+ \tab \code{\link[R.filesets:validateChecksum.GenericDataFile]{validateChecksum}} \tab Asserts that the file checksum matches the one of the checksum file.\cr
+ \tab \code{\link[R.filesets:writeChecksum.GenericDataFile]{writeChecksum}} \tab Write the file checksum to a checksum file.\cr
 }
 
 

@@ -6,32 +6,34 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getPathname.GenericDataFile}
-\alias{getPathname.GenericDataFile}
-\alias{GenericDataFile.getPathname}
-\alias{getPathname.GenericDataFile}
-\alias{getPathname,GenericDataFile-method}
+\name{isFile.GenericDataFile}
+\alias{isFile.GenericDataFile}
+\alias{GenericDataFile.isFile}
+\alias{isFile.GenericDataFile}
+\alias{isFile,GenericDataFile-method}
 
 
-\title{Gets the pathname of the file}
+\title{Checks if this is an existing file}
 
 \description{
-  Gets the pathname of the file.
+  Checks if this is an existing file and not a directory.
 }
 
-\usage{\method{getPathname}{GenericDataFile}(this, ...)}
+\usage{\method{isFile}{GenericDataFile}(this, ...)}
 
 \arguments{
  \item{...}{Not used.}
 }
 
 \value{
-  Returns a \code{\link[base]{character}} string.
+  Returns a \code{\link[base:logical]{TRUE}} if an existing file (and not a directory),
+  otherwise \code{\link[base:logical]{FALSE}}.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
+  \code{\link[R.utils]{isFile}}.
   For more information see \code{\link{GenericDataFile}}.
 }
 \keyword{internal}
