@@ -32,7 +32,7 @@
 #   The filename of an \code{GenericDataFile} is structured as follows:
 #   \itemize{
 #    \item{filename}{\code{"sample001,a,b,c.CEL"} 
-#       (this follows the \R convention (but not the Unix convention)}
+#       (this follows the \R convention, but not the Unix convention)}
 #    \item{fullname}{\code{"sample001,a,b,c"}}
 #    \item{name}{\code{"sample001"}}
 #    \item{tags}{\code{c("a", "b", "c")}}
@@ -1381,12 +1381,14 @@ setMethodS3("validateChecksum", "GenericDataFile", function(this, ..., verbose=F
 #   appended (removed).
 # }
 #
-# @synopsis
-#
-# \usage{\method{gunzip}{GenericDataFile}(this, ...)}
+# \usage{
+#  \method{gzip}{GenericDataFile}(this, ...)
+#  \method{gunzip}{GenericDataFile}(this, ...)
+# }
 #
 # \arguments{
-#  \item{...}{Not used.}
+#  \item{...}{Arguments passed to "R.utils::gzip" and "R.utils::gunzip", 
+#    respectively.}
 #  \item{verbose}{...}
 # }
 #
