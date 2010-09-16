@@ -58,18 +58,15 @@
 \alias{compareChecksum}
 \alias{copyTo}
 \alias{digest2}
-\alias{dim.GenericTabularFile}
 \alias{dimension.TabularTextFile}
 \alias{equals.GenericDataFileSet}
 \alias{extract.GenericDataFileSetList}
 \alias{extractMatrix}
-\alias{extractMatrix.GenericTabularFile}
 \alias{extractMatrix.GenericTabularFileSet}
 \alias{findByName}
 \alias{fromFile}
 \alias{fromFiles}
 \alias{GenericDataFileList}
-\alias{GenericTabularFile}
 \alias{getAlias}
 \alias{getAlias.GenericDataFile}
 \alias{getAsteriskTags}
@@ -80,8 +77,6 @@
 \alias{getAttributes.GenericDataFile}
 \alias{getChecksum}
 \alias{getColumnNames}
-\alias{getColumnNames.GenericTabularFile}
-\alias{getColumnNames.TabularTextFile}
 \alias{getColumnNameTranslator}
 \alias{getColumnNameTranslator.GenericTabularFile}
 \alias{getCreatedOn}
@@ -114,7 +109,6 @@
 \alias{getFullNameTranslator}
 \alias{getFullNameTranslator.FullNameInterface}
 \alias{getHeader}
-\alias{getHeader.TabularTextFile}
 \alias{getLabel.GenericDataFile}
 \alias{getLastAccessedOn}
 \alias{getLastModifiedOn}
@@ -136,21 +130,16 @@
 \alias{getTags.GenericDataFileSetList}
 \alias{hasBeenModified}
 \alias{hasColumnHeader}
-\alias{hasColumnHeader.TabularTextFile}
 \alias{hasFile}
 \alias{hasFile.GenericDataFileSet}
 \alias{indexOf}
 \alias{indexOf.GenericDataFileSetList}
 \alias{length.GenericDataFileSetList}
 \alias{nbrOfColumns}
-\alias{nbrOfColumns.GenericTabularFile}
 \alias{nbrOfFiles}
 \alias{nbrOfFiles.GenericDataFileSetList}
 \alias{nbrOfLines}
-\alias{nbrOfLines.TabularTextFile}
 \alias{nbrOfRows}
-\alias{nbrOfRows.GenericTabularFile}
-\alias{nbrOfRows.TabularTextFile}
 \alias{nbrOfSets}
 \alias{nbrOfSets.GenericDataFileSetList}
 \alias{readChecksum}
@@ -160,11 +149,8 @@
 \alias{readColumns.GenericTabularFile}
 \alias{readColumns.TabularTextFile}
 \alias{readDataFrame}
-\alias{readDataFrame.GenericTabularFile}
-\alias{readDataFrame.TabularTextFile}
 \alias{readLines}
 \alias{readLines.default}
-\alias{readLines.TabularTextFile}
 \alias{readRawHeader}
 \alias{readRawHeader.TabularTextFile}
 \alias{readTableHeader}
@@ -201,7 +187,6 @@
 \alias{setName}
 \alias{setTags}
 \alias{setTags.GenericDataFileSetList}
-\alias{TabularTextFile}
 \alias{testAttributes}
 \alias{testAttributes.GenericDataFile}
 \alias{translateColumnNames}
@@ -236,6 +221,7 @@
 \alias{appendFullNamesTranslatorByTabularTextFile.GenericDataFileSet}
 \alias{appendFullNamesTranslatorByTabularTextFileSet}
 \alias{appendFullNamesTranslatorByTabularTextFileSet.GenericDataFileSet}
+\alias{sortBy}
 
 \description{
   This page contains aliases for all "non-documented" objects that

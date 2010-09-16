@@ -1,4 +1,4 @@
-  [.TabularTextFile append append.default appendFiles
+ [.TabularTextFile append append.default appendFiles
   appendFullNamesTranslator
   appendFullNamesTranslator.GenericDataFileSet
   appendFullNamesTranslatorByfunction
@@ -29,16 +29,15 @@
   clearListOfFullNameTranslators.FullNameInterface
   clone.GenericDataFile clone.GenericDataFileSet
   clone.GenericDataFileSetList compareChecksum copyTo digest2
-  dim.GenericTabularFile dimension.TabularTextFile
+   dimension.TabularTextFile
   equals.GenericDataFileSet extract.GenericDataFileSetList
-  extractMatrix extractMatrix.GenericTabularFile
+  extractMatrix
   extractMatrix.GenericTabularFileSet findByName fromFile fromFiles
-  GenericDataFileList GenericTabularFile getAlias
+  GenericDataFileList getAlias
   getAlias.GenericDataFile getAsteriskTags
   getAsteriskTags.GenericDataFileSetList getAttribute
   getAttribute.GenericDataFile getAttributes
   getAttributes.GenericDataFile getChecksum getColumnNames
-  getColumnNames.GenericTabularFile getColumnNames.TabularTextFile
   getColumnNameTranslator getColumnNameTranslator.GenericTabularFile
   getCreatedOn getDefaultFullName
   getDefaultFullName.GenericDataFileSetList getExtension
@@ -54,7 +53,7 @@
   getFileSize.GenericDataFileSet getFileType getFullName getFullNames
   getFullNames.GenericDataFileSetList getFullNameTranslator
   getFullNameTranslator.FullNameInterface getHeader
-  getHeader.TabularTextFile getLabel.GenericDataFile getLastAccessedOn
+  getLabel.GenericDataFile getLastAccessedOn
   getLastModifiedOn getListOfFullNameTranslators
   getListOfFullNameTranslators.FullNameInterface getNames
   getNames.GenericDataFileSetList getOutputExtension
@@ -62,18 +61,17 @@
   getReadArguments getReadArguments.TabularTextFile getSet
   getSet.GenericDataFileSetList getSets getSets.GenericDataFileSetList
   getTags getTags.GenericDataFileSetList hasBeenModified
-  hasColumnHeader hasColumnHeader.TabularTextFile hasFile
+  hasColumnHeader hasFile
   hasFile.GenericDataFileSet indexOf indexOf.GenericDataFileSetList
   length.GenericDataFileSetList nbrOfColumns
-  nbrOfColumns.GenericTabularFile nbrOfFiles
+  nbrOfFiles
   nbrOfFiles.GenericDataFileSetList nbrOfLines
-  nbrOfLines.TabularTextFile nbrOfRows nbrOfRows.GenericTabularFile
-  nbrOfRows.TabularTextFile nbrOfSets nbrOfSets.GenericDataFileSetList
+   nbrOfRows
+   nbrOfSets nbrOfSets.GenericDataFileSetList
   readChecksum readColumnNames readColumnNames.TabularTextFile
   readColumns readColumns.GenericTabularFile
   readColumns.TabularTextFile readDataFrame
-  readDataFrame.GenericTabularFile readDataFrame.TabularTextFile
-  readLines readLines.default readLines.TabularTextFile readRawHeader
+  readLines readLines.default readRawHeader
   readRawHeader.TabularTextFile readTableHeader readTableHeader.default
   renameTo renameToUpperCaseExt renameToUpperCaseExt.GenericDataFile
   reorder.GenericDataFileSet sapply sapply.default
@@ -90,7 +88,7 @@
   setListOfFullNameTranslators
   setListOfFullNameTranslators.FullNameInterface setName
  setTags setTags.GenericDataFileSetList
-  TabularTextFile testAttributes testAttributes.GenericDataFile
+  testAttributes testAttributes.GenericDataFile
   translateColumnNames translateColumnNames.GenericTabularFile
   translateFullName translateFullName.FullNameInterface update2
   update2.GenericDataFileSet updateFullName
@@ -112,3 +110,4 @@ hasTag hasTags
   appendFullNamesTranslatorByTabularTextFile.GenericDataFileSet
   appendFullNamesTranslatorByTabularTextFileSet
   appendFullNamesTranslatorByTabularTextFileSet.GenericDataFileSet
+ sortBy
