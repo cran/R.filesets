@@ -1,12 +1,12 @@
 Package: R.filesets
-Version: 0.9.0
-Date: 2010-08-19
+Version: 0.9.1
+Date: 2010-11-19
 Title: Easy handling of and access to files organized in structured
         directories
 Author: Henrik Bengtsson <henrikb@braju.com>
 Maintainer: Henrik Bengtsson <henrikb@braju.com>
 Depends: R (>= 2.6.0), R.methodsS3 (>= 1.2.0), R.oo (>= 1.7.3), R.utils
-        (>= 1.4.4), digest (>= 0.4.2)
+        (>= 1.5.7), digest (>= 0.4.2)
 Suggests: gtools (>= 2.6.2)
 Description: A file set refers to a set of files located in one or more
         directories on the file system.  This package provides classes
@@ -27,6 +27,8 @@ URL: http://www.aroma-project.org/
 PatchURL: http://www.braju.com/R/
 LazyLoad: TRUE
 biocViews: Infrastructure, DataImport, DataRepresentation
-Packaged: 2010-09-16 15:22:58 UTC; hb
 Repository: CRAN
-Date/Publication: 2010-09-16 18:40:06
+Repository/R-Forge/Project: r-dots
+Repository/R-Forge/Revision: 430
+Date/Publication: 2010-11-24 07:49:17
+Packaged: 2010-11-22 21:39:55 UTC; rforge
