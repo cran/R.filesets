@@ -222,6 +222,9 @@
 \alias{appendFullNamesTranslatorByTabularTextFileSet}
 \alias{appendFullNamesTranslatorByTabularTextFileSet.GenericDataFileSet}
 \alias{sortBy}
+\alias{getTags.Arguments}
+\alias{dropRootPathTags}
+\alias{dropRootPathTags.default}
 
 \description{
   This page contains aliases for all "non-documented" objects that
