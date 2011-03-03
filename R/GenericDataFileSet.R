@@ -1333,6 +1333,8 @@ setMethodS3("copyTo", "GenericDataFileSet", function(this, path=NULL, ..., verbo
 #     set is located.}
 #  \item{paths}{A @character @vector of root paths where to look for 
 #     the file set.}
+#  \item{firstOnly}{If @TRUE, only the first path found, if any, is returned,
+#     otherwise all found paths are returned.}
 #  \item{mustExist}{If @TRUE, an exception is thrown if the file set was
 #     not found, otherwise not.}
 #  \item{...}{Not used.}
@@ -1341,7 +1343,7 @@ setMethodS3("copyTo", "GenericDataFileSet", function(this, path=NULL, ..., verbo
 #
 # \value{
 #   Returns a @character @vector of paths.
-#   If no file sets where found, @NULL is returned.
+#   If no file sets were found, @NULL is returned.
 # }
 # 
 # @author
@@ -1385,21 +1387,56 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
 
   verbose && enter(verbose, "Locating data sets");
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Identify existing root directories
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  rootPaths <- sapply(paths, FUN=filePath, expandLinks="any");
-  rootPaths <- paths[sapply(rootPaths, FUN=isDirectory)];
-  if (length(rootPaths) == 0) {
+
+  verbose && enter(verbose, "Expanding paths by allowing for regular expression matching of the deepest subdirectory");
+
+  verbose && cat(verbose, "Possible search paths before expansion:");
+  verbose && print(verbose, paths);
+
+  # Expand paths by regular expressions, in case they exist
+  paths <- lapply(paths, FUN=function(path) {
+    parent <- dirname(path);
+    subdir <- basename(path);  # This will drop trailing slashes, if any.
+    pattern <- sprintf("^%s(|[.](lnk|LNK))$", subdir);
+    subdirs <- list.files(pattern=pattern, path=parent, full.names=FALSE);
+    file.path(parent, subdirs);
+  });
+  paths <- unlist(paths, use.names=FALSE);
+
+  verbose && cat(verbose, "Possible search paths after expansion:");
+  verbose && print(verbose, paths);
+
+  if (length(paths) == 0) {
     if (mustExist) {
-      throw("None of the data directories exist: ", 
-                                           paste(paths, collapse=", "));
+      throw("No such root path directories: ", paste(paths, collapse=", "));
     }
+    verbose && exit(verbose);
     return(NULL);
   }
 
+  verbose && exit(verbose);
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Identify existing root directories
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  verbose && enter(verbose, "Filtering out root paths that are existing directories");
+
+  rootPaths <- sapply(paths, FUN=filePath, expandLinks="any");
+  if (length(rootPaths) == 0) {
+    if (mustExist) {
+      throw("None of the root path directories exist: ", 
+                                           paste(paths, collapse=", "));
+    }
+    verbose && exit(verbose);
+    return(NULL);
+  }
+  rootPaths <- rootPaths[sapply(rootPaths, FUN=isDirectory)];
+
   verbose && cat(verbose, "Search root path:");
   verbose && print(verbose, rootPaths);
+
+  verbose && exit(verbose);
 
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1493,8 +1530,9 @@ setMethodS3("findByName", "GenericDataFileSet", function(static, name, tags=NULL
       verbose && exit(verbose);
     } else {
       paths <- dataSetPaths;
-    }# if (length(subdirs) >= 1)
-  
+    } # if (length(subdirs) >= 1)
+
+
     if (length(paths) > 1) {
       if (firstOnly) {
         warning("Found duplicated data set: ", paste(paths, collapse=", "));
@@ -1578,16 +1616,35 @@ setMethodS3("byName", "GenericDataFileSet", function(static, name, tags=NULL, su
   verbose && cat(verbose, "Tags: ", paste(tags, collapse=","));
 
   suppressWarnings({
-    path <- findByName(static, name=name, tags=tags, subdirs=subdirs, 
-            paths=paths, firstOnly=TRUE, mustExist=TRUE, verbose=verbose);
+    paths <- findByName(static, name=name, tags=tags, subdirs=subdirs, 
+             paths=paths, firstOnly=FALSE, mustExist=TRUE, verbose=verbose);
   })
 
-  verbose && cat(verbose, "Path to data set:");
-  verbose && print(verbose, path);
+  verbose && cat(verbose, "Paths to possible data sets:");
+  verbose && print(verbose, paths);
 
-  suppressWarnings({
-    res <- byPath(static, path=path, ..., verbose=verbose);
-  })
+  res <- NULL;
+  for (kk in seq(along=paths)) {
+    path <- paths[kk];
+    verbose && enter(verbose, sprintf("Trying path #%d of %d", kk, length(paths)));
+    verbose && cat(verbose, "Path: ", path);
+
+    suppressWarnings({
+      res <- byPath(static, path=path, ..., verbose=verbose);
+    });
+
+    if (!is.null(res)) {
+      verbose && cat(verbose, "Successful setup of data set.");
+      verbose && exit(verbose);
+      break;
+    }
+
+    verbose && exit(verbose);
+  } # for (kk ...)
+
+  if (is.null(res)) {
+    throw(sprintf("Failed to setup a data set for any of %d data directories located.", length(paths)));
+  }
 
   verbose && exit(verbose);
 
@@ -1830,6 +1887,7 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 # Deprecated
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 setMethodS3("fromFiles", "GenericDataFileSet", function(static, ...) {
+  warning("Static method fromFiles() for GenericDataFileSet has been deprecated (since January 2010). Instead use static byPath(), e.g. GenericDataFileSet$byPath().");
   byPath(static, ...);
 }, static=TRUE, deprecated=TRUE, protected=TRUE)
 
@@ -1838,6 +1896,25 @@ setMethodS3("fromFiles", "GenericDataFileSet", function(static, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-02-27
+# o BUG FIX: findByName() for GenericDataFileSet would throw "<simpleError
+#   in paths[sapply(rootPaths, FUN = isDirectory)]: invalid subscript type
+#   'list'>" in case no matching root path directories existed.
+# 2011-02-24
+# o GENERALIZATION: Added support to findByName() for GenericDataFileSet
+#   such that root paths also can be specified by simple regular expression
+#   (still via argument 'paths').
+# 2011-02-18
+# o DEPRECATION: Added a warning message reporting that fromFiles() of
+#   GenericDataFileSet has been deprecated, if still called by someone.
+# o GENERALIZATION: Now byName() for GenericDataFileSet will try all
+#   possible data set directories located when trying to setup a data set.
+#   Before it only tried the first one located.  This new approach is
+#   equally fast for the first data set directory as before.  The advantage
+#   is that it adds further flexibilities, e.g. the first directory may
+#   not be what we want but the second, which can be further tested by
+#   the byPath() and downstream methods.
+# o DOCUMENTATION: Argument 'firstOnly' of findByName() was not documented.
 # 2011-02-13
 # o GENERALIZATION: Now append() for GenericDataFileSet tries to also
 #   append non-GenericDataFileSet object by passing them down to
