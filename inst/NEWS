@@ -1,8 +1,27 @@
 Package: R.filesets
 ===================
 
+Version: 1.0.1 [2011-05-16]
+o ROBUSTNESS: Now appendFiles() for GenericDataFileSet asserts that all
+  files to be appended are instances of the file class of this set as
+  given by the static getFileClass().
+o ROBUSTNESS: Added argument '.assertSameClass' to appendFiles()
+  for GenericDataFileSet, which if TRUE asserts that the files to be 
+  appended inherits from the same class as the existing files.
+  Before this test was mandatory.
+
+
+Version: 1.0.0 [2011-04-06]
+o Added getChecksum() to GenericDataFileSet, which calculates the 
+  checksum of the object returned by the protected getChecksumData().
+  Use with care, because what objects should be the basis of the
+  checksum is not clear, e.g. should it be only the file system
+  checksum, or should things such as translated fullnames be included
+  as well?
+
+
 Version: 0.9.9 [2011-04-04]
-o BUG FIX: equals() for GenericDataFile would consider to files not
+o BUG FIX: equals() for GenericDataFile would consider two files not
   to be equal only if their checksums was equal, and vice versa.
   Also, when creating the message string explaining why they differ
   an error would have been thrown.
