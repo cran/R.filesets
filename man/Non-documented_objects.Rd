@@ -233,6 +233,7 @@
 \alias{tags.default}
 \alias{dropTags}
 \alias{dropTags.default}
+\alias{getChecksumObjects}
 
 \description{
   This page contains aliases for all "non-documented" objects that
