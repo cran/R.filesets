@@ -40,7 +40,7 @@ extends \emph{\link[R.filesets]{GenericTabularFile}}\cr
   Methods for reading all or a subset of the tabular data exist.
  }
 
- \usage{TabularTextFile(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0, columnNames=TRUE, .verify=TRUE, verbose=FALSE)}
+ \usage{TabularTextFile(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0, columnNames=TRUE, commentChar="#", .verify=TRUE, verbose=FALSE)}
 
  \arguments{
    \item{...}{Arguments passed to \code{\link{GenericTabularFile}}.}
@@ -53,6 +53,8 @@ extends \emph{\link[R.filesets]{GenericTabularFile}}\cr
    \item{columnNames}{A \code{\link[base]{logical}} or a \code{\link[base]{character}} \code{\link[base]{vector}}. If \code{\link[base:logical]{TRUE}},
       then column names are inferred from the file.  If a \code{\link[base]{character}}
       \code{\link[base]{vector}}, then the column names are given by this argument.}
+   \item{commentChar}{A single \code{\link[base]{character}} specifying which symbol
+      should be used for comments, cf. \code{\link[utils]{read.table}}.}
    \item{.verify, verbose}{(Internal only) If \code{\link[base:logical]{TRUE}}, the file is
       verified while the object is instantiated by the constructor.
       The verbose argument is passed to the verifier function.}
@@ -64,6 +66,7 @@ extends \emph{\link[R.filesets]{GenericTabularFile}}\cr
  \tab \code{[} \tab  -\cr
  \tab \code{as.character} \tab  -\cr
  \tab \code{\link[R.filesets:getColumnNames.TabularTextFile]{getColumnNames}} \tab Gets the column names.\cr
+ \tab \code{getCommentChar} \tab  -\cr
  \tab \code{\link[R.filesets:getHeader.TabularTextFile]{getHeader}} \tab Gets the file header.\cr
  \tab \code{\link[R.filesets:hasColumnHeader.TabularTextFile]{hasColumnHeader}} \tab Checks if there are column names in the header.\cr
  \tab \code{\link[R.filesets:nbrOfLines.TabularTextFile]{nbrOfLines}} \tab Counts the number of lines in the data file.\cr
@@ -71,6 +74,7 @@ extends \emph{\link[R.filesets]{GenericTabularFile}}\cr
  \tab \code{readColumnNames} \tab  -\cr
  \tab \code{\link[R.filesets:readDataFrame.TabularTextFile]{readDataFrame}} \tab Reads the tabular data as a data frame.\cr
  \tab \code{\link[R.filesets:readLines.TabularTextFile]{readLines}} \tab Reads the lines of the data file as strings.\cr
+ \tab \code{setCommentChar} \tab  -\cr
  \tab \code{\link[R.filesets:writeColumnsToFiles.TabularTextFile]{writeColumnsToFiles}} \tab Read each column from a data file and exports it to a separate file.\cr
 }
 
