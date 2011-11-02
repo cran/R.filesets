@@ -11,7 +11,7 @@
 #  Methods for reading all or a subset of the tabular data exist.
 # }
 # 
-# \usage{TabularTextFile(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0, columnNames=TRUE, .verify=TRUE, verbose=FALSE)}
+# \usage{TabularTextFile(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0, columnNames=TRUE, commentChar="#", .verify=TRUE, verbose=FALSE)}
 #
 # \arguments{
 #   \item{...}{Arguments passed to @see "GenericTabularFile".}
@@ -24,6 +24,8 @@
 #   \item{columnNames}{A @logical or a @character @vector. If @TRUE,
 #      then column names are inferred from the file.  If a @character
 #      @vector, then the column names are given by this argument.}
+#   \item{commentChar}{A single @character specifying which symbol
+#      should be used for comments, cf. @see "utils::read.table".}
 #   \item{.verify, verbose}{(Internal only) If @TRUE, the file is 
 #      verified while the object is instantiated by the constructor.
 #      The verbose argument is passed to the verifier function.}
@@ -39,7 +41,7 @@
 #   An object of this class is typically part of an @see "TabularTextFileSet".
 # }
 #*/###########################################################################
-setConstructorS3("TabularTextFile", function(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0, columnNames=TRUE, .verify=TRUE, verbose=FALSE) {
+setConstructorS3("TabularTextFile", function(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0, columnNames=TRUE, commentChar="#", .verify=TRUE, verbose=FALSE) {
   # Argument 'columnNames':
   if (is.logical(columnNames)) {
     readColumnNames <- columnNames;
@@ -50,6 +52,12 @@ setConstructorS3("TabularTextFile", function(..., sep=c("\t", ","), quote="\"", 
     throw("Argument 'columnNames' must be either a logical or a character vector: ", class(columnNames)[1]);
   }
 
+  # Argument 'commentChar':
+  if (!is.null(commentChar)) {
+    commentChar <- Arguments$getCharacter(commentChar, nchar=c(1,1));
+  }
+
+
   this <- extend(GenericTabularFile(..., .verify=FALSE), "TabularTextFile",
     .fileHeader = NULL,
     .columnNameTranslator = NULL,
@@ -57,12 +65,17 @@ setConstructorS3("TabularTextFile", function(..., sep=c("\t", ","), quote="\"", 
     quote = quote,
     fill = fill,
     skip = skip,
+    .commentChar = commentChar,
     .columnNames = columnNames,
     readColumnNames = readColumnNames
   );
 
-  if (.verify)
+  if (.verify) {
     verify(this, ..., verbose=verbose);
+    # Clear temporary settings
+    this$.fileHeader <- NULL;
+  }
+
   this;
 })
 
@@ -117,6 +130,19 @@ setMethodS3("verify", "TabularTextFile", function(this, ..., verbose=FALSE) {
   invisible(this);
 }, private=TRUE)
 
+
+setMethodS3("getCommentChar", "TabularTextFile", function(this, ...) {
+  this$.commentChar;
+})
+
+
+setMethodS3("setCommentChar", "TabularTextFile", function(this, ch, ...) {
+  if (!is.null(ch)) {
+    ch <- Arguments$getCharacter(ch, nchar=c(1,1));
+  }
+  this$.commentChar <- ch;
+  invisible(this);
+})
 
 
 setMethodS3("readColumnNames", "TabularTextFile", function(this, ...) {
@@ -277,27 +303,37 @@ setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, ..., ve
   }
 
 
-  ready <- FALSE;
+  # Read header comments
   comments <- c();
   skip <- this$skip;
-  while (!ready) {
-    line <- readLines(con, n=1);
-    isComments <- (regexpr("^#", line) != -1);
-    if (!isComments) {
-      if (skip == 0)
-        break;
-      skip <- skip - 1;
-    }
-    comments <- c(comments, line);
+  ch <- getCommentChar(this);
+  if (!is.null(ch)) {
+    pattern <- sprintf("^%s", ch);
+    ready <- FALSE;
+    while (!ready) {
+      line <- readLines(con, n=1);
+      isEmpty <- (regexpr("^$", line) != -1);
+      if (!isEmpty) {
+        isComments <- (regexpr(pattern, line) != -1);
+        if (!isComments) {
+          if (skip == 0)
+            break;
+          skip <- skip - 1;
+        }
+        comments <- c(comments, line);
+      }
+    } # while(!ready)
   }
 
   verbose && cat(verbose, "Header comments:", level=-20);
   verbose && str(verbose, comments, level=-20);
 
-  # Infer column separator?
+  # Infer column separator from the first line after the header comments?
   sep <- this$sep;
   if (length(sep) > 1) {
     verbose && enter(verbose, "Identifying the separator that returns most columns");
+    verbose && cat(verbose, "Line:");
+    verbose && print(verbose, line);
     verbose && cat(verbose, "Separators:");
     verbose && str(verbose, sep);
     columns <- base::lapply(sep, FUN=function(split) {
@@ -439,14 +475,15 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Inferred arguments
   args <- list(
-    header      = hasColumnHeader(this),
-    colClasses  = colClasses,
-    skip        = fileHeader$skip,
-    sep         = fileHeader$sep,
-    quote       = fileHeader$quote,
-    fill        = this$fill,
-    check.names = FALSE,
-    na.strings  = c("---", "NA")
+    header       = hasColumnHeader(this),
+    colClasses   = colClasses,
+    skip         = fileHeader$skip,
+    sep          = fileHeader$sep,
+    quote        = fileHeader$quote,
+    fill         = this$fill,
+    comment.char = getCommentChar(this),
+    check.names  = FALSE,
+    na.strings   = c("---", "NA")
   );
 
   # Overwrite with user specified arguments, if any
@@ -924,6 +961,10 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-09-26
+# o Added methods set- and getCommentChar() to TabularTextFile and
+#   argument 'commentChar' to its constructor.  This allows to use
+#   custom comment characters other than just "#".
 # 2011-07-13
 # o GENERALIZATION: Now readDataFrame() of TabularTextFile can read
 #   numeric columns that are quoted and for which 'colClasses' in non-NA.
