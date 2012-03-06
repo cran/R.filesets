@@ -1,7 +1,7 @@
-3e62c33ec3dba3d04ea99fe052ffebc9 *DESCRIPTION
+dfad0c03b6056a3743d1f8da3c09453e *DESCRIPTION
 8b1ecca81c7b61b2307ec62aac27b74a *NAMESPACE
 9400b3c4ffcd01c344a61387d7131750 *R/000.R
-09931989e2136de35af1b2faf403c423 *R/006.fixVarArgs.R
+ba5c2f85033885549846127bf9497046 *R/006.fixVarArgs.R
 dcb0e44d79e9859ee6006eb8c70b2837 *R/999.NonDocumentedObjects.R
 df7c029ec9ff4ef541c7f5ebbaaf5cc4 *R/999.package.R
 fcd05762ef9b3ad7ae82ceafead70880 *R/Arguments.EXTRAS.R
@@ -30,7 +30,7 @@ bbd036a1cab0f5d0214fdaf29da60d96 *incl/999.missingdocs.txt
 6ba29f67320d45ca440c3461c309d033 *incl/GenericDataFileSet.Rex
 a53341ea53d1456f4851701c3bc8f288 *incl/GenericDataFileSetList.Rex
 fc13c365a466825b0324ca423c72024d *incl/TabularTextFileSet.Rex
-8666b01c97c8c224e0abebe9bbd01f78 *inst/NEWS
+291c194f4a170d34dd435e629d4ca954 *inst/NEWS
 17176b5f957547d1b23da36fedead87a *inst/exData/dataSetA,original/all,fullnames.txt
 fcb889d29d51c600409d242e03d7d779 *inst/exData/dataSetA,original/fileA,20100112.dat
 e0e0d2750626df38cedab8796cfa6459 *inst/exData/dataSetA,original/fileB,other,tags.dat
