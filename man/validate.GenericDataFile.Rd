@@ -6,27 +6,29 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getPathname.GenericDataFile}
-\alias{getPathname.GenericDataFile}
-\alias{GenericDataFile.getPathname}
-\alias{getPathname.GenericDataFile}
-\alias{getPathname,GenericDataFile-method}
+\name{validate.GenericDataFile}
+\alias{validate.GenericDataFile}
+\alias{GenericDataFile.validate}
+\alias{validate.GenericDataFile}
+\alias{validate,GenericDataFile-method}
 
 
-\title{Gets the pathname of the file}
+\title{Validates the content of a file}
 
 \description{
-  Gets the pathname of the file.
+  Validates the content of a file.
 }
 
-\usage{\method{getPathname}{GenericDataFile}(this, ...)}
+\usage{\method{validate}{GenericDataFile}(this, ...)}
 
 \arguments{
  \item{...}{Not used.}
 }
 
 \value{
-  Returns a \code{\link[base]{character}} string (\code{\link[base]{NULL}} if an "empty" file).
+  If the file is invalid, then an error is thrown.
+  If the files is valid, then \code{\link[base:logical]{TRUE}} is returned.
+  Otherwise, \code{\link[base]{NA}} is returned, which happens if the file was not validated.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

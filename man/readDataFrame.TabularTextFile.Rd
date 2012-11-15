@@ -19,7 +19,7 @@
  Reads the tabular data as a data frame.
 }
 
-\usage{\method{readDataFrame}{TabularTextFile}(this, con=NULL, rows=NULL, nrow=NULL, trimQuotes=FALSE, ..., verbose=FALSE)}
+\usage{\method{readDataFrame}{TabularTextFile}(this, con=NULL, rows=NULL, nrow=NULL, trimQuotes=FALSE, ..., debug=FALSE, verbose=FALSE)}
 
 \arguments{
   \item{con}{(Internal) If a \code{\link[base:connections]{connection}}, then it is used, otherwies
@@ -27,11 +27,13 @@
   \item{rows}{(Optional) An \code{\link[base]{integer}} \code{\link[base]{vector}} specifying which rows to
    be read.}
   \item{nrow}{(Optional) An \code{\link[base]{integer}} specifying how many rows to read.
-   If specified, it corresponds to specifying \code{rows=seq(length=nrow)}.}
+   If specified, it corresponds to specifying \code{rows=seq_len(nrow)}.}
   \item{trimQuotes}{(Optional) If \code{\link[base:logical]{TRUE}}, quotes are trimmed from numeric
    columns before parsing them as numerics.  This makes it possible to
    read quoted numeric values.}
   \item{...}{Passed to internal \code{\link[R.filesets:getReadArguments.TabularTextFile]{*getReadArguments}()}.}
+  \item{debug}{If \code{\link[base:logical]{TRUE}}, additional details on the file and how it was
+   read is returned as part of the attributes.}
   \item{verbose}{A \code{\link[base]{logical}} or a \code{\link[R.utils]{Verbose}} object.}
 }
 

@@ -23,9 +23,11 @@
 \code{~~~~~~~|}\cr
 \code{~~~~~~~+--}\code{\link[R.filesets]{GenericDataFile}}\cr
 \code{~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~+--}\code{\link[R.filesets]{GenericTabularFile}}\cr
+\code{~~~~~~~~~~~~+--}\code{\link[R.filesets]{ColumnNamesInterface}}\cr
 \code{~~~~~~~~~~~~~~~~~|}\cr
-\code{~~~~~~~~~~~~~~~~~+--}\emph{\code{TabularTextFile}}\cr
+\code{~~~~~~~~~~~~~~~~~+--}\code{\link[R.filesets]{GenericTabularFile}}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~|}\cr
+\code{~~~~~~~~~~~~~~~~~~~~~~+--}\emph{\code{TabularTextFile}}\cr
 
 \bold{Directly known subclasses:}\cr
 \cr
@@ -40,7 +42,7 @@ extends \emph{\link[R.filesets]{GenericTabularFile}}\cr
   Methods for reading all or a subset of the tabular data exist.
  }
 
- \usage{TabularTextFile(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0, columnNames=TRUE, commentChar="#", .verify=TRUE, verbose=FALSE)}
+ \usage{TabularTextFile(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0, columnNames=NA, commentChar="#", .verify=TRUE, verbose=FALSE)}
 
  \arguments{
    \item{...}{Arguments passed to \code{\link{GenericTabularFile}}.}
@@ -65,13 +67,10 @@ extends \emph{\link[R.filesets]{GenericTabularFile}}\cr
 \tabular{rll}{
  \tab \code{[} \tab  -\cr
  \tab \code{as.character} \tab  -\cr
- \tab \code{\link[R.filesets:getColumnNames.TabularTextFile]{getColumnNames}} \tab Gets the column names.\cr
  \tab \code{getCommentChar} \tab  -\cr
  \tab \code{\link[R.filesets:getHeader.TabularTextFile]{getHeader}} \tab Gets the file header.\cr
- \tab \code{\link[R.filesets:hasColumnHeader.TabularTextFile]{hasColumnHeader}} \tab Checks if there are column names in the header.\cr
  \tab \code{\link[R.filesets:nbrOfLines.TabularTextFile]{nbrOfLines}} \tab Counts the number of lines in the data file.\cr
  \tab \code{\link[R.filesets:nbrOfRows.TabularTextFile]{nbrOfRows}} \tab Counts the number of data rows.\cr
- \tab \code{readColumnNames} \tab  -\cr
  \tab \code{\link[R.filesets:readDataFrame.TabularTextFile]{readDataFrame}} \tab Reads the tabular data as a data frame.\cr
  \tab \code{\link[R.filesets:readLines.TabularTextFile]{readLines}} \tab Reads the lines of the data file as strings.\cr
  \tab \code{setCommentChar} \tab  -\cr
@@ -80,10 +79,13 @@ extends \emph{\link[R.filesets]{GenericTabularFile}}\cr
 
 
  \bold{Methods inherited from GenericTabularFile}:\cr
-as.character, dim, extractMatrix, getColumnNames, getColumnNameTranslator, nbrOfColumns, nbrOfRows, readColumns, readDataFrame, setColumnNameTranslator, translateColumnNames
+as.character, dim, extractMatrix, nbrOfRows, readColumns, readDataFrame
+
+ \bold{Methods inherited from ColumnNamesInterface}:\cr
+appendColumnNamesTranslator, appendColumnNamesTranslatorBycharacter, appendColumnNamesTranslatorByfunction, appendColumnNamesTranslatorBylist, appendColumnNamesTranslatorByNULL, clearColumnNamesTranslator, clearListOfColumnNamesTranslators, getColumnNames, getColumnNamesTranslator, getDefaultColumnNames, getListOfColumnNamesTranslators, nbrOfColumns, setColumnNames, setColumnNamesTranslator, setListOfColumnNamesTranslators, updateColumnNames
 
  \bold{Methods inherited from GenericDataFile}:\cr
-compareChecksum, copyTo, equals, fromFile, getAlias, getAttribute, getAttributes, getChecksum, getCreatedOn, getDefaultFullName, getExtension, getExtensionPattern, getFilename, getFilenameExtension, getFileSize, getFileType, getLastAccessedOn, getLastModifiedOn, getOutputExtension, getPath, getPathname, gunzip, gzip, hasBeenModified, isFile, readChecksum, renameTo, renameToUpperCaseExt, setAlias, setAttribute, setAttributes, setAttributesBy, setAttributesByTags, setExtensionPattern, testAttributes, validateChecksum, writeChecksum
+compareChecksum, copyTo, equals, fromFile, getAttribute, getAttributes, getChecksum, getCreatedOn, getDefaultFullName, getExtension, getExtensionPattern, getFilename, getFilenameExtension, getFileSize, getFileType, getLastAccessedOn, getLastModifiedOn, getOutputExtension, getPath, getPathname, gunzip, gzip, hasBeenModified, isFile, readChecksum, renameTo, renameToUpperCaseExt, setAttribute, setAttributes, setAttributesBy, setAttributesByTags, setExtensionPattern, testAttributes, validate, validateChecksum, writeChecksum
 
  \bold{Methods inherited from FullNameInterface}:\cr
 appendFullNameTranslator, appendFullNameTranslatorBycharacter, appendFullNameTranslatorBydata.frame, appendFullNameTranslatorByfunction, appendFullNameTranslatorBylist, appendFullNameTranslatorByNULL, appendFullNameTranslatorByTabularTextFile, appendFullNameTranslatorByTabularTextFileSet, clearFullNameTranslator, clearListOfFullNameTranslators, getDefaultFullName, getFullName, getFullNameTranslator, getListOfFullNameTranslators, getName, getTags, hasTag, hasTags, setFullName, setFullNameTranslator, setListOfFullNameTranslators, setName, setTags, updateFullName
