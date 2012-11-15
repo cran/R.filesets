@@ -31,12 +31,12 @@
 # \section{Filename convention}{
 #   The filename of an \code{GenericDataFile} is structured as follows:
 #   \itemize{
-#    \item{filename}{\code{"sample001,a,b,c.CEL"} 
+#    \item{filename}{: \code{"sample001,a,b,c.CEL"} 
 #       (this follows the \R convention, but not the Unix convention)}
-#    \item{fullname}{\code{"sample001,a,b,c"}}
-#    \item{name}{\code{"sample001"}}
-#    \item{tags}{\code{c("a", "b", "c")}}
-#    \item{extension}{\code{"CEL"}}
+#    \item{fullname}{: \code{"sample001,a,b,c"}}
+#    \item{name}{: \code{"sample001"}}
+#    \item{tags}{: \code{c("a", "b", "c")}}
+#    \item{extension}{: \code{"CEL"}}
 #   }
 # }
 #
@@ -66,7 +66,7 @@ setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist
   args <- list(...);
 
   # Ignore any argument called 'recursive'
-  keep <- whichVector(regexpr("^recursive$", names(args)) == -1);
+  keep <- which(regexpr("^recursive$", names(args)) == -1);
   args <- args[keep];
 
   if (length(args) > 0) {
@@ -82,7 +82,6 @@ setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist
   }
 
   extend(Object(), c("GenericDataFile", uses("FullNameInterface")),
-    .alias = NULL,
     .pathname = pathname,
     .attributes = list()
   )
@@ -91,7 +90,7 @@ setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist
 
 
 setMethodS3("clone", "GenericDataFile", function(this, clear=TRUE, ...) {
-  object <- NextMethod("clone", this, ...);
+  object <- NextMethod("clone");
   if (clear)
     clearCache(object);
   object;
@@ -380,10 +379,6 @@ setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
 # @synopsis
 #
 # \arguments{
-#  \item{aliased}{If @TRUE, and an alias has been set, the alias is 
-#     returned, otherwise the default full name is returned.}
-#  \item{translate}{If @TRUE, an a fullname translator is set, the fullname
-#     is translated before returned.}
 #  \item{...}{Not used.}
 # }
 #
@@ -404,18 +399,26 @@ setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("getDefaultFullName", "GenericDataFile", function(this, aliased=FALSE, ...) {
-  if (aliased) {
-    alias <- getAlias(this);
-    if (!is.null(alias))
-      fullname <- alias;
-  } else {
-    filename <- getFilename(this);
-    if (is.null(filename))
-      return(as.character(NA));
-    pattern <- getExtensionPattern(this);
-    fullname <- gsub(pattern, "", filename);
+setMethodS3("getDefaultFullName", "GenericDataFile", function(this, ...) {
+  # TO BE REMOVED/BACKWARD COMPATIBILITY: Argument 'aliased' is deprecated.
+  args <- list(...);
+  if (is.element("aliased", names(args))) {
+    .Deprecated(msg="Argument 'aliased' of getDefaultFullName() for GenericDataFile is deprecated.  Use fullname translators instead.");
+    aliased <- args[["aliased"]];
+    if (aliased) {
+      alias <- getAlias(this);
+      if (!is.null(alias)) {
+        fullname <- alias;
+        return(fullname);
+      }
+    }
   }
+
+  filename <- getFilename(this);
+  if (is.null(filename))
+    return(as.character(NA));
+  pattern <- getExtensionPattern(this);
+  fullname <- gsub(pattern, "", filename);
 
   fullname;
 }, protected=TRUE)
@@ -570,6 +573,38 @@ setMethodS3("isFile", "GenericDataFile", function(this, ...) {
 })
 
 
+###########################################################################/**
+# @RdocMethod validate
+#
+# @title "Validates the content of a file"
+#
+# \description{
+#   @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   If the file is invalid, then an error is thrown.
+#   If the files is valid, then @TRUE is returned.
+#   Otherwise, @NA is returned, which happens if the file was not validated.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/###########################################################################
+setMethodS3("validate", "GenericDataFile", function(this, ...) {
+  NA;
+})
+
+
 
 ###########################################################################/**
 # @RdocMethod getFileSize
@@ -622,7 +657,7 @@ setMethodS3("getFileSize", "GenericDataFile", function(this, what=c("numeric", "
     
   units <- c("bytes", "kB", "MB", "GB", "TB");
   scale <- 1;
-  for (kk in seq(along=units)) {
+  for (kk in seq_along(units)) {
     unit <- units[kk];
     if (fileSize < 1000)
       break;
@@ -1483,20 +1518,6 @@ setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # ODDS AND ENDS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-setMethodS3("getAlias", "GenericDataFile", function(this, ...) {
-  this$.alias;
-}, protected=TRUE)
-
-setMethodS3("setAlias", "GenericDataFile", function(this, alias=NULL, ...) {
-  if (!is.null(alias)) {
-    alias <- Arguments$getFilename(alias);
-  }
-  
-  this$.alias <- alias;
-  invisible(this);
-}, protected=TRUE)
-
-
 setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # Local functions
@@ -1553,23 +1574,11 @@ setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname
 }, static=TRUE, protected=TRUE)
 
 
-setMethodS3("getLabel", "GenericDataFile", function(this, ...) {
-  label <- this$label;
-  if (is.null(label))
-    label <- getName(this, ...);
-  label;
-}, private=TRUE)
-
-setMethodS3("setLabel", "GenericDataFile", function(this, label, ...) {
-  this$label <- label;
-  invisible(this);
-}, private=TRUE) 
-
-
-
 
 ############################################################################
 # HISTORY:
+# 2012-10-30
+# o Added validate() to GenericDataFile.
 # 2011-11-19
 # o Now more methods for GenericDataFile handle a so called "empty" file,
 #   which is a file with pathname equal to NULL.

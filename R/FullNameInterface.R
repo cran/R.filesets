@@ -47,10 +47,6 @@ setConstructorS3("FullNameInterface", function(...) {
 # @synopsis
 #
 # \arguments{
-#  \item{aliased}{If @TRUE, and an alias has been set, the alias is 
-#     returned, otherwise the default full name is returned.}
-#  \item{translate}{If @TRUE, an a fullname translator is set, the fullname
-#     is translated before returned.}
 #  \item{...}{Not used.}
 # }
 #
@@ -89,7 +85,7 @@ setMethodS3("getDefaultFullName", "FullNameInterface", abstract=TRUE, protected=
 # @synopsis
 #
 # \arguments{
-#  \item{translate}{If @TRUE, an a fullname translator is set, the fullname
+#  \item{translate}{If @TRUE and a fullname translator is set, the fullname
 #     is translated before returned.}
 #  \item{...}{Not used.}
 # }
@@ -237,7 +233,7 @@ setMethodS3("getTags", "FullNameInterface", function(this, pattern=NULL, collaps
       # Replace asterisk custom tags?
       hasAsteriskTags <- is.element("*", customTags);
       if (hasAsteriskTags) {
-        pos <- whichVector("*" == customTags);
+        pos <- which("*" == customTags);
         customTags <- customTags[-pos];
         
         asteriskTags <- tags;
@@ -376,7 +372,7 @@ setMethodS3("setTags", "FullNameInterface", function(this, tags="*", ...) {
 # TRANSLATOR FUNCTIONS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 setMethodS3("clearListOfFullNameTranslators", "FullNameInterface", function(this, ...) {
-  this$.listOfFullNameTranslators <- list();
+  setListOfFullNameTranslators(this, list());
 }, protected=TRUE)
 
 setMethodS3("clearFullNameTranslator", "FullNameInterface", function(this, ...) {
@@ -394,7 +390,7 @@ setMethodS3("getListOfFullNameTranslators", "FullNameInterface", function(this, 
 
 setMethodS3("setListOfFullNameTranslators", "FullNameInterface", function(this, fnList, ...) {
   # Argument 'fnList':
-  for (kk in seq(along=fnList)) {
+  for (kk in seq_along(fnList)) {
     fcn <- fnList[[kk]];
     if (!is.function(fcn)) {
       throw("Element #", kk, " of argument 'fnList' is not a function: ", 
@@ -418,7 +414,7 @@ setMethodS3("getFullNameTranslator", "FullNameInterface", function(this, ...) {
 
   # Create fullnames translator function
   res <- function(names, ...) {
-    for (kk in seq(along=fnList)) {
+    for (kk in seq_along(fnList)) {
       fcn <- fnList[[kk]];
       names <- fcn(names, ...);
     }
@@ -466,7 +462,7 @@ setMethodS3("appendFullNameTranslatorBylist", "FullNameInterface", function(this
     throw("Argument 'list' is not a list: ", class(list)[1]);
   }
 
-  for (kk in seq(along=list)) {
+  for (kk in seq_along(list)) {
     by <- list[[kk]];
     appendFullNameTranslator(this, by, ...);
   }
@@ -600,6 +596,9 @@ setMethodS3("updateFullName", "FullNameInterface", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-11-07
+# o Now clearListOfFullNamesTranslators() utilizes
+#   setListOfFullNamesTranslators(). 
 # 2011-07-15
 # o Added argument 'named' to getTags() for FullNameInterface.
 # 2010-01-31
