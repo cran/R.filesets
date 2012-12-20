@@ -19,10 +19,11 @@
  Returns the files of the file set.
 }
 
-\usage{\method{as.list}{GenericDataFileSet}(x, ...)}
+\usage{\method{as.list}{GenericDataFileSet}(x, useNames=TRUE, ...)}
 
 \arguments{
-  \item{...}{Not used.}
+  \item{...}{Arguments passed to \code{\link[R.filesets:getFiles.GenericDataFileSet]{*getFiles}()}.}
+  \item{useNames}{If \code{\link[base:logical]{TRUE}}, the list will be annotated with names.}
 }
 
 \value{
