@@ -19,7 +19,7 @@
  Reads the tabular data from all files as data frames and combines them into one data frame (by default).
 }
 
-\usage{\method{readDataFrame}{TabularTextFileSet}(this, ..., combineBy=function(x) Reduce(rbind, x))}
+\usage{\method{readDataFrame}{TabularTextFileSet}(this, ..., combineBy=function(x) Reduce(rbind, x), verbose=FALSE)}
 
 \arguments{
   \item{...}{Arguments passed to
@@ -63,12 +63,12 @@ cat("Common column names:\n")
 print(colNames)
 
 # Read the *common* columns "as is" (hence 'NA')
-colClassPatterns <- rep(NA, times=length(colNames))
-names(colClassPatterns) <- colNames
+colClasses <- rep(NA, times=length(colNames))
+names(colClasses) <- colNames
 cat("Column class patterns:\n")
-print(colClassPatterns)
+print(colClasses)
 
-data <- readDataFrame(ds, colClassPatterns=colClassPatterns)
+data <- readDataFrame(ds, colClasses=colClasses)
 print(data)
 }
 

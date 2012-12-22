@@ -54,7 +54,6 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
 \tabular{rll}{
  \tab \code{\link[R.filesets:compareChecksum.GenericDataFile]{compareChecksum}} \tab Compares the file checksum with the value of the checksum file.\cr
  \tab \code{\link[R.filesets:equals.GenericDataFile]{equals}} \tab Checks if a file equals another.\cr
- \tab \code{\link[R.filesets:fromFile.GenericDataFile]{fromFile}} \tab Defines a GenericDataFile from a pathname.\cr
  \tab \code{\link[R.filesets:getChecksum.GenericDataFile]{getChecksum}} \tab Gets the checksum of a file.\cr
  \tab \code{\link[R.filesets:getExtension.GenericDataFile]{getExtension}} \tab Gets the filename extension.\cr
  \tab \code{\link[R.filesets:getFilename.GenericDataFile]{getFilename}} \tab Gets the filename of the file.\cr
@@ -70,7 +69,7 @@ extends \emph{\link[R.filesets]{FullNameInterface}}\cr
 
 
  \bold{Methods inherited from FullNameInterface}:\cr
-appendFullNameTranslator, appendFullNameTranslatorBycharacter, appendFullNameTranslatorBydata.frame, appendFullNameTranslatorByfunction, appendFullNameTranslatorBylist, appendFullNameTranslatorByNULL, appendFullNameTranslatorByTabularTextFile, appendFullNameTranslatorByTabularTextFileSet, clearFullNameTranslator, clearListOfFullNameTranslators, getDefaultFullName, getFullName, getFullNameTranslator, getListOfFullNameTranslators, getName, getTags, hasTag, hasTags, setFullName, setFullNameTranslator, setListOfFullNameTranslators, setName, setTags, updateFullName
+appendFullNameTranslator, appendFullNameTranslatorBycharacter, appendFullNameTranslatorBydata.frame, appendFullNameTranslatorByfunction, appendFullNameTranslatorBylist, appendFullNameTranslatorByNULL, appendFullNameTranslatorByTabularTextFile, appendFullNameTranslatorByTabularTextFileSet, clearFullNameTranslator, clearListOfFullNameTranslators, getDefaultFullName, getFullName, getFullNameTranslator, getListOfFullNameTranslators, getName, getTags, hasTag, hasTags, resetFullName, setFullName, setFullNameTranslator, setListOfFullNameTranslators, setName, setTags, updateFullName
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save

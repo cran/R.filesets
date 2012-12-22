@@ -51,12 +51,12 @@ setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!is.null(filename)) {
-    pathname <- Arguments$getReadablePathname(filename, path=path, mustExist=mustExist);
-    if (!is.na(pathname) && !isFile(pathname)) {
+    pathname <- Arguments$getReadablePathname(filename, path=path, absolutePath=TRUE, mustExist=mustExist);
+    if (!is.na(pathname)) {
+      # Assert that it is not pointing to a directory
       if (isDirectory(pathname)) {
         throw("The specified pathname is a directory: ", pathname);
       }
-      throw("The specified pathname is not a file: ", pathname);
     }
   } else {
     pathname <- NULL;
@@ -81,10 +81,17 @@ setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist
     }
   }
 
-  extend(Object(), c("GenericDataFile", uses("FullNameInterface")),
+  this <- extend(Object(), c("GenericDataFile", uses("FullNameInterface")),
+    "cached:.checksum" = NULL,
+    .prevModifiedOn = NULL,
     .pathname = pathname,
     .attributes = list()
-  )
+  );
+
+  # Update time stamps
+  hasBeenModified(this);
+
+  this;
 }, abstract=TRUE)
 
 
@@ -94,7 +101,7 @@ setMethodS3("clone", "GenericDataFile", function(this, clear=TRUE, ...) {
   if (clear)
     clearCache(object);
   object;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 
@@ -231,11 +238,11 @@ setMethodS3("as.character", "GenericDataFile", function(x, ...) {
   s <- c(s, sprintf("Full name: %s", getFullName(this)));
 
   # Pathname
-  pathname <- getPathname(this);
+  pathname <- getPathname(this, absolute=FALSE);
   if (!is.null(pathname)) {
-    pathnameR <- getRelativePath(pathname);
-    if (nchar(pathnameR) < nchar(pathname)) {
-      pathname <- pathnameR;
+    pathnameA <- getPathname(this, absolute=TRUE);
+    if (nchar(pathnameA) < nchar(pathname)) {
+      pathname <- pathnameA;
     }
   }
   s <- c(s, paste("Pathname: ", pathname, sep=""));
@@ -254,7 +261,7 @@ setMethodS3("as.character", "GenericDataFile", function(x, ...) {
 
   class(s) <- "GenericSummary";
   s;
-}, private=TRUE)
+}, protected=TRUE)
 
 
 
@@ -271,11 +278,14 @@ setMethodS3("as.character", "GenericDataFile", function(x, ...) {
 # @synopsis
 #
 # \arguments{
+#  \item{absolute}{If @TRUE, the absolute pathname is returned, 
+#     otherwise the relative.}
 #  \item{...}{Not used.}
 # }
 #
 # \value{
-#   Returns a @character string (@NULL if an "empty" file).
+#   Returns the pathname as @character string
+#   (or @NULL if an "empty" file).
 # }
 #
 # @author
@@ -284,8 +294,15 @@ setMethodS3("as.character", "GenericDataFile", function(x, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("getPathname", "GenericDataFile", function(this, ...) {
+setMethodS3("getPathname", "GenericDataFile", function(this, absolute=FALSE, ...) {
   pathname <- this$.pathname;
+  if (!is.null(pathname)) {
+    if (absolute) {
+      pathname <- getAbsolutePath(pathname);
+    } else {
+      pathname <- getRelativePath(pathname);
+    }
+  }
   pathname;
 })
 
@@ -304,7 +321,7 @@ setMethodS3("getPathname", "GenericDataFile", function(this, ...) {
 # @synopsis
 #
 # \arguments{
-#  \item{...}{Not used.}
+#  \item{...}{Optional arguments passed to @seemethod "getPathname".}
 # }
 #
 # \value{
@@ -318,7 +335,7 @@ setMethodS3("getPathname", "GenericDataFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getPath", "GenericDataFile", function(this, ...) {
-  res <- getPathname(this);
+  res <- getPathname(this, ...);
   if (is.null(res)) res <- as.character(NA);
   res <- dirname(res);
   res;
@@ -339,7 +356,7 @@ setMethodS3("getPath", "GenericDataFile", function(this, ...) {
 # @synopsis
 #
 # \arguments{
-#  \item{...}{Not used.}
+#  \item{...}{Optional arguments passed to @seemethod "getPathname".}
 # }
 #
 # \value{
@@ -359,7 +376,7 @@ setMethodS3("getPath", "GenericDataFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
-  res <- getPathname(this);
+  res <- getPathname(this, ...);
   if (is.null(res)) res <- as.character(NA);
   res <- basename(res);
   res;
@@ -424,12 +441,12 @@ setMethodS3("getDefaultFullName", "GenericDataFile", function(this, ...) {
 }, protected=TRUE)
 
 
-setMethodS3("getFilenameExtension", "GenericDataFile", abstract=TRUE, protected=TRUE);
+setMethodS3("getFilenameExtension", "GenericDataFile", abstract=TRUE, protected=TRUE)
 
 
 setMethodS3("getOutputExtension", "GenericDataFile", function(...) {
   getFilenameExtension(...);  
-}, protected=TRUE);
+}, protected=TRUE)
 
 
 setMethodS3("getExtensionPattern", "GenericDataFile", function(this, ..., default="\\.([^.]+)$", force=FALSE) {
@@ -496,7 +513,7 @@ setMethodS3("getExtension", "GenericDataFile", function(this, ...) {
   fullname <- getDefaultFullName(this, ...);
 
   # Drop <fullname> and a possible '.'.
-  substring(filename, first=nchar(fullname)+2);
+  substring(filename, first=nchar(fullname)+2L);
 })
 
 
@@ -922,7 +939,7 @@ setMethodS3("fromFile", "GenericDataFile", function(static, filename, path=NULL,
   res <- newInstance(static, filename=pathname, ...);
 
   res;
-}, static=TRUE)
+}, static=TRUE, protected=TRUE)
 
 
 
@@ -1443,18 +1460,21 @@ setMethodS3("validateChecksum", "GenericDataFile", function(this, ..., verbose=F
 ###########################################################################/**
 # @RdocMethod gzip
 # @aliasmethod gunzip
+# @aliasmethod isGzipped
 #
 # @title "Compresses/uncompresses a file"
 #
 # \description{
-#   @get "title" using gzip compression.  
+#   @get "title" using gzip compression.
 #   When compressing (uncompressing), the new filename has suffix \code{.gz}
-#   appended (removed).
+#   appended (removed), which is also used to test if a file is gzip'ed
+#   or not.
 # }
 #
 # \usage{
 #  \method{gzip}{GenericDataFile}(this, ...)
 #  \method{gunzip}{GenericDataFile}(this, ...)
+#  \method{isGzipped}{GenericDataFile}(this, ...)
 # }
 #
 # \arguments{
@@ -1483,8 +1503,9 @@ setMethodS3("gzip", "GenericDataFile", function(this, ...) {
   }   
 
   pathname <- getPathname(this);
-  if (regexpr("[.]gz$", pathname) != -1)
+  if (isGzipped(this)) {
     throw("File is already gzip'ed: ", pathname);
+  }
 
   outPathname <- sprintf("%s.gz", pathname);
   gzip(pathname, destname=outPathname, ...);
@@ -1502,8 +1523,9 @@ setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
   }
 
   pathname <- getPathname(this);
-  if (regexpr("[.]gz$", pathname) == -1)
+  if (!isGzipped(this)) {
     throw("File is not gzip'ed: ", pathname);
+  }
 
   outPathname <- gsub("[.]gz$", "", pathname);
   gunzip(pathname, destname=outPathname, ...);
@@ -1511,6 +1533,12 @@ setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
   this$.pathname <- outPathname;
 
   invisible(pathname);
+}, protected=TRUE)
+
+
+setMethodS3("isGzipped", "GenericDataFile", function(this, ...) {
+  filename <- getFilename(this, ...);
+  (regexpr("[.]gz$", filename) != -1L);
 }, protected=TRUE)
 
 
@@ -1577,6 +1605,16 @@ setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname
 
 ############################################################################
 # HISTORY:
+# 2012-12-06
+# o Added argument 'absolute=FALSE' to getPathname() for GenericDataFile.
+# 2012-12-03
+# o Added isGzipped() to GenericDataFile.
+# 2012-11-28
+# o Now GenericDataFile() retrieves the file time stamps such that
+#   hasBeenModified() returns a correct value also when first called,
+#   and not only TRUE just in case.
+# o Now declaring the .checksum field as a 'cached' field, which will
+#   be cleared if clearCache() or gc() is called on the object.
 # 2012-10-30
 # o Added validate() to GenericDataFile.
 # 2011-11-19

@@ -6,32 +6,32 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{nbrOfRows.GenericTabularFile}
-\alias{nbrOfRows.GenericTabularFile}
-\alias{GenericTabularFile.nbrOfRows}
-\alias{nbrOfRows.GenericTabularFile}
-\alias{nbrOfRows,GenericTabularFile-method}
+\name{readColumns.GenericTabularFile}
+\alias{readColumns.GenericTabularFile}
+\alias{GenericTabularFile.readColumns}
+\alias{readColumns.GenericTabularFile}
+\alias{readColumns,GenericTabularFile-method}
 
 
-\title{Gets the number of data rows}
+\title{Reads a subset of the columns as a data frame}
 
 \description{
- Gets the number of data rows.
+ Reads a subset of the columns as a data frame.
 }
 
-\usage{\method{nbrOfRows}{GenericTabularFile}(...)}
+\usage{\method{readColumns}{GenericTabularFile}(...)}
 
 \arguments{
   \item{...}{Not used.}
 }
 
 \value{
-  Returns an \code{\link[base]{integer}}.
+  Returns a \code{\link[base]{data.frame}}.
 }
+
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  \code{\link[R.filesets:dim.GenericTabularFile]{*dim}()}.
   For more information see \code{\link{GenericTabularFile}}.
 }
 

@@ -1,4 +1,4 @@
-GenericDataFileList [.TabularTextFile append append.default
+GenericDataFileList append append.default
 appendFiles appendFullNameTranslator
 appendFullNameTranslator.FullNameInterface
 appendFullNameTranslatorByNULL
@@ -88,7 +88,7 @@ name name.default nbrOfColumns nbrOfFiles
 nbrOfFiles.GenericDataFileSetList nbrOfLines nbrOfRows
 nbrOfSets nbrOfSets.GenericDataFileSetList readChecksum
 readColumnNames readColumnNames.TabularTextFile readColumns
-readColumns.GenericTabularFile readColumns.TabularTextFile
+readColumns.TabularTextFile
 readDataFrame readLines readLines.default readRawHeader
 readRawHeader.TabularTextFile readTableHeader
 readTableHeader.default renameTo renameToUpperCaseExt
@@ -142,3 +142,11 @@ appendColumnNamesTranslatorByfunction.ColumnNamesInterface
 getDefaultColumnClassPatterns
 getDefaultColumnClassPatterns.TabularTextFile
 getDefaultColumnClasses getDefaultColumnClasses.TabularTextFile
+resetFullName resetFullName.FullNameInterface resetFullNames
+resetFullNames.GenericDataFileSet
+isGzipped
+getOneFile
+getOneFile.GenericDataFileSet
+head.GenericTabularFile tail.GenericTabularFile
+[.GenericTabularFile
+

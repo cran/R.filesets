@@ -13,7 +13,6 @@
 
 % Other missing docs
 \alias{GenericDataFileList}
-\alias{[.TabularTextFile}
 \alias{append}
 \alias{append.default}
 \alias{appendFiles}
@@ -180,7 +179,6 @@
 \alias{readColumnNames}
 \alias{readColumnNames.TabularTextFile}
 \alias{readColumns}
-\alias{readColumns.GenericTabularFile}
 \alias{readColumns.TabularTextFile}
 \alias{readDataFrame}
 \alias{readLines}
@@ -275,6 +273,16 @@
 \alias{getDefaultColumnClassPatterns.TabularTextFile}
 \alias{getDefaultColumnClasses}
 \alias{getDefaultColumnClasses.TabularTextFile}
+\alias{resetFullName}
+\alias{resetFullName.FullNameInterface}
+\alias{resetFullNames}
+\alias{resetFullNames.GenericDataFileSet}
+\alias{isGzipped}
+\alias{getOneFile}
+\alias{getOneFile.GenericDataFileSet}
+\alias{head.GenericTabularFile}
+\alias{tail.GenericTabularFile}
+\alias{[.GenericTabularFile}
 
 \description{
   This page contains aliases for all "non-documented" objects that

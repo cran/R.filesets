@@ -1,8 +1,85 @@
 Package: R.filesets
 ===================
 
+Version: 1.9.0 [2012-12-20]
+o Argument 'colClassPatterns' of readDataFrame() for TabularTextFile
+  has been renamed to 'colClasses'.
+
+
+Version: 1.8.2 [2012-12-19]
+o Bumped up package dependencies.
+o Utilizing new startupMessage() of R.oo.
+o ROBUSTNESS: Now indexOf() for GenericDataFileSet throws an 
+  exception if use tries to pass an argument 'names'.
+
+
+Version: 1.8.1 [2012-12-09]
+o Added head() and tail() for GenericTabularFile.
+o Added subsetting via [() to GenericTabularFile.
+o BUG FIX: nbrOfRows() for TabularTextFile forgot to exclude comment
+  rows in the file header.
+o BUG FIX: readColumns() for GenericTabularFile would not preserve
+  the order of the requested 'columns'.
+
+
+Version: 1.8.0 [2012-12-06]
+o Added getOneFile() for GenericDataFileSet, which returns the first
+  GenericDataFile with a non-missing pathname.
+o Added argument 'absolute=FALSE' to getPathname() for GenericDataFile.
+o ROBUSTNESS: Now GenericDataFile stores the absolute pathname of
+  the file, even if a relative pathname is given.  This makes sure
+  that the file is found also when the working directory is changed.
+o BUG FIX: equals() for GenericDataFileSet would only compare the first
+  GenericDataFile in each set.
+
+
+Version: 1.7.3 [2012-12-03]
+o Added isGzipped() to GenericDataFile.
+
+
+Version: 1.7.2 [2012-12-03]
+o Generalized writeColumnsToFiles() to GenericTabularFile.  Used
+  to be available only for TabularTextFile.
+o CLEANUP: Now package only imports 'digest' and 'R.methodsS3'.
+  Added 'stats' to list of imported packages.
+o ROBUSTNESS: Now package declares S3 methods in the namespace.
+
+
+Version: 1.7.1 [2012-12-02]
+o BUG FIX: getDefaultColumnNames() for TabularTextFile did not use
+  'columnNames' if it was set when creating the TabularTextFile object.
+o BUG FIX: Now getReadArguments() for TabularTextFile drops arguments
+  that are NULL, because they could cause errors downstreams, e.g.
+  readDataFrame() calling read.table(..., colClasses=NULL) =>
+  rep_len(NULL, x) => "Error in rep_len(colClasses, cols) :
+  cannot replicate NULL to a non-zero length".
+
+
+Version: 1.7.0 [2012-11-30]
+o Updated as.list() for GenericDataSet to return a *named* list of 
+  GenericDataFile:s (previously it had no names).  The names are
+  the (translated) full names of the GenericDataFile:s.
+o CLEANUP: Removed lapply() and sapply() for GenericDataSet because
+  the corresponding functions in the 'base' package utilizes 
+  as.list().
+
+
+Version: 1.6.1 [2012-11-28]
+o Now GenericDataFile() retrieves the file time stamps such that
+  hasBeenModified() returns a correct value also when first called,
+  and not only TRUE just in case.  This has the effect that
+  getChecksum() will detected cached results already at the
+  second call as long as the file has to been modified.  Previously
+  it took two calls to getChecksum() for it to be properly cached.
+o Now declaring more internal and temporary Object fields as "cached",
+  which means they will be cleared if clearCache() or gc() is called on
+  the corresponding object.
+o Added further verbose output to TabularTextFileSet.
+o DOCUMENTATION: Minor corrections to help pages.
+
+
 Version: 1.6.0 [2012-11-15]
-o No updated. Bumped the version for CRAN release.
+o No updates. Bumped the version for CRAN release.
 
 
 Version: 1.5.4 [2012-11-15]
