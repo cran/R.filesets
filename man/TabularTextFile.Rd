@@ -42,7 +42,7 @@ extends \emph{\link[R.filesets]{GenericTabularFile}}\cr
   Methods for reading all or a subset of the tabular data exist.
  }
 
- \usage{TabularTextFile(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0, columnNames=NA, commentChar="#", .verify=TRUE, verbose=FALSE)}
+ \usage{TabularTextFile(..., sep=c("\t", ","), quote="\"", fill=FALSE, skip=0L, columnNames=NA, commentChar="#", .verify=TRUE, verbose=FALSE)}
 
  \arguments{
    \item{...}{Arguments passed to \code{\link{GenericTabularFile}}.}
@@ -90,6 +90,21 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCa
 
 
  }
+
+ \examples{
+path <- system.file("exData/dataSetA,original", package="R.filesets")
+
+db <- TabularTextFile("fileA,20100112.dat", path=path)
+print(db)
+
+# Read all data
+df <- readDataFrame(db)
+print(df)
+
+# Read columns 'x', 'y', and 'char'
+df <- readDataFrame(db, colClasses=c("(x|y)"="integer", "char"="character"))
+print(df)
+}
 
  \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
