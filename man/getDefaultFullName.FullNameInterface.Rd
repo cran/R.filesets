@@ -9,9 +9,7 @@
 \name{getDefaultFullName.FullNameInterface}
 \alias{getDefaultFullName.FullNameInterface}
 \alias{FullNameInterface.getDefaultFullName}
-\alias{getDefaultFullName.FullNameInterface}
 \alias{getDefaultFullName,FullNameInterface-method}
-
 
 \title{Gets the default full name}
 
@@ -19,7 +17,9 @@
   Gets the default full name, that is, the fullname without translations.
 }
 
-\usage{\method{getDefaultFullName}{FullNameInterface}(...)}
+\usage{
+\method{getDefaultFullName}{FullNameInterface}(...)
+}
 
 \arguments{
  \item{...}{Not used.}
@@ -36,7 +36,7 @@
  \code{foo,a.2,b}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.filesets:getName.FullNameInterface]{*getName}()}.

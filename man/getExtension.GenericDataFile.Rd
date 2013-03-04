@@ -9,9 +9,7 @@
 \name{getExtension.GenericDataFile}
 \alias{getExtension.GenericDataFile}
 \alias{GenericDataFile.getExtension}
-\alias{getExtension.GenericDataFile}
 \alias{getExtension,GenericDataFile-method}
-
 
 \title{Gets the filename extension}
 
@@ -19,7 +17,9 @@
   Gets the filename extension.
 }
 
-\usage{\method{getExtension}{GenericDataFile}(this, ...)}
+\usage{
+\method{getExtension}{GenericDataFile}(this, ...)
+}
 
 \arguments{
  \item{...}{Arguments passed to \code{\link[R.filesets:getFilename.GenericDataFile]{*getFilename}()} and
@@ -30,7 +30,7 @@
   Returns a \code{\link[base]{character}} string (which is of length zero if "empty" file).
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericDataFile}}.

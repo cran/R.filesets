@@ -9,9 +9,7 @@
 \name{appendFiles.GenericDataFileSet}
 \alias{appendFiles.GenericDataFileSet}
 \alias{GenericDataFileSet.appendFiles}
-\alias{appendFiles.GenericDataFileSet}
 \alias{appendFiles,GenericDataFileSet-method}
-
 
 \title{Appends a list of files to a data set}
 
@@ -19,7 +17,9 @@
   Appends a list of files to a data set.
 }
 
-\usage{\method{appendFiles}{GenericDataFileSet}(this, files, clone=TRUE, ..., .fileClass=getFileClass(this), .assertSameClass=TRUE, verbose=FALSE)}
+\usage{
+\method{appendFiles}{GenericDataFileSet}(this, files, clone=TRUE, ..., .fileClass=getFileClass(this), .assertSameClass=TRUE, verbose=FALSE)
+}
 
 \arguments{
  \item{files}{A single \code{\link{GenericDataFile}} or a \code{\link[base]{list}} of such to
@@ -43,7 +43,7 @@
   of the data set, otherwise an exception is thrown.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   To append a data set, see \code{\link{append}}().

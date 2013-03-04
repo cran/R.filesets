@@ -9,9 +9,7 @@
 \name{getFullName.FullNameInterface}
 \alias{getFullName.FullNameInterface}
 \alias{FullNameInterface.getFullName}
-\alias{getFullName.FullNameInterface}
 \alias{getFullName,FullNameInterface-method}
-
 
 \title{Gets the full name}
 
@@ -19,7 +17,9 @@
   Gets the full name consisting of a name and tags.
 }
 
-\usage{\method{getFullName}{FullNameInterface}(this, ..., translate=TRUE)}
+\usage{
+\method{getFullName}{FullNameInterface}(this, ..., translate=TRUE)
+}
 
 \arguments{
  \item{translate}{If \code{\link[base:logical]{TRUE}} and a fullname translator is set, the fullname
@@ -31,7 +31,7 @@
   Returns a \code{\link[base]{character}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.filesets:getName.FullNameInterface]{*getName}()}.

@@ -9,9 +9,7 @@
 \name{as.list.GenericDataFileSet}
 \alias{as.list.GenericDataFileSet}
 \alias{GenericDataFileSet.as.list}
-\alias{as.list.GenericDataFileSet}
 \alias{as.list,GenericDataFileSet-method}
-
 
 \title{Returns the files of the file set}
 
@@ -19,7 +17,9 @@
  Returns the files of the file set.
 }
 
-\usage{\method{as.list}{GenericDataFileSet}(x, useNames=TRUE, ...)}
+\usage{
+\method{as.list}{GenericDataFileSet}(x, useNames=TRUE, ...)
+}
 
 \arguments{
   \item{...}{Arguments passed to \code{\link[R.filesets:getFiles.GenericDataFileSet]{*getFiles}()}.}
@@ -30,7 +30,7 @@
  Returns a \code{\link[base]{list}} of files, each of class \code{\link{getFileClass}}().
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericDataFileSet}}.

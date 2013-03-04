@@ -9,9 +9,7 @@
 \name{getName.FullNameInterface}
 \alias{getName.FullNameInterface}
 \alias{FullNameInterface.getName}
-\alias{getName.FullNameInterface}
 \alias{getName,FullNameInterface-method}
-
 
 \title{Gets the name}
 
@@ -19,7 +17,9 @@
   Gets the name.
 }
 
-\usage{\method{getName}{FullNameInterface}(this, ...)}
+\usage{
+\method{getName}{FullNameInterface}(this, ...)
+}
 
 \arguments{
  \item{...}{Additional arguments passed to \code{\link[R.filesets:getFullName.FullNameInterface]{*getFullName}()}.}
@@ -34,7 +34,7 @@
  For instance, the name of \code{foo,a.2,b} is \code{foo}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.filesets:getFullName.FullNameInterface]{*getFullName}()}.

@@ -9,9 +9,7 @@
 \name{nbrOfColumns.ColumnNamesInterface}
 \alias{nbrOfColumns.ColumnNamesInterface}
 \alias{ColumnNamesInterface.nbrOfColumns}
-\alias{nbrOfColumns.ColumnNamesInterface}
 \alias{nbrOfColumns,ColumnNamesInterface-method}
-
 
 \title{Gets the number of columns}
 
@@ -19,7 +17,9 @@
  Gets the number of columns.
 }
 
-\usage{\method{nbrOfColumns}{ColumnNamesInterface}(this, ...)}
+\usage{
+\method{nbrOfColumns}{ColumnNamesInterface}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -28,7 +28,7 @@
 \value{
   Returns an \code{\link[base]{integer}}.
 }
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.filesets:getColumnNames.ColumnNamesInterface]{*getColumnNames}()}.

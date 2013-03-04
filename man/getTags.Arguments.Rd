@@ -7,12 +7,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\name{getTags.Arguments}
+\name{Arguments$getTags}
+\alias{Arguments$getTags}
 \alias{getTags.Arguments}
 \alias{Arguments.getTags}
-\alias{getTags.Arguments}
 \alias{getTags,Arguments-method}
-
 
 \title{Gets and validates tags}
 
@@ -20,8 +19,13 @@
  Gets and validates tags.
 }
 
-\synopsis{getTags.Arguments(static, ..., na.rm=TRUE, collapse=",")}
-\usage{Arguments$getTags(..., na.rm=TRUE, collapse=",")}
+\usage{
+## Static method (use this):
+## Arguments$getTags(..., na.rm=TRUE, collapse=",")
+
+## Don't use the below:
+\method{getTags}{Arguments}(static, ..., na.rm=TRUE, collapse=",")
+}
 
 \arguments{
   \item{...}{\code{\link[base]{character}} \code{\link[base]{vector}} of tags.}
@@ -36,7 +40,7 @@
  \code{\link[base]{character}} \code{\link[base]{vector}} (iff \code{collapse} is \code{\link[base]{NULL}}).
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link[R.utils]{Arguments}}.

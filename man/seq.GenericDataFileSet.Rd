@@ -9,9 +9,7 @@
  \name{seq.GenericDataFileSet}
 \alias{seq.GenericDataFileSet}
 \alias{GenericDataFileSet.seq}
-\alias{seq.GenericDataFileSet}
 \alias{seq,GenericDataFileSet-method}
-
 
  \title{Gets an integer vector of file indices}
 
@@ -19,7 +17,9 @@
    Gets an integer vector of file indices.
  }
 
- \usage{\method{seq}{GenericDataFileSet}(this, ...)}
+ \usage{
+\method{seq}{GenericDataFileSet}(this, ...)
+}
 
  \arguments{
   \item{...}{Not used.}
@@ -30,7 +30,7 @@
    or an empty vector if the set is empty.
  }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
  \seealso{
    For more information see \code{\link{GenericDataFileSet}}.

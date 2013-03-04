@@ -16,7 +16,9 @@
   Reads data from a tabular file or a set of such files.
  }
 
- \usage{\method{readDataFrame}{default}(filename, path=NULL, ...)}
+ \usage{
+\method{readDataFrame}{default}(filename, path=NULL, ...)
+}
 
  \arguments{
    \item{filename, path}{\code{\link[base]{character}} \code{\link[base]{vector}} specifying one or more files to
@@ -79,7 +81,7 @@ df <- readDataFrame(pathname, skip="^x")
 print(df)
 }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
  \seealso{
    \code{\link[utils]{read.table}}.

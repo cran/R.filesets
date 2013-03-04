@@ -9,9 +9,7 @@
 \name{getDefaultFullName.GenericDataFileSet}
 \alias{getDefaultFullName.GenericDataFileSet}
 \alias{GenericDataFileSet.getDefaultFullName}
-\alias{getDefaultFullName.GenericDataFileSet}
 \alias{getDefaultFullName,GenericDataFileSet-method}
-
 
 \title{Gets the default full name of the file set}
 
@@ -19,7 +17,9 @@
   Gets the default full name of the file set, that is the name of the directory without parent directories.
 }
 
-\usage{\method{getDefaultFullName}{GenericDataFileSet}(this, parent=getDepth(this, default = NULL), ...)}
+\usage{
+\method{getDefaultFullName}{GenericDataFileSet}(this, parent=getDepth(this, default = NULL), ...)
+}
 
 \arguments{
  \item{parent}{The number of generations up in the directory tree the
@@ -40,7 +40,7 @@
  used, e.g. \code{foo,c}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericDataFileSet}}.

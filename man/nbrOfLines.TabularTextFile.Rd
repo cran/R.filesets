@@ -9,9 +9,7 @@
 \name{nbrOfLines.TabularTextFile}
 \alias{nbrOfLines.TabularTextFile}
 \alias{TabularTextFile.nbrOfLines}
-\alias{nbrOfLines.TabularTextFile}
 \alias{nbrOfLines,TabularTextFile-method}
-
 
 \title{Counts the number of lines in the data file}
 
@@ -19,7 +17,9 @@
  Counts the number of lines in the data file.  The count include header rows, comments and more.
 }
 
-\usage{\method{nbrOfLines}{TabularTextFile}(this, fast=FALSE, ...)}
+\usage{
+\method{nbrOfLines}{TabularTextFile}(this, fast=FALSE, ...)
+}
 
 \arguments{
   \item{fast}{If \code{\link[base:logical]{TRUE}}, \code{\link[base]{NA}} is returned for large data files (>1Mb),
@@ -31,7 +31,7 @@
   Returns a \code{\link[base]{character}} \code{\link[base]{vector}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
    To count the number of data rows is the data table,

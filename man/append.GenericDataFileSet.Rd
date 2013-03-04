@@ -9,9 +9,7 @@
 \name{append.GenericDataFileSet}
 \alias{append.GenericDataFileSet}
 \alias{GenericDataFileSet.append}
-\alias{append.GenericDataFileSet}
 \alias{append,GenericDataFileSet-method}
-
 
 \title{Appends one data set to an existing one}
 
@@ -20,7 +18,9 @@
   The fullname of the merged data set is that of the first data set.
 }
 
-\usage{\method{append}{GenericDataFileSet}(x, values, ...)}
+\usage{
+\method{append}{GenericDataFileSet}(x, values, ...)
+}
 
 \arguments{
  \item{values}{The data set to be appended to this data set.}
@@ -37,7 +37,7 @@
   being appended, each of its file is cloned before being appended.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   To append one or more files, see \code{\link{appendFiles}}().

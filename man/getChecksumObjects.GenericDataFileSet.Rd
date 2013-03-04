@@ -10,9 +10,7 @@
 \name{getChecksumObjects.GenericDataFileSet}
 \alias{getChecksumObjects.GenericDataFileSet}
 \alias{GenericDataFileSet.getChecksumObjects}
-\alias{getChecksumObjects.GenericDataFileSet}
 \alias{getChecksumObjects,GenericDataFileSet-method}
-
 
 \title{Retrieves objects that uniquely identifying the data set}
 
@@ -20,7 +18,9 @@
  Retrieves objects that uniquely identifying the data set.
 }
 
-\usage{\method{getChecksumObjects}{GenericDataFileSet}(this, ..., verbose=FALSE)}
+\usage{
+\method{getChecksumObjects}{GenericDataFileSet}(this, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -38,7 +38,7 @@
   (possibly translated).
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.filesets:getChecksum.GenericDataFileSet]{*getChecksum}()}

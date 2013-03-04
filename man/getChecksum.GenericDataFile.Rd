@@ -9,9 +9,7 @@
 \name{getChecksum.GenericDataFile}
 \alias{getChecksum.GenericDataFile}
 \alias{GenericDataFile.getChecksum}
-\alias{getChecksum.GenericDataFile}
 \alias{getChecksum,GenericDataFile-method}
-
 
 \title{Gets the checksum of a file}
 
@@ -19,7 +17,9 @@
   Gets the checksum of a file.
 }
 
-\usage{\method{getChecksum}{GenericDataFile}(this, ..., force=FALSE, verbose=FALSE)}
+\usage{
+\method{getChecksum}{GenericDataFile}(this, ..., force=FALSE, verbose=FALSE)
+}
 
 \arguments{
  \item{force}{If \code{\link[base:logical]{FALSE}}, the file exists and has not be modified since,
@@ -32,7 +32,7 @@
   Returns a \code{\link[base]{character}} string, which can be \code{\link[base]{NA}} if file is missing.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   Internally \code{\link[digest]{digest}} is used.

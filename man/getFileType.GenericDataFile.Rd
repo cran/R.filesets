@@ -9,9 +9,7 @@
 \name{getFileType.GenericDataFile}
 \alias{getFileType.GenericDataFile}
 \alias{GenericDataFile.getFileType}
-\alias{getFileType.GenericDataFile}
 \alias{getFileType,GenericDataFile-method}
-
 
 \title{Gets the file type of a file}
 
@@ -19,7 +17,9 @@
   Gets the file type of a file.
 }
 
-\usage{\method{getFileType}{GenericDataFile}(this, ...)}
+\usage{
+\method{getFileType}{GenericDataFile}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}
@@ -35,7 +35,7 @@
   may override this.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericDataFile}}.

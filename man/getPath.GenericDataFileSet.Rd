@@ -9,9 +9,7 @@
 \name{getPath.GenericDataFileSet}
 \alias{getPath.GenericDataFileSet}
 \alias{GenericDataFileSet.getPath}
-\alias{getPath.GenericDataFileSet}
 \alias{getPath,GenericDataFileSet-method}
-
 
 \title{Gets the path (directory) of the file set}
 
@@ -19,7 +17,9 @@
   Gets the path (directory) of the file set.
 }
 
-\usage{\method{getPath}{GenericDataFileSet}(this, ...)}
+\usage{
+\method{getPath}{GenericDataFileSet}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}
@@ -29,7 +29,7 @@
   Returns a \code{\link[base]{character}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericDataFileSet}}.

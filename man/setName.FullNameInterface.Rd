@@ -9,9 +9,7 @@
 \name{setName.FullNameInterface}
 \alias{setName.FullNameInterface}
 \alias{FullNameInterface.setName}
-\alias{setName.FullNameInterface}
 \alias{setName,FullNameInterface-method}
-
 
 \title{Sets the name part of the fullname}
 
@@ -19,7 +17,9 @@
   Sets the name part of the fullname, leaving the tags untouched.
 }
 
-\usage{\method{setName}{FullNameInterface}(this, name=NULL, ...)}
+\usage{
+\method{setName}{FullNameInterface}(this, name=NULL, ...)
+}
 
 \arguments{
  \item{name}{The new name part of the fullname.
@@ -31,7 +31,7 @@
   Returns (invisibly) itself.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.filesets:setFullName.FullNameInterface]{*setFullName}()}.

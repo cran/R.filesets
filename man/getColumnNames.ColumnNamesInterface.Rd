@@ -9,9 +9,7 @@
 \name{getColumnNames.ColumnNamesInterface}
 \alias{getColumnNames.ColumnNamesInterface}
 \alias{ColumnNamesInterface.getColumnNames}
-\alias{getColumnNames.ColumnNamesInterface}
 \alias{getColumnNames,ColumnNamesInterface-method}
-
 
 \title{Gets the column names}
 
@@ -19,7 +17,9 @@
   Gets the column names.
 }
 
-\usage{\method{getColumnNames}{ColumnNamesInterface}(this, ..., translate=TRUE)}
+\usage{
+\method{getColumnNames}{ColumnNamesInterface}(this, ..., translate=TRUE)
+}
 
 \arguments{
  \item{translate}{If \code{\link[base:logical]{TRUE}} and a names translator is set, the
@@ -31,7 +31,7 @@
   Returns a \code{\link[base]{character}} \code{\link[base]{vector}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.filesets:getDefaultColumnNames.ColumnNamesInterface]{*getDefaultColumnNames}()}.

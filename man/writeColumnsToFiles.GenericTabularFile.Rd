@@ -10,9 +10,7 @@
 \name{writeColumnsToFiles.GenericTabularFile}
 \alias{writeColumnsToFiles.GenericTabularFile}
 \alias{GenericTabularFile.writeColumnsToFiles}
-\alias{writeColumnsToFiles.GenericTabularFile}
 \alias{writeColumnsToFiles,GenericTabularFile-method}
-
 
 \title{Read each column from a data file and exports it to a separate file}
 
@@ -22,7 +20,9 @@
  is memory efficient and can handle very large data files.
 }
 
-\usage{\method{writeColumnsToFiles}{GenericTabularFile}(this, destPath, filenameFmt="\%s.txt", tags=NULL, columnName=NULL, header=NULL, ..., verbose=FALSE)}
+\usage{
+\method{writeColumnsToFiles}{GenericTabularFile}(this, destPath, filenameFmt="\%s.txt", tags=NULL, columnName=NULL, header=NULL, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{destPath}{The output directory where to write the files.}
@@ -46,7 +46,7 @@
  instance an interrupt occured.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericTabularFile}}.

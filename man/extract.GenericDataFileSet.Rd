@@ -9,9 +9,7 @@
 \name{extract.GenericDataFileSet}
 \alias{extract.GenericDataFileSet}
 \alias{GenericDataFileSet.extract}
-\alias{extract.GenericDataFileSet}
 \alias{extract,GenericDataFileSet-method}
-
 
 \title{Extract a subset of the file set}
 
@@ -19,7 +17,9 @@
   Extract a subset of the file set.
 }
 
-\usage{\method{extract}{GenericDataFileSet}(this, files, ..., onMissing=c("NA", "error", "drop"), onDuplicates=c("ignore", "drop", "error"))}
+\usage{
+\method{extract}{GenericDataFileSet}(this, files, ..., onMissing=c("NA", "error", "drop"), onDuplicates=c("ignore", "drop", "error"))
+}
 
 \arguments{
  \item{files}{An \code{\link[base]{integer}} or a \code{\link[base]{logical}} \code{\link[base]{vector}} indicating which data files
@@ -35,7 +35,7 @@
   Returns an \code{\link{GenericDataFileSet}} (or a subclass) object.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericDataFileSet}}.

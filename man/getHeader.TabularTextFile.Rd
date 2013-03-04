@@ -9,9 +9,7 @@
 \name{getHeader.TabularTextFile}
 \alias{getHeader.TabularTextFile}
 \alias{TabularTextFile.getHeader}
-\alias{getHeader.TabularTextFile}
 \alias{getHeader,TabularTextFile-method}
-
 
 \title{Gets the file header}
 
@@ -19,7 +17,9 @@
  Gets the file header.
 }
 
-\usage{\method{getHeader}{TabularTextFile}(this, ..., force=FALSE)}
+\usage{
+\method{getHeader}{TabularTextFile}(this, ..., force=FALSE)
+}
 
 \arguments{
   \item{...}{Passed to internal \code{\link[R.filesets:readRawHeader.TabularTextFile]{*readRawHeader}()}.}
@@ -29,7 +29,7 @@
 \value{
   Returns a named \code{\link[base]{list}}.
 }
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{TabularTextFile}}.

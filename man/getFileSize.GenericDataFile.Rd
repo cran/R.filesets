@@ -9,9 +9,7 @@
 \name{getFileSize.GenericDataFile}
 \alias{getFileSize.GenericDataFile}
 \alias{GenericDataFile.getFileSize}
-\alias{getFileSize.GenericDataFile}
 \alias{getFileSize,GenericDataFile-method}
-
 
 \title{Gets the size of a file}
 
@@ -19,7 +17,9 @@
   Gets the size of a file.
 }
 
-\usage{\method{getFileSize}{GenericDataFile}(this, what=c("numeric", "units"), sep="", ...)}
+\usage{
+\method{getFileSize}{GenericDataFile}(this, what=c("numeric", "units"), sep="", ...)
+}
 
 \arguments{
  \item{what}{A \code{\link[base]{character}} string specifying the data type returned.
@@ -35,7 +35,7 @@
   A missing value (\code{\link[base]{NA}}) is returned if the file does not exist.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[base]{file.info}}().

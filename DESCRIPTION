@@ -1,13 +1,15 @@
 Package: R.filesets
-Version: 2.0.0
-Depends: R (>= 2.6.0), R.oo (>= 1.11.7), R.utils (>= 1.19.3)
+Version: 2.0.1
+Depends: R (>= 2.6.0), R.oo (>= 1.11.7), R.utils (>= 1.19.5)
 Imports: stats, R.methodsS3 (>= 1.4.2), R.oo (>= 1.11.7), R.utils (>=
-        1.19.3), digest (>= 0.6.0)
+        1.19.5), digest (>= 0.6.3)
 Suggests: gtools (>= 2.7.0)
-Date: 2013-01-17
+Date: 2013-03-04
 Title: Easy handling of and access to files organized in structured
         directories
-Author: Henrik Bengtsson <henrikb@braju.com>
+Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
+        email = "henrikb@braju.com"))
+Author: Henrik Bengtsson
 Maintainer: Henrik Bengtsson <henrikb@braju.com>
 Description: A file set refers to a set of files located in one or more
         directories on the file system.  This package provides classes
@@ -27,6 +29,7 @@ License: LGPL (>= 2.1)
 URL: http://www.aroma-project.org/
 LazyLoad: TRUE
 biocViews: Infrastructure, DataImport, DataRepresentation
-Packaged: 2013-01-21 07:04:26 UTC; hb
+Packaged: 2013-04-17 03:48:59 UTC; hb
+NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2013-01-21 12:29:28
+Date/Publication: 2013-04-17 23:08:58

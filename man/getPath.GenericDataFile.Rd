@@ -9,9 +9,7 @@
 \name{getPath.GenericDataFile}
 \alias{getPath.GenericDataFile}
 \alias{GenericDataFile.getPath}
-\alias{getPath.GenericDataFile}
 \alias{getPath,GenericDataFile-method}
-
 
 \title{Gets the path (directory) of the file}
 
@@ -19,7 +17,9 @@
   Gets the path (directory) of the file.
 }
 
-\usage{\method{getPath}{GenericDataFile}(this, ...)}
+\usage{
+\method{getPath}{GenericDataFile}(this, ...)
+}
 
 \arguments{
  \item{...}{Optional arguments passed to \code{\link[R.filesets:getPathname.GenericDataFile]{*getPathname}()}.}
@@ -29,7 +29,7 @@
   Returns a \code{\link[base]{character}} string (\code{\link[base]{NA}} if an "empty" file).
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericDataFile}}.

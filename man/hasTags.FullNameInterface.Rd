@@ -9,9 +9,7 @@
 \name{hasTags.FullNameInterface}
 \alias{hasTags.FullNameInterface}
 \alias{FullNameInterface.hasTags}
-\alias{hasTags.FullNameInterface}
 \alias{hasTags,FullNameInterface-method}
-
 \alias{FullNameInterface.hasTag}
 \alias{hasTag.FullNameInterface}
 \alias{hasTag,FullNameInterface-method}
@@ -38,7 +36,7 @@
   \code{\link[base:logical]{FALSE}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.filesets:getTags.FullNameInterface]{*getTags}()}.

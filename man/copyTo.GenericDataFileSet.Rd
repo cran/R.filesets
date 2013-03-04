@@ -9,9 +9,7 @@
  \name{copyTo.GenericDataFileSet}
 \alias{copyTo.GenericDataFileSet}
 \alias{GenericDataFileSet.copyTo}
-\alias{copyTo.GenericDataFileSet}
 \alias{copyTo,GenericDataFileSet-method}
-
 
  \title{Copies a data set to another directory}
 
@@ -19,7 +17,9 @@
    Copies a data set to another directory.
  }
 
- \usage{\method{copyTo}{GenericDataFileSet}(this, path=NULL, ..., verbose=FALSE)}
+ \usage{
+\method{copyTo}{GenericDataFileSet}(this, path=NULL, ..., verbose=FALSE)
+}
 
  \arguments{
   \item{path}{The destination directory.  If missing, it is created.}
@@ -40,7 +40,7 @@
    individual files are safely copied.
  }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
  \seealso{
    For more information see \code{\link{GenericDataFileSet}}.

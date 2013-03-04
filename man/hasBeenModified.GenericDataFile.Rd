@@ -9,9 +9,7 @@
 \name{hasBeenModified.GenericDataFile}
 \alias{hasBeenModified.GenericDataFile}
 \alias{GenericDataFile.hasBeenModified}
-\alias{hasBeenModified.GenericDataFile}
 \alias{hasBeenModified,GenericDataFile-method}
-
 
 \title{Checks whether the file has been modified}
 
@@ -19,7 +17,9 @@
   Checks whether the file has been modified since last time checked.
 }
 
-\usage{\method{hasBeenModified}{GenericDataFile}(this, ..., unknown=TRUE)}
+\usage{
+\method{hasBeenModified}{GenericDataFile}(this, ..., unknown=TRUE)
+}
 
 \arguments{
  \item{...}{Not used.}
@@ -31,7 +31,7 @@
   Returns \code{\link[base:logical]{TRUE}}, \code{\link[base:logical]{FALSE}}, or the value of argument \code{unknown}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[base]{file.info}}().

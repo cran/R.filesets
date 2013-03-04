@@ -9,9 +9,7 @@
 \name{validate.GenericDataFileSet}
 \alias{validate.GenericDataFileSet}
 \alias{GenericDataFileSet.validate}
-\alias{validate.GenericDataFileSet}
 \alias{validate,GenericDataFileSet-method}
-
 
 \title{Validates all files in the data set}
 
@@ -19,7 +17,9 @@
   Validates all files in the data set.
 }
 
-\usage{\method{validate}{GenericDataFileSet}(this, ...)}
+\usage{
+\method{validate}{GenericDataFileSet}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}
@@ -31,7 +31,7 @@
   Otherwise, \code{\link[base]{NA}} is returned.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericDataFileSet}}.

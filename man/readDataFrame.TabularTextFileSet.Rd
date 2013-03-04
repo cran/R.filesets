@@ -9,9 +9,7 @@
 \name{readDataFrame.TabularTextFileSet}
 \alias{readDataFrame.TabularTextFileSet}
 \alias{TabularTextFileSet.readDataFrame}
-\alias{readDataFrame.TabularTextFileSet}
 \alias{readDataFrame,TabularTextFileSet-method}
-
 
 \title{Reads the tabular data from all files as data frames}
 
@@ -19,7 +17,9 @@
  Reads the tabular data from all files as data frames and combines them into one data frame (by default).
 }
 
-\usage{\method{readDataFrame}{TabularTextFileSet}(this, ..., combineBy=function(x) Reduce(rbind, x), verbose=FALSE)}
+\usage{
+\method{readDataFrame}{TabularTextFileSet}(this, ..., combineBy=function(x) Reduce(rbind, x), verbose=FALSE)
+}
 
 \arguments{
   \item{...}{Arguments passed to
@@ -72,7 +72,7 @@ data <- readDataFrame(ds, colClasses=colClasses)
 print(data)
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{TabularTextFileSet}}.
