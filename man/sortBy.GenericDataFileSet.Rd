@@ -9,9 +9,7 @@
 \name{sortBy.GenericDataFileSet}
 \alias{sortBy.GenericDataFileSet}
 \alias{GenericDataFileSet.sortBy}
-\alias{sortBy.GenericDataFileSet}
 \alias{sortBy,GenericDataFileSet-method}
-
 
 \title{Sorts the set}
 
@@ -19,7 +17,9 @@
   Sorts the set by one of several ordering schema.
 }
 
-\usage{\method{sortBy}{GenericDataFileSet}(this, by=c("lexicographic", "mixedsort"), caseSensitive=FALSE, ...)}
+\usage{
+\method{sortBy}{GenericDataFileSet}(this, by=c("lexicographic", "mixedsort"), caseSensitive=FALSE, ...)
+}
 
 \arguments{
  \item{by}{A \code{\link[base]{character}} string specifying the ordering scheme.}
@@ -40,7 +40,7 @@
   cf. \code{\link[gtools]{mixedsort}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericDataFileSet}}.

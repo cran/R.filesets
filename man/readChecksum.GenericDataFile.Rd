@@ -9,9 +9,7 @@
 \name{readChecksum.GenericDataFile}
 \alias{readChecksum.GenericDataFile}
 \alias{GenericDataFile.readChecksum}
-\alias{readChecksum.GenericDataFile}
 \alias{readChecksum,GenericDataFile-method}
-
 
 \title{Reads the value of the corresponding checksum file}
 
@@ -19,7 +17,9 @@
   Reads the value of the corresponding checksum file, if existing.
 }
 
-\usage{\method{readChecksum}{GenericDataFile}(this, ..., verbose=FALSE)}
+\usage{
+\method{readChecksum}{GenericDataFile}(this, ..., verbose=FALSE)
+}
 
 \arguments{
  \item{...}{Not used.}
@@ -38,7 +38,7 @@
   hexadecimal value.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.filesets:validateChecksum.GenericDataFile]{*validateChecksum}()}.

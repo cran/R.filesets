@@ -30,7 +30,9 @@ extends \link[R.oo]{Interface}\cr
 
  }
 
- \usage{FullNameInterface(...)}
+ \usage{
+FullNameInterface(...)
+}
 
  \arguments{
    \item{...}{Not used.}
@@ -132,5 +134,5 @@ cat("Default fullnames (after resetting):\n")
 print(getFullNames(ds))
 }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 \keyword{classes}

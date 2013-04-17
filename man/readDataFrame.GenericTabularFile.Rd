@@ -9,9 +9,7 @@
 \name{readDataFrame.GenericTabularFile}
 \alias{readDataFrame.GenericTabularFile}
 \alias{GenericTabularFile.readDataFrame}
-\alias{readDataFrame.GenericTabularFile}
 \alias{readDataFrame,GenericTabularFile-method}
-
 
 \title{Reads the tabular data as a data frame}
 
@@ -19,7 +17,9 @@
  Reads the tabular data as a data frame.
 }
 
-\usage{\method{readDataFrame}{GenericTabularFile}(...)}
+\usage{
+\method{readDataFrame}{GenericTabularFile}(...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
   Returns a \code{\link[base]{data.frame}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericTabularFile}}.

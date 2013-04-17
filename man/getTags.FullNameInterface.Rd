@@ -9,9 +9,7 @@
 \name{getTags.FullNameInterface}
 \alias{getTags.FullNameInterface}
 \alias{FullNameInterface.getTags}
-\alias{getTags.FullNameInterface}
 \alias{getTags,FullNameInterface-method}
-
 
 \title{Gets the tags}
 
@@ -19,7 +17,9 @@
   Gets the tags.
 }
 
-\usage{\method{getTags}{FullNameInterface}(this, pattern=NULL, collapse=NULL, ..., named=FALSE, na.rm=TRUE, useCustomTags=TRUE)}
+\usage{
+\method{getTags}{FullNameInterface}(this, pattern=NULL, collapse=NULL, ..., named=FALSE, na.rm=TRUE, useCustomTags=TRUE)
+}
 
 \arguments{
  \item{pattern}{An optional regular expression used to filter out tags.
@@ -50,7 +50,7 @@
  tags from the fullname.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.filesets:getFullName.FullNameInterface]{*getFullName}()}.

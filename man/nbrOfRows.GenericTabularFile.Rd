@@ -9,9 +9,7 @@
 \name{nbrOfRows.GenericTabularFile}
 \alias{nbrOfRows.GenericTabularFile}
 \alias{GenericTabularFile.nbrOfRows}
-\alias{nbrOfRows.GenericTabularFile}
 \alias{nbrOfRows,GenericTabularFile-method}
-
 
 \title{Gets the number of data rows}
 
@@ -19,7 +17,9 @@
  Gets the number of data rows.
 }
 
-\usage{\method{nbrOfRows}{GenericTabularFile}(...)}
+\usage{
+\method{nbrOfRows}{GenericTabularFile}(...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -28,7 +28,7 @@
 \value{
   Returns an \code{\link[base]{integer}}.
 }
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.filesets:dim.GenericTabularFile]{*dim}()}.

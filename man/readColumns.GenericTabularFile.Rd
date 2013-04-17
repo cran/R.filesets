@@ -9,9 +9,7 @@
 \name{readColumns.GenericTabularFile}
 \alias{readColumns.GenericTabularFile}
 \alias{GenericTabularFile.readColumns}
-\alias{readColumns.GenericTabularFile}
 \alias{readColumns,GenericTabularFile-method}
-
 
 \title{Reads a subset of the columns as a data frame}
 
@@ -19,7 +17,9 @@
  Reads a subset of the columns as a data frame.
 }
 
-\usage{\method{readColumns}{GenericTabularFile}(...)}
+\usage{
+\method{readColumns}{GenericTabularFile}(...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
   Returns a \code{\link[base]{data.frame}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericTabularFile}}.

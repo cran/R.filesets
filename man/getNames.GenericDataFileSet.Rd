@@ -9,9 +9,7 @@
 \name{getNames.GenericDataFileSet}
 \alias{getNames.GenericDataFileSet}
 \alias{GenericDataFileSet.getNames}
-\alias{getNames.GenericDataFileSet}
 \alias{getNames,GenericDataFileSet-method}
-
 \alias{GenericDataFileSet.getFullNames}
 \alias{getFullNames.GenericDataFileSet}
 \alias{getFullNames,GenericDataFileSet-method}
@@ -38,7 +36,7 @@
   in the set.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.filesets:indexOf.GenericDataFileSet]{*indexOf}()}

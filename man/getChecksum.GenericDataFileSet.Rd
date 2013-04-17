@@ -9,9 +9,7 @@
 \name{getChecksum.GenericDataFileSet}
 \alias{getChecksum.GenericDataFileSet}
 \alias{GenericDataFileSet.getChecksum}
-\alias{getChecksum.GenericDataFileSet}
 \alias{getChecksum,GenericDataFileSet-method}
-
 
 \title{Generates a deterministic checksum for an R object}
 
@@ -19,7 +17,9 @@
  Generates a deterministic checksum for an R object that can be used to identify the data set.
 }
 
-\usage{\method{getChecksum}{GenericDataFileSet}(this, ...)}
+\usage{
+\method{getChecksum}{GenericDataFileSet}(this, ...)
+}
 
 \arguments{
   \item{...}{Arguments passed to \code{\link[R.filesets:getChecksumObjects.GenericDataFileSet]{*getChecksumObjects}()}.}
@@ -29,7 +29,7 @@
   Returns the checksum as a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   Internally, the checksum is calculated on the objects returned by

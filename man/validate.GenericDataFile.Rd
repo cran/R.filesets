@@ -9,9 +9,7 @@
 \name{validate.GenericDataFile}
 \alias{validate.GenericDataFile}
 \alias{GenericDataFile.validate}
-\alias{validate.GenericDataFile}
 \alias{validate,GenericDataFile-method}
-
 
 \title{Validates the content of a file}
 
@@ -19,7 +17,9 @@
   Validates the content of a file.
 }
 
-\usage{\method{validate}{GenericDataFile}(this, ...)}
+\usage{
+\method{validate}{GenericDataFile}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}
@@ -31,7 +31,7 @@
   Otherwise, \code{\link[base]{NA}} is returned, which happens if the file was not validated.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericDataFile}}.

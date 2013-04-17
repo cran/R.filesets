@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{byPath.GenericDataFileSet}
+\name{GenericDataFileSet$byPath}
+\alias{GenericDataFileSet$byPath}
 \alias{byPath.GenericDataFileSet}
 \alias{GenericDataFileSet.byPath}
-\alias{byPath.GenericDataFileSet}
 \alias{byPath,GenericDataFileSet-method}
-
 
 \title{Defines a GenericDataFileSet by searching for files in a directory}
 
@@ -19,8 +18,13 @@
   Defines a GenericDataFileSet by searching for files in a directory.
 }
 
-\synopsis{byPath.GenericDataFileSet(static, path=NULL, pattern=NULL, recursive=FALSE, depth=0, fileClass=getFileClass(static), ..., .validate=FALSE, verbose=FALSE)}
-\usage{GenericDataFileSet$byPath(path=NULL, pattern=NULL, recursive=FALSE, depth=0, fileClass=getFileClass(static), ..., .validate=FALSE, verbose=FALSE)}
+\usage{
+## Static method (use this):
+## GenericDataFileSet$byPath(path=NULL, pattern=NULL, recursive=FALSE, depth=0, fileClass=getFileClass(static), ..., .validate=FALSE, verbose=FALSE)
+
+## Don't use the below:
+\method{byPath}{GenericDataFileSet}(static, path=NULL, pattern=NULL, recursive=FALSE, depth=0, fileClass=getFileClass(static), ..., .validate=FALSE, verbose=FALSE)
+}
 
 \arguments{
  \item{path}{The directory where to search for files.}
@@ -43,7 +47,7 @@
   included explicitly, if wanted.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericDataFileSet}}.

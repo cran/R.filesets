@@ -9,9 +9,7 @@
 \name{gzip.GenericDataFile}
 \alias{gzip.GenericDataFile}
 \alias{GenericDataFile.gzip}
-\alias{gzip.GenericDataFile}
 \alias{gzip,GenericDataFile-method}
-
 \alias{GenericDataFile.gunzip}
 \alias{gunzip.GenericDataFile}
 \alias{gunzip,GenericDataFile-method}
@@ -49,7 +47,7 @@
   An exception is thrown if the file does not exist.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   Internally \code{\link[R.utils]{gzip}} is used.

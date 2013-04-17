@@ -9,9 +9,7 @@
 \name{getCreatedOn.GenericDataFile}
 \alias{getCreatedOn.GenericDataFile}
 \alias{GenericDataFile.getCreatedOn}
-\alias{getCreatedOn.GenericDataFile}
 \alias{getCreatedOn,GenericDataFile-method}
-
 
 \title{Gets when the file was created}
 
@@ -19,7 +17,9 @@
   Gets when the file was created.
 }
 
-\usage{\method{getCreatedOn}{GenericDataFile}(this, ...)}
+\usage{
+\method{getCreatedOn}{GenericDataFile}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}
@@ -29,7 +29,7 @@
   Returns a \code{POSIXct} time stamp.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[base]{file.info}}().

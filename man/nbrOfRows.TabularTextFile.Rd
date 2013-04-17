@@ -9,9 +9,7 @@
 \name{nbrOfRows.TabularTextFile}
 \alias{nbrOfRows.TabularTextFile}
 \alias{TabularTextFile.nbrOfRows}
-\alias{nbrOfRows.TabularTextFile}
 \alias{nbrOfRows,TabularTextFile-method}
-
 
 \title{Counts the number of data rows}
 
@@ -19,7 +17,9 @@
  Counts the number of data rows.  The count does not include the header rows or comments.
 }
 
-\usage{\method{nbrOfRows}{TabularTextFile}(this, fast=FALSE, ...)}
+\usage{
+\method{nbrOfRows}{TabularTextFile}(this, fast=FALSE, ...)
+}
 
 \arguments{
   \item{fast}{Argument passed to \code{\link[R.filesets:nbrOfLines.TabularTextFile]{*nbrOfLines}()}.}
@@ -29,7 +29,7 @@
 \value{
   Returns a \code{\link[base]{character}} \code{\link[base]{vector}}.
 }
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
    The number of data rows is always less or equal to the number of lines

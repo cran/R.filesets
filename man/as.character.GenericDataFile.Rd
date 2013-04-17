@@ -9,9 +9,7 @@
 \name{as.character.GenericDataFile}
 \alias{as.character.GenericDataFile}
 \alias{GenericDataFile.as.character}
-\alias{as.character.GenericDataFile}
 \alias{as.character,GenericDataFile-method}
-
 
 \title{Returns a short string describing the file}
 
@@ -19,7 +17,9 @@
  Returns a short string describing the file.
 }
 
-\usage{\method{as.character}{GenericDataFile}(x, ...)}
+\usage{
+\method{as.character}{GenericDataFile}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericDataFile}}.

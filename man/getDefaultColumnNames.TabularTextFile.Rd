@@ -9,9 +9,7 @@
 \name{getDefaultColumnNames.TabularTextFile}
 \alias{getDefaultColumnNames.TabularTextFile}
 \alias{TabularTextFile.getDefaultColumnNames}
-\alias{getDefaultColumnNames.TabularTextFile}
 \alias{getDefaultColumnNames,TabularTextFile-method}
-
 
 \title{Gets the default column names}
 
@@ -19,7 +17,9 @@
  Gets the default column names by inferring it from the file header.
 }
 
-\usage{\method{getDefaultColumnNames}{TabularTextFile}(this, ...)}
+\usage{
+\method{getDefaultColumnNames}{TabularTextFile}(this, ...)
+}
 
 \arguments{
   \item{...}{Optional arguments passed \code{\link[R.filesets:getHeader.TabularTextFile]{*getHeader}()}.}
@@ -29,7 +29,7 @@
   Returns \code{\link[base]{character}} \code{\link[base]{vector}},
   or \code{\link[base]{NULL}} if there are no column names in the file header.
 }
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{TabularTextFile}}.

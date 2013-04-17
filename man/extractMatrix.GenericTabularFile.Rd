@@ -9,9 +9,7 @@
 \name{extractMatrix.GenericTabularFile}
 \alias{extractMatrix.GenericTabularFile}
 \alias{GenericTabularFile.extractMatrix}
-\alias{extractMatrix.GenericTabularFile}
 \alias{extractMatrix,GenericTabularFile-method}
-
 
 \title{Reads one of the columns}
 
@@ -19,7 +17,9 @@
  Reads one of the columns.
 }
 
-\usage{\method{extractMatrix}{GenericTabularFile}(this, column=1, drop=FALSE, ..., verbose=FALSE)}
+\usage{
+\method{extractMatrix}{GenericTabularFile}(this, column=1, drop=FALSE, ..., verbose=FALSE)
+}
 
 \arguments{
   \item{column}{An \code{\link[base]{integer}} specifying the column to read.}
@@ -33,7 +33,7 @@
   Returns a Jx1 \code{\link[base]{matrix}}, or if \code{drop=TRUE} a \code{\link[base]{vector}} of length J.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericTabularFile}}.

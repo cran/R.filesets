@@ -9,9 +9,7 @@
 \name{setFullName.FullNameInterface}
 \alias{setFullName.FullNameInterface}
 \alias{FullNameInterface.setFullName}
-\alias{setFullName.FullNameInterface}
 \alias{setFullName,FullNameInterface-method}
-
 
 \title{Sets the full name}
 
@@ -21,7 +19,9 @@
   specified fullname.
 }
 
-\usage{\method{setFullName}{FullNameInterface}(this, ...)}
+\usage{
+\method{setFullName}{FullNameInterface}(this, ...)
+}
 
 \arguments{
  \item{...}{Arguments, typically a \code{\link[base]{character}} string, which are
@@ -33,7 +33,7 @@
   Returns (invisibly) itself.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.filesets:getFullName.FullNameInterface]{*getFullName}()}.

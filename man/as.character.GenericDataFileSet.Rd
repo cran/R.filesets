@@ -9,9 +9,7 @@
 \name{as.character.GenericDataFileSet}
 \alias{as.character.GenericDataFileSet}
 \alias{GenericDataFileSet.as.character}
-\alias{as.character.GenericDataFileSet}
 \alias{as.character,GenericDataFileSet-method}
-
 
 \title{Returns a short string describing the file set}
 
@@ -19,7 +17,9 @@
  Returns a short string describing the file set.
 }
 
-\usage{\method{as.character}{GenericDataFileSet}(x, ...)}
+\usage{
+\method{as.character}{GenericDataFileSet}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericDataFileSet}}.

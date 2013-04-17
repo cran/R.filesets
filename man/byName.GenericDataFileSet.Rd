@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{byName.GenericDataFileSet}
+ \name{GenericDataFileSet$byName}
+\alias{GenericDataFileSet$byName}
 \alias{byName.GenericDataFileSet}
 \alias{GenericDataFileSet.byName}
-\alias{byName.GenericDataFileSet}
 \alias{byName,GenericDataFileSet-method}
-
 
  \title{Locates and sets up a file set by its name}
 
@@ -19,8 +18,13 @@
    Locates and sets up a file set by its name, tags, root and sub directories.
  }
 
- \synopsis{byName.GenericDataFileSet(static, name, tags=NULL, subdirs=NULL, paths=NULL, ..., verbose=FALSE)}
-\usage{GenericDataFileSet$byName(name, tags=NULL, subdirs=NULL, paths=NULL, ..., verbose=FALSE)}
+ \usage{
+## Static method (use this):
+## GenericDataFileSet$byName(name, tags=NULL, subdirs=NULL, paths=NULL, ..., verbose=FALSE)
+
+## Don't use the below:
+\method{byName}{GenericDataFileSet}(static, name, tags=NULL, subdirs=NULL, paths=NULL, ..., verbose=FALSE)
+}
 
  \arguments{
   \item{name, tags}{The name and the tags of the file set to be located.}
@@ -37,7 +41,7 @@
    If not found, an exception is thrown.
  }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
  \seealso{
    Internally, \code{\link[R.filesets:findByName.GenericDataFileSet]{*findByName}()} is used to locate the data set,

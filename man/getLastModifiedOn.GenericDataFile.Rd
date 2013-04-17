@@ -9,9 +9,7 @@
 \name{getLastModifiedOn.GenericDataFile}
 \alias{getLastModifiedOn.GenericDataFile}
 \alias{GenericDataFile.getLastModifiedOn}
-\alias{getLastModifiedOn.GenericDataFile}
 \alias{getLastModifiedOn,GenericDataFile-method}
-
 
 \title{Gets when the file was last modified}
 
@@ -19,7 +17,9 @@
   Gets when the file was last modified.
 }
 
-\usage{\method{getLastModifiedOn}{GenericDataFile}(this, ...)}
+\usage{
+\method{getLastModifiedOn}{GenericDataFile}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}
@@ -29,7 +29,7 @@
   Returns a \code{POSIXct} time stamp.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[base]{file.info}}().

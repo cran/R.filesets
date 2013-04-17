@@ -9,9 +9,7 @@
 \name{getFile.GenericDataFileSet}
 \alias{getFile.GenericDataFileSet}
 \alias{GenericDataFileSet.getFile}
-\alias{getFile.GenericDataFileSet}
 \alias{getFile,GenericDataFileSet-method}
-
 
 \title{Get a particular file of the file set}
 
@@ -19,7 +17,9 @@
  Get a particular file of the file set.
 }
 
-\usage{\method{getFile}{GenericDataFileSet}(this, idx, ...)}
+\usage{
+\method{getFile}{GenericDataFileSet}(this, idx, ...)
+}
 
 \arguments{
   \item{idx}{An \code{\link[base]{integer}} index specifying the file to be returned.}
@@ -30,7 +30,7 @@
   Returns a @GenericDataFile.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericDataFileSet}}.

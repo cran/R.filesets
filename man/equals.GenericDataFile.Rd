@@ -9,9 +9,7 @@
  \name{equals.GenericDataFile}
 \alias{equals.GenericDataFile}
 \alias{GenericDataFile.equals}
-\alias{equals.GenericDataFile}
 \alias{equals,GenericDataFile-method}
-
 
  \title{Checks if a file equals another}
 
@@ -19,7 +17,9 @@
   Checks if a file equals another.
  }
 
- \usage{\method{equals}{GenericDataFile}(this, other, ...)}
+ \usage{
+\method{equals}{GenericDataFile}(this, other, ...)
+}
 
  \arguments{
    \item{other}{The other \code{\link{GenericDataFile}} to be compared to.}
@@ -47,7 +47,7 @@
    Note that subclasses use refined rules.
  }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
  \seealso{
    \code{\link[R.filesets:getFileSize.GenericDataFile]{*getFileSize}()}.

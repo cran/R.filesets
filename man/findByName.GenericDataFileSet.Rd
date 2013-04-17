@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
- \name{findByName.GenericDataFileSet}
+ \name{GenericDataFileSet$findByName}
+\alias{GenericDataFileSet$findByName}
 \alias{findByName.GenericDataFileSet}
 \alias{GenericDataFileSet.findByName}
-\alias{findByName.GenericDataFileSet}
 \alias{findByName,GenericDataFileSet-method}
-
 
  \title{Locates all file sets that match the requested name}
 
@@ -19,8 +18,13 @@
    Locates all file sets that match the requested name, tags, and sub directories, in any of the root paths.
  }
 
- \synopsis{findByName.GenericDataFileSet(static, name, tags=NULL, subdirs=NULL, paths=NULL, firstOnly=TRUE, mustExist=FALSE, ..., verbose=FALSE)}
-\usage{GenericDataFileSet$findByName(name, tags=NULL, subdirs=NULL, paths=NULL, firstOnly=TRUE, mustExist=FALSE, ..., verbose=FALSE)}
+ \usage{
+## Static method (use this):
+## GenericDataFileSet$findByName(name, tags=NULL, subdirs=NULL, paths=NULL, firstOnly=TRUE, mustExist=FALSE, ..., verbose=FALSE)
+
+## Don't use the below:
+\method{findByName}{GenericDataFileSet}(static, name, tags=NULL, subdirs=NULL, paths=NULL, firstOnly=TRUE, mustExist=FALSE, ..., verbose=FALSE)
+}
 
  \arguments{
   \item{name, tags}{The name and the tags of the file set to be located.}
@@ -41,7 +45,7 @@
    If no file sets were found, \code{\link[base]{NULL}} is returned.
  }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
  \seealso{
    For more information see \code{\link{GenericDataFileSet}}.

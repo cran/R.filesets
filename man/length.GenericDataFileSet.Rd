@@ -9,9 +9,7 @@
 \name{length.GenericDataFileSet}
 \alias{length.GenericDataFileSet}
 \alias{GenericDataFileSet.length}
-\alias{length.GenericDataFileSet}
 \alias{length,GenericDataFileSet-method}
-
 \alias{GenericDataFileSet.nbrOfFiles}
 \alias{nbrOfFiles.GenericDataFileSet}
 \alias{nbrOfFiles,GenericDataFileSet-method}
@@ -32,7 +30,7 @@
   Returns an non-negative \code{\link[base]{integer}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericDataFileSet}}.

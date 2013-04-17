@@ -9,9 +9,7 @@
 \name{compareChecksum.GenericDataFile}
 \alias{compareChecksum.GenericDataFile}
 \alias{GenericDataFile.compareChecksum}
-\alias{compareChecksum.GenericDataFile}
 \alias{compareChecksum,GenericDataFile-method}
-
 
 \title{Compares the file checksum with the value of the checksum file}
 
@@ -19,7 +17,9 @@
   Compares the file checksum with the value of the checksum file.
 }
 
-\usage{\method{compareChecksum}{GenericDataFile}(this, ..., verbose=FALSE)}
+\usage{
+\method{compareChecksum}{GenericDataFile}(this, ..., verbose=FALSE)
+}
 
 \arguments{
  \item{...}{Not used.}
@@ -33,7 +33,7 @@
   An exception is thrown if the file does not exist.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.filesets:validateChecksum.GenericDataFile]{*validateChecksum}()}.

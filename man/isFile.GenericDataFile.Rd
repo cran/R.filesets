@@ -9,9 +9,7 @@
 \name{isFile.GenericDataFile}
 \alias{isFile.GenericDataFile}
 \alias{GenericDataFile.isFile}
-\alias{isFile.GenericDataFile}
 \alias{isFile,GenericDataFile-method}
-
 
 \title{Checks if this is an existing file}
 
@@ -19,7 +17,9 @@
   Checks if this is an existing file and not a directory.
 }
 
-\usage{\method{isFile}{GenericDataFile}(this, ...)}
+\usage{
+\method{isFile}{GenericDataFile}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}
@@ -30,7 +30,7 @@
   otherwise \code{\link[base:logical]{FALSE}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.utils]{isFile}}.

@@ -9,9 +9,7 @@
 \name{getFilename.GenericDataFile}
 \alias{getFilename.GenericDataFile}
 \alias{GenericDataFile.getFilename}
-\alias{getFilename.GenericDataFile}
 \alias{getFilename,GenericDataFile-method}
-
 
 \title{Gets the filename of the file}
 
@@ -19,7 +17,9 @@
   Gets the filename of the file.
 }
 
-\usage{\method{getFilename}{GenericDataFile}(this, ...)}
+\usage{
+\method{getFilename}{GenericDataFile}(this, ...)
+}
 
 \arguments{
  \item{...}{Optional arguments passed to \code{\link[R.filesets:getPathname.GenericDataFile]{*getPathname}()}.}
@@ -35,7 +35,7 @@
  \code{foo,a.2,b.ext}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericDataFile}}.

@@ -9,9 +9,7 @@
 \name{getDefaultFullName.GenericDataFile}
 \alias{getDefaultFullName.GenericDataFile}
 \alias{GenericDataFile.getDefaultFullName}
-\alias{getDefaultFullName.GenericDataFile}
 \alias{getDefaultFullName,GenericDataFile-method}
-
 
 \title{Gets the full name of the file}
 
@@ -19,7 +17,9 @@
   Gets the full name of the file, that is the filename without the filename extension.
 }
 
-\usage{\method{getDefaultFullName}{GenericDataFile}(this, ...)}
+\usage{
+\method{getDefaultFullName}{GenericDataFile}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}
@@ -36,7 +36,7 @@
  \code{foo,a.2,b}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericDataFile}}.

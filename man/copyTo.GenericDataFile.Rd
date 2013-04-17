@@ -9,9 +9,7 @@
  \name{copyTo.GenericDataFile}
 \alias{copyTo.GenericDataFile}
 \alias{GenericDataFile.copyTo}
-\alias{copyTo.GenericDataFile}
 \alias{copyTo,GenericDataFile-method}
-
 
  \title{Safely copies a file to a new pathname}
 
@@ -19,7 +17,9 @@
    Safely copies a file to a new pathname.
  }
 
- \usage{\method{copyTo}{GenericDataFile}(this, filename=getFilename(this), path=NULL, overwrite=FALSE, ..., verbose=TRUE)}
+ \usage{
+\method{copyTo}{GenericDataFile}(this, filename=getFilename(this), path=NULL, overwrite=FALSE, ..., verbose=TRUE)
+}
 
  \arguments{
   \item{filename, path}{The filename and the path for the destination file.
@@ -49,7 +49,7 @@
    are identical.
  }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
  \seealso{
    \code{\link[R.filesets:renameTo.GenericDataFile]{*renameTo}()}.

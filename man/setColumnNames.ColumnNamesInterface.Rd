@@ -9,9 +9,7 @@
 \name{setColumnNames.ColumnNamesInterface}
 \alias{setColumnNames.ColumnNamesInterface}
 \alias{ColumnNamesInterface.setColumnNames}
-\alias{setColumnNames.ColumnNamesInterface}
 \alias{setColumnNames,ColumnNamesInterface-method}
-
 
 \title{Sets the column names}
 
@@ -21,7 +19,9 @@
   specified names.
 }
 
-\usage{\method{setColumnNames}{ColumnNamesInterface}(this, ...)}
+\usage{
+\method{setColumnNames}{ColumnNamesInterface}(this, ...)
+}
 
 \arguments{
  \item{...}{Arguments, typically a \code{\link[base]{character}} string, which are
@@ -33,7 +33,7 @@
   Returns (invisibly) itself.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.filesets:getColumnNames.ColumnNamesInterface]{*getColumnNames}()}.

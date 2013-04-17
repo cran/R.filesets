@@ -9,9 +9,7 @@
 \name{getPathnames.GenericDataFileSet}
 \alias{getPathnames.GenericDataFileSet}
 \alias{GenericDataFileSet.getPathnames}
-\alias{getPathnames.GenericDataFileSet}
 \alias{getPathnames,GenericDataFileSet-method}
-
 
 \title{Gets the pathnames of the files in the file set}
 
@@ -19,7 +17,9 @@
   Gets the pathnames of the files in the file set.
 }
 
-\usage{\method{getPathnames}{GenericDataFileSet}(this, ...)}
+\usage{
+\method{getPathnames}{GenericDataFileSet}(this, ...)
+}
 
 \arguments{
  \item{...}{Not used.}
@@ -29,7 +29,7 @@
   Returns a \code{\link[base]{character}} \code{\link[base]{vector}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{GenericDataFileSet}}.

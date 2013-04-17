@@ -9,9 +9,7 @@
 \name{getDefaultColumnNames.ColumnNamesInterface}
 \alias{getDefaultColumnNames.ColumnNamesInterface}
 \alias{ColumnNamesInterface.getDefaultColumnNames}
-\alias{getDefaultColumnNames.ColumnNamesInterface}
 \alias{getDefaultColumnNames,ColumnNamesInterface-method}
-
 
 \title{Gets the default column names}
 
@@ -19,7 +17,9 @@
   Gets the default column names, that is, the column names without translations.
 }
 
-\usage{\method{getDefaultColumnNames}{ColumnNamesInterface}(...)}
+\usage{
+\method{getDefaultColumnNames}{ColumnNamesInterface}(...)
+}
 
 \arguments{
  \item{...}{Not used.}
@@ -29,7 +29,7 @@
   Returns a \code{\link[base]{character}} \code{\link[base]{vector}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.filesets:getColumnNames.ColumnNamesInterface]{*getColumnNames}()}.

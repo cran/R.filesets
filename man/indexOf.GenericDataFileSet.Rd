@@ -9,9 +9,7 @@
 \name{indexOf.GenericDataFileSet}
 \alias{indexOf.GenericDataFileSet}
 \alias{GenericDataFileSet.indexOf}
-\alias{indexOf.GenericDataFileSet}
 \alias{indexOf,GenericDataFileSet-method}
-
 
 \title{Finds indices of a subset of files}
 
@@ -19,7 +17,9 @@
   Finds indices of a subset of files whose names match a given set of names or name patterns.
 }
 
-\usage{\method{indexOf}{GenericDataFileSet}(this, patterns=NULL, ..., onMissing=c("NA", "error"))}
+\usage{
+\method{indexOf}{GenericDataFileSet}(this, patterns=NULL, ..., onMissing=c("NA", "error"))
+}
 
 \arguments{
  \item{patterns}{A \code{\link[base]{character}} \code{\link[base]{vector}} of length K of names and/or
@@ -40,7 +40,7 @@
   there is not match, then by fixed strings.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.filesets:getNames.GenericDataFileSet]{*getNames}()}

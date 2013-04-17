@@ -9,9 +9,7 @@
  \name{renameTo.GenericDataFile}
 \alias{renameTo.GenericDataFile}
 \alias{GenericDataFile.renameTo}
-\alias{renameTo.GenericDataFile}
 \alias{renameTo,GenericDataFile-method}
-
 
  \title{Renames/moves a file}
 
@@ -19,7 +17,9 @@
    Renames/moves a file.
  }
 
- \usage{\method{renameTo}{GenericDataFile}(this, filename=getFilename(this), path=NULL, ..., verbose=TRUE)}
+ \usage{
+\method{renameTo}{GenericDataFile}(this, filename=getFilename(this), path=NULL, ..., verbose=TRUE)
+}
 
  \arguments{
   \item{filename, path}{The filename and the path for the destination file.
@@ -34,7 +34,7 @@
    Returns the soure \code{\link{GenericDataFile}}.
  }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
  \seealso{
    \code{\link[R.filesets:copyTo.GenericDataFile]{*copyTo}()}.

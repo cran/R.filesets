@@ -9,9 +9,7 @@
 \name{validateChecksum.GenericDataFile}
 \alias{validateChecksum.GenericDataFile}
 \alias{GenericDataFile.validateChecksum}
-\alias{validateChecksum.GenericDataFile}
 \alias{validateChecksum,GenericDataFile-method}
-
 
 \title{Asserts that the file checksum matches the one of the checksum file}
 
@@ -19,7 +17,9 @@
   Asserts that the file checksum matches the one of the checksum file.
 }
 
-\usage{\method{validateChecksum}{GenericDataFile}(this, ..., verbose=FALSE)}
+\usage{
+\method{validateChecksum}{GenericDataFile}(this, ..., verbose=FALSE)
+}
 
 \arguments{
  \item{...}{Not used.}
@@ -31,7 +31,7 @@
   returns \code{\link[base:logical]{FALSE}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.filesets:validateChecksum.GenericDataFile]{*validateChecksum}()}.
