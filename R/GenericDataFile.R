@@ -8,10 +8,10 @@
 #
 #  A GenericDataFile is an object refering to a data file on a file system.
 #  Note that this class is abstract and can not be instanciated, but
-#  instead you have to use one of the subclasses or the generic 
+#  instead you have to use one of the subclasses or the generic
 #  @seemethod "fromFile" method.
 # }
-# 
+#
 # @synopsis
 #
 # \arguments{
@@ -27,11 +27,11 @@
 # \section{Fields and Methods}{
 #  @allmethods "public"
 # }
-# 
+#
 # \section{Filename convention}{
 #   The filename of an \code{GenericDataFile} is structured as follows:
 #   \itemize{
-#    \item{filename}{: \code{"sample001,a,b,c.CEL"} 
+#    \item{filename}{: \code{"sample001,a,b,c.CEL"}
 #       (this follows the \R convention, but not the Unix convention)}
 #    \item{fullname}{: \code{"sample001,a,b,c"}}
 #    \item{name}{: \code{"sample001"}}
@@ -66,10 +66,10 @@ setConstructorS3("GenericDataFile", function(filename=NULL, path=NULL, mustExist
   args <- list(...);
 
   # Ignore any argument called 'recursive'
-  keep <- which(regexpr("^recursive$", names(args)) == -1);
+  keep <- which(regexpr("^recursive$", names(args)) == -1L);
   args <- args[keep];
 
-  if (length(args) > 0) {
+  if (length(args) > 0L) {
     if (is.element(.onUnknownArgs, c("error", "warning"))) {
       argsStr <- paste(names(args), collapse=", ");
       msg <- sprintf("Unknown arguments: %s", argsStr);
@@ -129,7 +129,7 @@ setMethodS3("clone", "GenericDataFile", function(this, clear=TRUE, ...) {
 #
 # \details{
 #   The two files compared are equal if they have the same pathname.
-#   
+#
 #   The two files compared are \emph{not} equal if:
 #   \itemize{
 #    \item Argument \code{other} is not a @see "GenericDataFile", or
@@ -278,7 +278,7 @@ setMethodS3("as.character", "GenericDataFile", function(x, ...) {
 # @synopsis
 #
 # \arguments{
-#  \item{absolute}{If @TRUE, the absolute pathname is returned, 
+#  \item{absolute}{If @TRUE, the absolute pathname is returned,
 #     otherwise the relative.}
 #  \item{...}{Not used.}
 # }
@@ -365,7 +365,7 @@ setMethodS3("getPath", "GenericDataFile", function(this, ...) {
 #
 # \details{
 #  The filename of a file is the pathname excluding any path.
-#  For instance, the filename of \code{path/to/foo,a.2,b.ext} is 
+#  For instance, the filename of \code{path/to/foo,a.2,b.ext} is
 #  \code{foo,a.2,b.ext}.
 # }
 #
@@ -406,7 +406,7 @@ setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
 # \details{
 #  The full name of a file is the filename excluding any
 #  extension (and period).
-#  For instance, the full name of \code{path/to/foo,a.2,b.ext} is 
+#  For instance, the full name of \code{path/to/foo,a.2,b.ext} is
 #  \code{foo,a.2,b}.
 # }
 #
@@ -431,7 +431,7 @@ setMethodS3("getDefaultFullName", "GenericDataFile", function(this, ...) {
     }
   }
 
-  filename <- getFilename(this);
+  filename <- getFilename(this, ...);
   if (is.null(filename))
     return(as.character(NA));
   pattern <- getExtensionPattern(this);
@@ -445,7 +445,7 @@ setMethodS3("getFilenameExtension", "GenericDataFile", abstract=TRUE, protected=
 
 
 setMethodS3("getOutputExtension", "GenericDataFile", function(...) {
-  getFilenameExtension(...);  
+  getFilenameExtension(...);
 }, protected=TRUE)
 
 
@@ -492,7 +492,7 @@ setMethodS3("setExtensionPattern", "GenericDataFile", function(this, pattern=NUL
 # @synopsis
 #
 # \arguments{
-#  \item{...}{Arguments passed to @seemethod "getFilename" and 
+#  \item{...}{Arguments passed to @seemethod "getFilename" and
 #     @seemethod "getDefaultFullName".}
 # }
 #
@@ -508,10 +508,7 @@ setMethodS3("setExtensionPattern", "GenericDataFile", function(this, pattern=NUL
 #*/###########################################################################
 setMethodS3("getExtension", "GenericDataFile", function(this, ...) {
   filename <- getFilename(this, ...);
-
-  # Why not getFullName()? /HB 2010-02-01
   fullname <- getDefaultFullName(this, ...);
-
   # Drop <fullname> and a possible '.'.
   substring(filename, first=nchar(fullname)+2L);
 })
@@ -552,7 +549,8 @@ setMethodS3("getExtension", "GenericDataFile", function(this, ...) {
 #*/###########################################################################
 setMethodS3("getFileType", "GenericDataFile", function(this, ...) {
   pattern <- "(.*)[.]([abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]+)$";
-  ext <- gsub(pattern, "\\2", getFilename(this));
+  filename <- getFilename(this, ...);
+  ext <- gsub(pattern, "\\2", filename);
   tolower(ext);
 })
 
@@ -671,7 +669,7 @@ setMethodS3("getFileSize", "GenericDataFile", function(this, what=c("numeric", "
 
   if (is.na(fileSize))
     return(fileSize);
-    
+
   units <- c("bytes", "kB", "MB", "GB", "TB");
   scale <- 1;
   for (kk in seq_along(units)) {
@@ -813,7 +811,7 @@ setMethodS3("getLastAccessedOn", "GenericDataFile", function(this, ...) {
 #
 # \arguments{
 #  \item{...}{Not used.}
-#  \item{unknown}{The @logical value returned if the timestamp for the 
+#  \item{unknown}{The @logical value returned if the timestamp for the
 #   previous modification, if any, is unknown.}
 # }
 #
@@ -833,7 +831,7 @@ setMethodS3("hasBeenModified", "GenericDataFile", function(this, ..., unknown=TR
   prevModifiedOn <- this$.prevModifiedOn;
 
   # Unknown modification timestamp on file?
-  if (is.na(lastModifiedOn) || lastModifiedOn == 0) {
+  if (is.na(lastModifiedOn) || lastModifiedOn == 0L) {
     res <- unknown;
     attr(res, "lastModifiedOn") <- lastModifiedOn;
     attr(res, "prevModifiedOn") <- prevModifiedOn;
@@ -871,7 +869,7 @@ setMethodS3("hasBeenModified", "GenericDataFile", function(this, ..., unknown=TR
 # \arguments{
 #  \item{filename, path}{The filename and the path to the file.  The file
 #    must exist, otherwise an exception is thrown.}
-#  \item{unknown}{The @logical value returned if the timestamp for the 
+#  \item{unknown}{The @logical value returned if the timestamp for the
 #   previous modification, if any, is unknown.}
 #  \item{...}{Not used.}
 #  \item{recursive}{If TRUE, ...}
@@ -923,7 +921,7 @@ setMethodS3("fromFile", "GenericDataFile", function(static, filename, path=NULL,
     knownSubclasses <- rev(knownSubclasses);
     for (className in knownSubclasses) {
       clazz <- Class$forName(className);
-  
+
       # Try reading the file using the static fromFile() method of each class
       static <- getStaticInstance(clazz);
       tryCatch({
@@ -958,7 +956,7 @@ setMethodS3("fromFile", "GenericDataFile", function(static, filename, path=NULL,
 # \arguments{
 #  \item{filename, path}{The filename and the path for the destination file.
 #   The default is to use the same filename as the source file.
-#   The destination pathname must not be the same as the source file, 
+#   The destination pathname must not be the same as the source file,
 #   otherwise an exception is thrown.}
 #  \item{overwrite}{If @TRUE, existing files are overwritten, otherwise not.
 #   If @FALSE and the file already exists, an exception is thrown.}
@@ -973,7 +971,7 @@ setMethodS3("fromFile", "GenericDataFile", function(static, filename, path=NULL,
 #   If the source and destination pathnames are identical, an exception
 #   is thrown.
 # }
-# 
+#
 # \details{
 #   In order to minimize the risk for corrupt copies, the
 #   @see "R.utils::copyFile" method of \pkg{R.utils} is used.
@@ -1004,7 +1002,7 @@ setMethodS3("copyTo", "GenericDataFile", function(this, filename=getFilename(thi
     pushState(verbose);
     on.exit(popState(verbose));
   }
- 
+
   # Assert that we're not trying to copy to itself
   if (identical(pathname, getPathname(this)))
     throw("Cannot copy file. Source and destination are identical: ", pathname);
@@ -1017,7 +1015,7 @@ setMethodS3("copyTo", "GenericDataFile", function(this, filename=getFilename(thi
   # Fail-safe copying
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   verbose && enter(verbose, "Copying file");
-  copyFile(getPathname(this), pathname, overwrite=overwrite, 
+  copyFile(getPathname(this), pathname, overwrite=overwrite,
                                                  verbose=less(verbose, 10));
   verbose && exit(verbose);
 
@@ -1046,7 +1044,7 @@ setMethodS3("copyTo", "GenericDataFile", function(this, filename=getFilename(thi
 # \arguments{
 #  \item{filename, path}{The filename and the path for the destination file.
 #   The default is to use the same filename as the source file.
-#   The destination pathname must not be the same as the source file, 
+#   The destination pathname must not be the same as the source file,
 #   otherwise an exception is thrown.}
 #  \item{...}{Not used.}
 #  \item{verbose}{...}
@@ -1055,7 +1053,7 @@ setMethodS3("copyTo", "GenericDataFile", function(this, filename=getFilename(thi
 # \value{
 #   Returns the soure @see "GenericDataFile".
 # }
-# 
+#
 # @author
 #
 # \seealso{
@@ -1077,11 +1075,11 @@ setMethodS3("renameTo", "GenericDataFile", function(this, filename=getFilename(t
     pushState(verbose);
     on.exit(popState(verbose));
   }
- 
+
   # Assert that the file exists
   if (!isFile(this)) {
     throw("Cannot rename file. Source file does not exist: NA");
-  }   
+  }
 
   # Nothing to do?
   if (identical(pathname, getPathname(this)))
@@ -1159,7 +1157,7 @@ setMethodS3("getChecksum", "GenericDataFile", function(this, ..., force=FALSE, v
     if (isFile(this)) {
       verbose && enter(verbose, "Calculating checksum");
       pathname <- getPathname(this);
-      checksum <- digest2(pathname, file=TRUE);
+      checksum <- digest::digest(pathname, file=TRUE);
       verbose && exit(verbose);
     } else {
       naValue <- as.character(NA);
@@ -1214,7 +1212,7 @@ setMethodS3("writeChecksum", "GenericDataFile", function(this, ..., skip=FALSE, 
 
   if (!isFile(this)) {
     throw("Cannot write checksum to file. File does not exist: NA");
-  }   
+  }
 
 
   verbose && enter(verbose, "Writing checksum");
@@ -1265,7 +1263,7 @@ setMethodS3("writeChecksum", "GenericDataFile", function(this, ..., skip=FALSE, 
 #
 # \value{
 #   Returns a @character string, which can be @NA if file is missing.
-#   An exception is thrown if the file does not exist, and hence not 
+#   An exception is thrown if the file does not exist, and hence not
 #   the checkum file.
 # }
 #
@@ -1295,7 +1293,7 @@ setMethodS3("readChecksum", "GenericDataFile", function(this, ..., verbose=FALSE
 
   if (!isFile(this)) {
     throw("Cannot read stored checksum. File does not exist: NA");
-  }   
+  }
 
   verbose && enter(verbose, "Reading checksum");
   pathname <- getPathname(this);
@@ -1309,19 +1307,19 @@ setMethodS3("readChecksum", "GenericDataFile", function(this, ..., verbose=FALSE
   # Trim all lines
   checksum <- trim(checksum);
   # Drop empty lines
-  checksum <- checksum[nchar(checksum) > 0];
+  checksum <- checksum[nchar(checksum) > 0L];
   # Drop comments
-  checksum <- checksum[regexpr("^#", checksum) == -1];
+  checksum <- checksum[regexpr("^#", checksum) == -1L];
 #  verbose && exit(verbose);
 
   verbose && enter(verbose, "Validating checksum");
-  if (length(checksum) == 0)
+  if (length(checksum) == 0L)
     throw("File format error. No checksum found: ", outPathname);
-  if (length(checksum) > 1)
+  if (length(checksum) > 1L)
     throw("File format error. Too many possible checksums: ", outPathname);
 
   # A checksum should only consist of hexadecimal characters
-  if (regexpr("^[0-9abcdefABCDEF]+$", checksum) == -1) {
+  if (regexpr("^[0-9abcdefABCDEF]+$", checksum) == -1L) {
     throw("File format error. Invalid checksum ('", checksum, "'): ", outPathname);
   }
   verbose && exit(verbose);
@@ -1375,7 +1373,7 @@ setMethodS3("compareChecksum", "GenericDataFile", function(this, ..., verbose=FA
 
   if (!isFile(this)) {
     throw("Cannot compare checksum. File does not exist: NA");
-  }   
+  }
 
   pathname <- getPathname(this);
   outPathname <- sprintf("%s.md5", pathname);
@@ -1440,7 +1438,7 @@ setMethodS3("validateChecksum", "GenericDataFile", function(this, ..., verbose=F
 
   if (!isFile(this)) {
     throw("Cannot validate checksum. File does not exist: NA");
-  }   
+  }
 
   verbose && enter(verbose, "Validating checksum");
   pathname <- getPathname(this);
@@ -1472,13 +1470,13 @@ setMethodS3("validateChecksum", "GenericDataFile", function(this, ..., verbose=F
 # }
 #
 # \usage{
-#  \method{gzip}{GenericDataFile}(this, ...)
-#  \method{gunzip}{GenericDataFile}(this, ...)
-#  \method{isGzipped}{GenericDataFile}(this, ...)
+#  @usage gzip,GenericDataFile
+#  @usage gunzip,GenericDataFile
+#  @usage isGzipped,GenericDataFile
 # }
 #
 # \arguments{
-#  \item{...}{Arguments passed to "R.utils::gzip" and "R.utils::gunzip", 
+#  \item{...}{Arguments passed to "R.utils::gzip" and "R.utils::gunzip",
 #    respectively.}
 #  \item{verbose}{...}
 # }
@@ -1500,15 +1498,15 @@ setMethodS3("validateChecksum", "GenericDataFile", function(this, ..., verbose=F
 setMethodS3("gzip", "GenericDataFile", function(this, ...) {
   if (!isFile(this)) {
     throw("Cannot gzip file. File does not exist: NA");
-  }   
+  }
 
   pathname <- getPathname(this);
-  if (isGzipped(this)) {
+  if (isGzipped(pathname)) {
     throw("File is already gzip'ed: ", pathname);
   }
 
-  outPathname <- sprintf("%s.gz", pathname);
-  gzip(pathname, destname=outPathname, ...);
+  outPathname <- gzip(pathname, ...);
+  temporary <- attr(outPathname, "temporary");
 
   this$.pathname <- outPathname;
 
@@ -1518,17 +1516,18 @@ setMethodS3("gzip", "GenericDataFile", function(this, ...) {
 
 
 setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
+ # Argument 'this':
   if (!isFile(this)) {
     throw("Cannot gunzip file. File does not exist: NA");
   }
-
   pathname <- getPathname(this);
-  if (!isGzipped(this)) {
+  if (!isGzipped(pathname)) {
     throw("File is not gzip'ed: ", pathname);
   }
 
-  outPathname <- gsub("[.]gz$", "", pathname);
-  gunzip(pathname, destname=outPathname, ...);
+  # Decompress
+  outPathname <- gunzip(pathname, ...);
+  temporary <- attr(outPathname, "temporary");
 
   this$.pathname <- outPathname;
 
@@ -1537,8 +1536,7 @@ setMethodS3("gunzip", "GenericDataFile", function(this, ...) {
 
 
 setMethodS3("isGzipped", "GenericDataFile", function(this, ...) {
-  filename <- getFilename(this, ...);
-  (regexpr("[.]gz$", filename) != -1L);
+  isGzipped(getPathname(this), ...);
 }, protected=TRUE)
 
 
@@ -1547,9 +1545,9 @@ setMethodS3("isGzipped", "GenericDataFile", function(this, ...) {
 # ODDS AND ENDS
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname, ...) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # isFileCase() is a case-sensitive isFile() for Windows
   isFileCase <- function(pathname, ...) {
     # Non-case sensitive check
@@ -1561,7 +1559,7 @@ setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname
     filename <- basename(pathname);
     filenames <- list.files(path=path, all.files=TRUE);
     res <- grep(filename, filenames, fixed=TRUE);
-    res <- (length(res) >= 1);
+    res <- (length(res) >= 1L);
     res;
   }
 
@@ -1605,6 +1603,13 @@ setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname
 
 ############################################################################
 # HISTORY:
+# 2013-06-20
+# o Now isGzipped() for GenericDataFile ignores the case of the filename
+#   extension when testing whether the file is gzipped or not.
+# 2013-05-22
+# o CLEANUP: Now getChecksum() for GenericDataFile calls
+#   digest::digest(..., file=TRUE) instead of digest2(..., file=TRUE),
+#   which would give identical results.
 # 2012-12-06
 # o Added argument 'absolute=FALSE' to getPathname() for GenericDataFile.
 # 2012-12-03
@@ -1647,7 +1652,7 @@ setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname
 #   setFullNameTranslatorByFunction() and setFullNameTranslatorByNULL()
 #   are defined by default.
 # 2009-05-19
-# o Now setFullNameTranslator() for GenericDataFile asserts that the 
+# o Now setFullNameTranslator() for GenericDataFile asserts that the
 #   fullname translator function accepts also argument 'file'.
 # 2009-04-23
 # o BUG FIX: as.character() would throw 'Error in sprintf("%d", getFileSize
@@ -1706,8 +1711,8 @@ setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname
 # o Added setAttributesByTags(), which now also tries to coerce values.
 # o Added support for (in-memory) attributes.
 # 2007-02-07
-# o Added getChecksum(), writeChecksum(), readChecksum(), and 
-#   compareChecksum() and validateChecksum(). I did this because I noticed 
+# o Added getChecksum(), writeChecksum(), readChecksum(), and
+#   compareChecksum() and validateChecksum(). I did this because I noticed
 #   by chance that some of my CEL files transferred via an external HDD got
 #   corrupt probe signals.
 # 2007-01-14
@@ -1719,7 +1724,7 @@ setMethodS3("renameToUpperCaseExt", "GenericDataFile", function(static, pathname
 # 2006-09-15
 # o Added stextSize().
 # 2006-08-27
-# o Added stextLabel() and stextLabels(). stext is for "side text", cf. 
+# o Added stextLabel() and stextLabels(). stext is for "side text", cf.
 #   mtext for "margin text". stext() is slightly more convenient than mtext
 #   when it comes to different font sizes.
 # o Added copyTo().
