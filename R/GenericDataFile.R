@@ -107,6 +107,7 @@ setMethodS3("clone", "GenericDataFile", function(this, clear=TRUE, ...) {
 
 ###########################################################################/**
 # @RdocMethod equals
+# @alias equals
 #
 # @title "Checks if a file equals another"
 #
@@ -346,6 +347,7 @@ setMethodS3("getPath", "GenericDataFile", function(this, ...) {
 
 ###########################################################################/**
 # @RdocMethod getFilename
+# @alias getFilename
 #
 # @title "Gets the filename of the file"
 #
@@ -417,18 +419,10 @@ setMethodS3("getFilename", "GenericDataFile", function(this, ...) {
 # }
 #*/###########################################################################
 setMethodS3("getDefaultFullName", "GenericDataFile", function(this, ...) {
-  # TO BE REMOVED/BACKWARD COMPATIBILITY: Argument 'aliased' is deprecated.
+  # TO BE REMOVED. /HB 2013-10-15
   args <- list(...);
   if (is.element("aliased", names(args))) {
-    .Deprecated(msg="Argument 'aliased' of getDefaultFullName() for GenericDataFile is deprecated.  Use fullname translators instead.");
-    aliased <- args[["aliased"]];
-    if (aliased) {
-      alias <- getAlias(this);
-      if (!is.null(alias)) {
-        fullname <- alias;
-        return(fullname);
-      }
-    }
+    .Defunct(msg="Argument 'aliased' of getDefaultFullName() for GenericDataFile is deprecated.  Use fullname translators instead.");
   }
 
   filename <- getFilename(this, ...);
@@ -557,6 +551,7 @@ setMethodS3("getFileType", "GenericDataFile", function(this, ...) {
 
 ###########################################################################/**
 # @RdocMethod isFile
+# @alias isFile
 #
 # @title "Checks if this is an existing file"
 #
@@ -590,6 +585,7 @@ setMethodS3("isFile", "GenericDataFile", function(this, ...) {
 
 ###########################################################################/**
 # @RdocMethod validate
+# @alias validate
 #
 # @title "Validates the content of a file"
 #
@@ -614,10 +610,12 @@ setMethodS3("isFile", "GenericDataFile", function(this, ...) {
 # \seealso{
 #   @seeclass
 # }
+#
+# @keyword internal
 #*/###########################################################################
 setMethodS3("validate", "GenericDataFile", function(this, ...) {
   NA;
-})
+}, protected=TRUE)
 
 
 
@@ -1157,7 +1155,7 @@ setMethodS3("getChecksum", "GenericDataFile", function(this, ..., force=FALSE, v
     if (isFile(this)) {
       verbose && enter(verbose, "Calculating checksum");
       pathname <- getPathname(this);
-      checksum <- digest::digest(pathname, file=TRUE);
+      checksum <- digest(pathname, file=TRUE);
       verbose && exit(verbose);
     } else {
       naValue <- as.character(NA);
@@ -1459,6 +1457,9 @@ setMethodS3("validateChecksum", "GenericDataFile", function(this, ..., verbose=F
 # @RdocMethod gzip
 # @aliasmethod gunzip
 # @aliasmethod isGzipped
+# @alias gzip
+# @alias gunzip
+# @alias isGzipped
 #
 # @title "Compresses/uncompresses a file"
 #

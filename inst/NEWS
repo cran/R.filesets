@@ -1,6 +1,70 @@
 Package: R.filesets
 ===================
 
+Version: 2.3.0 [2013-10-16]
+o Minor cleanups.
+o Bumped up package dependences.
+
+
+Version: 2.2.5 [2013-10-09]
+o ROBUSTNESS: Added system tests validating getChecksum() on
+  GenericDataFile:s and GenericDataFileSet:s.
+
+
+Version: 2.2.4 [2013-10-07]
+o ROBUSTNESS: The overriding of append() to become a generic
+  function does now call base::append() in the default, instead
+  of copy the latter.  All this will eventually be removed,
+  when proper support for c, [, [[ etc. has been added everywhere.
+o CLEANUP: Now explicitly importing only what is needed in NAMESPACE.
+o Bumped up package dependences.
+
+
+Version: 2.2.3 [2013-10-05]
+o CLEANUP: Now GenericDataFileSet() gives an error informing that
+  argument 'alias' is defunct.
+o CLEANUP: Now no generic functions are created for defunct methods.
+o BUG FIX: Package now re-exports getChecksum() from R.cache instead
+  of creating its own.  This solves the problem of the default
+  getChecksum() of R.cache not being found.
+
+
+Version: 2.2.2 [2013-09-30]
+o SPEEDUP: Now readDataFrame() for TabularTextFile subsets by row, 
+  before reparsing numerical columns that were quoted.
+o ROBUSTNESS: Modernized the requirement to R (>= 2.15.0).
+o CLEANUP: Dropped obsolete autoload():s.
+o CLEANUP: Deprecated digest2() and deprecated -> defunct -> dropped.
+
+
+Version: 2.2.1 [2013-09-28]
+o Now the 'R.filesets' Package object is also available when the
+  package is only loaded (but not attached).
+o BUG FIX: Forgot to import cat() from 'R.utils'.
+
+
+Version: 2.2.0 [2013-09-23]
+o SPEEDUP/CLEANUP: Package no longer uses R.utils::whichVector(), which
+  use to be 10x faster, but since R 2.11.0 which() is 3x times again.
+o CLEANUP: Package no longer attaches 'R.utils' - only imports it.
+o CLEANUP: Package no longer utilizes import(), only importFrom():s.
+o ROBUSTNESS: Added package system tests.
+o ROBUSTNESS: Forgot to import R.methodsS3::appendVarArgs().
+o BUG FIX/WORKAROUND: For now, package attaches the 'R.oo' package.
+  This is needed due to what appears to be a bug in how R.oo
+  finalizes Object:s assuming R.oo is/can be attached.  Until that
+  is resolved, we make sure R.oo is attached.
+o ROBUSTNESS/WORKAROUND: For now, package attaches the 'R.oo' package.
+  This is needed due to what appears to be a bug in how R.oo
+  finalizes Object:s assuming R.oo is/can be attached.  Until that
+  is resolved, we make sure R.oo is attached.
+o Bumped up package dependences.
+
+
+Version: 2.1.1 [2013-08-31]
+o Added [() and c() for GenericDataFileSet.
+
+
 Version: 2.1.0 [2013-08-01]
 o Added argument 'private=FALSE' to byPath() of GenericDataFileSet.
 o Bumped up package dependences.
@@ -54,7 +118,7 @@ Version: 1.8.2 [2012-12-19]
 o Bumped up package dependencies.
 o Utilizing new startupMessage() of R.oo.
 o ROBUSTNESS: Now indexOf() for GenericDataFileSet throws an
-  exception if use tries to pass an argument 'names'.
+  exception if user tries to pass an argument 'names'.
 
 
 Version: 1.8.1 [2012-12-09]
