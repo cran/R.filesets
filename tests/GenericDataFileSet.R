@@ -1,5 +1,6 @@
 library("R.filesets")
 
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Setting up a file set
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -44,6 +45,10 @@ print(uids)
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Subsetting
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+df0 <- getFile(ds, 2L)
+df1 <- ds[[2L]]
+stopifnot(identical(getPathname(df0), getPathname(df1)))
+
 n <- length(ds)
 ds2 <- extract(ds, 1:n)
 print(ds2)
@@ -69,3 +74,19 @@ stopifnot(identical(is.na(idxs), unname(is.na(getPathnames(ds5)))))
 ds6 <- ds[idxs, onMissing="NA"]
 print(ds6)
 stopifnot(equals(ds6, ds5))
+
+ds7 <- ds[c(1,2,NA_integer_), onMissing="dropall"]
+stopifnot(length(ds7) == 0L)
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Special cases
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+dsEmpty <- R.oo::newInstance(ds)
+stopifnot(length(dsEmpty) == 0L)
+
+dsEmpty <- ds[c()]
+stopifnot(length(dsEmpty) == 0L)
+
+dsExpanded <- dsEmpty[rep(NA_integer_, times=5L)]
+stopifnot(length(dsExpanded) == 5L)
