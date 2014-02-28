@@ -24,7 +24,7 @@
 \code{~~~~~~~+--}\code{GenericDataFileSet}\cr
 
 \bold{Directly known subclasses:}\cr
-\link[R.filesets]{GenericTabularFileSet}, \link[R.filesets]{TabularTextFileSet}\cr
+\link[R.filesets]{ChecksumFileSet}, \link[R.filesets]{GenericTabularFileSet}, \link[R.filesets]{RdsFileSet}, \link[R.filesets]{TabularTextFileSet}\cr
 
 public static class \bold{GenericDataFileSet}\cr
 extends \emph{\link[R.filesets]{FullNameInterface}}\cr
@@ -53,14 +53,18 @@ GenericDataFileSet(files=NULL, tags="*", depth=NULL, ...,
 \section{Fields and Methods}{
  \bold{Methods:}\cr
 \tabular{rll}{
+ \tab \code{anyDuplicated} \tab  -\cr
+ \tab \code{\link[R.filesets:anyNA.GenericDataFileSet]{anyNA}} \tab Checks whether any of the pathnames are missing.\cr
  \tab \code{\link[R.filesets:append.GenericDataFileSet]{append}} \tab Appends one data set to an existing one.\cr
  \tab \code{\link[R.filesets:appendFiles.GenericDataFileSet]{appendFiles}} \tab Appends a list of files to a data set.\cr
  \tab \code{\link[R.filesets:as.list.GenericDataFileSet]{as.list}} \tab Returns the files of the file set.\cr
  \tab \code{\link[R.filesets:byName.GenericDataFileSet]{byName}} \tab Locates and sets up a file set by its name.\cr
  \tab \code{\link[R.filesets:byPath.GenericDataFileSet]{byPath}} \tab Defines a GenericDataFileSet by searching for files in a directory.\cr
+ \tab \code{duplicated} \tab  -\cr
  \tab \code{equals} \tab  -\cr
  \tab \code{\link[R.filesets:extract.GenericDataFileSet]{extract}} \tab Extract a subset of the file set.\cr
  \tab \code{\link[R.filesets:getChecksum.GenericDataFileSet]{getChecksum}} \tab Generates a deterministic checksum for an R object.\cr
+ \tab \code{getChecksumFileSet} \tab  -\cr
  \tab \code{\link[R.filesets:getDefaultFullName.GenericDataFileSet]{getDefaultFullName}} \tab Gets the default full name of the file set.\cr
  \tab \code{\link[R.filesets:getFile.GenericDataFileSet]{getFile}} \tab Get a particular file of the file set.\cr
  \tab \code{getFileClass} \tab  -\cr
@@ -70,9 +74,14 @@ GenericDataFileSet(files=NULL, tags="*", depth=NULL, ...,
  \tab \code{getOneFile} \tab  -\cr
  \tab \code{\link[R.filesets:getPath.GenericDataFileSet]{getPath}} \tab Gets the path (directory) of the file set.\cr
  \tab \code{\link[R.filesets:getPathnames.GenericDataFileSet]{getPathnames}} \tab Gets the pathnames of the files in the file set.\cr
+ \tab \code{gunzip} \tab  -\cr
+ \tab \code{\link[R.filesets:gzip.GenericDataFileSet]{gzip}} \tab Compresses/uncompresses a set of files.\cr
  \tab \code{hasFile} \tab  -\cr
  \tab \code{\link[R.filesets:indexOf.GenericDataFileSet]{indexOf}} \tab Finds indices of a subset of files.\cr
+ \tab \code{is.na} \tab  -\cr
+ \tab \code{na.omit} \tab  -\cr
  \tab \code{\link[R.filesets:sortBy.GenericDataFileSet]{sortBy}} \tab Sorts the set.\cr
+ \tab \code{unique} \tab  -\cr
  \tab \code{\link[R.filesets:validate.GenericDataFileSet]{validate}} \tab Validates all files in the data set.\cr
 }
 
@@ -81,7 +90,7 @@ GenericDataFileSet(files=NULL, tags="*", depth=NULL, ...,
 appendFullNameTranslator, appendFullNameTranslatorByNULL, appendFullNameTranslatorByTabularTextFile, appendFullNameTranslatorByTabularTextFileSet, appendFullNameTranslatorBycharacter, appendFullNameTranslatorBydata.frame, appendFullNameTranslatorByfunction, appendFullNameTranslatorBylist, clearFullNameTranslator, clearListOfFullNameTranslators, getDefaultFullName, getFullName, getFullNameTranslator, getListOfFullNameTranslators, getName, getTags, hasTag, hasTags, resetFullName, setFullName, setFullNameTranslator, setListOfFullNameTranslators, setName, setTags, updateFullName
 
  \bold{Methods inherited from Object}:\cr
-$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
 
 }

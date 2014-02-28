@@ -14,12 +14,12 @@ setMethodS3("appendFullNameTranslatorByfunction", "FullNameInterface", function(
   }
 
   # Sanity check
-  names <- c("foo bar");
-  namesT <- fcn(names, file=this);
+  name <- c("foo bar");
+  nameT <- fcn(name, file=this);
 
   # More sanity checks
-  if (length(namesT) != 1) {
-    throw("Argument 'fcn' specifies a translator function that does not return exactly one string if given one string: ", length(namesT));
+  if (length(nameT) != 1L) {
+    throw("Argument 'fcn' specifies a translator function that does not return exactly one string if given one string: ", length(nameT));
   }
 
   fnList <- getListOfFullNameTranslators(this);
@@ -57,7 +57,7 @@ setMethodS3("appendFullNameTranslatorBydata.frame", "FullNameInterface", functio
   if (length(keep) == 0) {
     d <- sapply(reqColNamesList, FUN=function(s) {
       paste(sprintf("'%s'", s), collapse=", ");
-    });    
+    });
     d <- sprintf("(%s)", d);
     msg <- sprintf("The specified data frame does not have all of the required columns (%s): %s", paste(d, collapse=" OR "), paste(colnames, collapse=", "));
     throw(msg);
@@ -65,7 +65,7 @@ setMethodS3("appendFullNameTranslatorBydata.frame", "FullNameInterface", functio
 
   flavor <- names(keep);
   reqColNames <- reqColNamesList[[flavor]];
-  
+
   lookup <- reqColNames[1];
 
   if (flavor == "fixed") {
@@ -119,7 +119,7 @@ setMethodS3("appendFullNameTranslatorByTabularTextFile", "FullNameInterface", fu
   df <- readDataFrame(df, colClasses="character");
 
   appendFullNameTranslator(this, df, ...);
-})
+}, protected=TRUE)
 
 
 setMethodS3("appendFullNameTranslatorByTabularTextFileSet", "FullNameInterface", function(this, ds, ...) {
@@ -133,7 +133,7 @@ setMethodS3("appendFullNameTranslatorByTabularTextFileSet", "FullNameInterface",
   });
 
   invisible(this);
-})
+}, protected=TRUE)
 
 
 

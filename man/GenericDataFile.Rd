@@ -24,7 +24,7 @@
 \code{~~~~~~~+--}\emph{\code{GenericDataFile}}\cr
 
 \bold{Directly known subclasses:}\cr
-\emph{\link[R.filesets]{GenericTabularFile}}, \emph{\link[R.filesets]{TabularTextFile}}\cr
+\emph{\link[R.filesets]{ChecksumFile}}, \emph{\link[R.filesets]{GenericTabularFile}}, \emph{\link[R.filesets]{RdsFile}}, \emph{\link[R.filesets]{TabularTextFile}}\cr
 
 public abstract static class \bold{GenericDataFile}\cr
 extends \emph{\link[R.filesets]{FullNameInterface}}\cr
@@ -58,12 +58,14 @@ GenericDataFile(filename=NULL, path=NULL, mustExist=TRUE, ...,
  \tab \code{\link[R.filesets:compareChecksum.GenericDataFile]{compareChecksum}} \tab Compares the file checksum with the value of the checksum file.\cr
  \tab \code{\link[R.filesets:equals.GenericDataFile]{equals}} \tab Checks if a file equals another.\cr
  \tab \code{\link[R.filesets:getChecksum.GenericDataFile]{getChecksum}} \tab Gets the checksum of a file.\cr
+ \tab \code{getChecksumFile} \tab  -\cr
  \tab \code{\link[R.filesets:getExtension.GenericDataFile]{getExtension}} \tab Gets the filename extension.\cr
  \tab \code{\link[R.filesets:getFileSize.GenericDataFile]{getFileSize}} \tab Gets the size of a file.\cr
  \tab \code{\link[R.filesets:getFileType.GenericDataFile]{getFileType}} \tab Gets the file type of a file.\cr
  \tab \code{\link[R.filesets:getFilename.GenericDataFile]{getFilename}} \tab Gets the filename of the file.\cr
  \tab \code{\link[R.filesets:getPath.GenericDataFile]{getPath}} \tab Gets the path (directory) of the file.\cr
  \tab \code{\link[R.filesets:getPathname.GenericDataFile]{getPathname}} \tab Gets the pathname of the file.\cr
+ \tab \code{is.na} \tab  -\cr
  \tab \code{\link[R.filesets:isFile.GenericDataFile]{isFile}} \tab Checks if this is an existing file.\cr
  \tab \code{\link[R.filesets:validateChecksum.GenericDataFile]{validateChecksum}} \tab Asserts that the file checksum matches the one of the checksum file.\cr
  \tab \code{\link[R.filesets:writeChecksum.GenericDataFile]{writeChecksum}} \tab Write the file checksum to a checksum file.\cr
@@ -74,7 +76,7 @@ GenericDataFile(filename=NULL, path=NULL, mustExist=TRUE, ...,
 appendFullNameTranslator, appendFullNameTranslatorByNULL, appendFullNameTranslatorByTabularTextFile, appendFullNameTranslatorByTabularTextFileSet, appendFullNameTranslatorBycharacter, appendFullNameTranslatorBydata.frame, appendFullNameTranslatorByfunction, appendFullNameTranslatorBylist, clearFullNameTranslator, clearListOfFullNameTranslators, getDefaultFullName, getFullName, getFullNameTranslator, getListOfFullNameTranslators, getName, getTags, hasTag, hasTags, resetFullName, setFullName, setFullNameTranslator, setListOfFullNameTranslators, setName, setTags, updateFullName
 
  \bold{Methods inherited from Object}:\cr
-$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
 
 }

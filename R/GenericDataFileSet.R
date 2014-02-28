@@ -160,8 +160,7 @@ setMethodS3("as.character", "GenericDataFileSet", function(x, ...) {
   # RAM
   s <- c(s, sprintf("RAM: %.2fMB", objectSize(this)/1024^2));
 
-  class(s) <- "GenericSummary";
-  s;
+  GenericSummary(s);
 }, protected=TRUE)
 
 
@@ -773,6 +772,7 @@ setMethodS3("as.list", "GenericDataFileSet", function(x, useNames=TRUE, ...) {
 
 ###########################################################################/**
 # @RdocMethod getFile
+# @aliasmethod [[
 #
 # @title "Get a particular file of the file set"
 #
@@ -838,7 +838,7 @@ setMethodS3("getOneFile", "GenericDataFileSet", function(this, default=NA, mustE
     if (is.null(default)) return(NULL);
     if (!is.object(default) && is.na(default)) {
       className <- getFileClass(this);
-      clazz <- Class$forName(className);
+      clazz <- Class$forName(className, envir=parent.frame());
       default <- newInstance(clazz);
     } else if (is.numeric(default)) {
       default <- getFile(this, default);
@@ -1069,20 +1069,25 @@ setMethodS3("append", "GenericDataFileSet", function(x, values, ...) {
 #  \item{onMissing}{A @character specifying the action if a requested file
 #    does not exist.  If \code{"error"}, an error is thrown.  If \code{"NA"},
 #    a @see "GenericDataFile" refering to an @NA pathname is used in place.
-#    If \code{"drop"}, the missing file is dropped.}
+#    If \code{"drop"}, the missing file is dropped.
+#    If \code{"dropall"}, an empty data set is return if one or more
+#    missing files are requested.
+#  }
 # }
 #
 # \value{
-#   Returns an @see "GenericDataFileSet" (or a subclass) object.
+#   Returns a @see "GenericDataFileSet" with zero of more
+#   @see "GenericDataFile":s.
 # }
 #
 # @author
 #
 # \seealso{
+#   @seemethod "na.omit" for dropping missing files from a fileset.
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissing=c("NA", "error", "drop"), onDuplicates=c("ignore", "drop", "error")) {
+setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissing=c("NA", "error", "drop", "dropall"), onDuplicates=c("ignore", "drop", "error")) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1118,16 +1123,30 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
 
   if (onMissing == "error") {
     disallow <- c("NA", "NaN");
-  } else if (is.element(onMissing, c("NA", "drop"))) {
+  } else if (is.element(onMissing, c("NA", "drop", "dropall"))) {
     disallow <- c("NaN");
   }
   files <- Arguments$getIndices(files, max=nbrOfFiles, disallow=disallow);
   missing <- which(is.na(files));
 
-  # Drop non-existing files?
-  if (length(missing) > 0L && onMissing == "drop") {
-    files <- files[is.finite(files)];
-    missing <- 0L;
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Handle missing files
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (length(missing) > 0L) {
+    # Error with missing files?
+    if (onMissing == "error") {
+      throw("Detected missing files, which is not allowed (onMissing='error'): ", length(missing));
+    }
+
+    # Drop non-existing files?
+    if (onMissing == "drop") {
+      files <- files[is.finite(files)];
+      missing <- integer(0L);
+    } else if (onMissing == "dropall") {
+      files <- files[c()];
+      missing <- integer(0L);
+    }
   }
 
   # Check for duplicates?
@@ -1149,18 +1168,25 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
   res <- clone(this);
   files <- this$files[files];
 
-  # Any missing files?
+  # Should missing files be returned?
   if (length(missing) > 0L) {
-    className <- class(this$files[[1L]])[1L];
+    className <- NULL;
+    if (length(this$files) > 0L) {
+      # TODO: Drop this? /HB 2013-11-15
+      className <- class(this$files[[1L]])[1L];
+    }
     if (is.null(className)) {
       className <- getFileClass(this);
     }
-    clazz <- Class$forName(className);
-    naValue <- newInstance(clazz, NA, mustExist=FALSE);
+
+    # Allocate a "missing" file of the correct class
+    clazz <- Class$forName(className, envir=parent.frame());
+    naValue <- newInstance(clazz, NA_character_, mustExist=FALSE);
     for (idx in missing) {
       files[[idx]] <- naValue;
     }
   }
+
   res$files <- files;
   files <- NULL; # Not needed anymore
 
@@ -1168,7 +1194,57 @@ setMethodS3("extract", "GenericDataFileSet", function(this, files, ..., onMissin
   clearCache(res);
 
   res;
-})
+}) # extract()
+
+
+
+###########################################################################/**
+# @RdocMethod anyNA
+# @alias anyNA  %% To be removed when depending on R (>= 3.1.0)
+# @alias is.na.GenericDataFileSet
+# @alias na.omit.GenericDataFileSet
+#
+# @title "Checks whether any of the pathnames are missing"
+#
+# \description{
+#   @get "title".
+#   Note that this only tests the \emph{pathnames} of files,
+#   but it does not test whether the files exists or not.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a @character.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seemethod "na.omit" for dropping missing items.
+#   @seeclass
+# }
+#*/###########################################################################
+setMethodS3("anyNA", "GenericDataFileSet", function(x, ...) {
+  files <- getFiles(x);
+  for (df in files) {
+    if (is.na(df)) return(TRUE);
+  }
+  FALSE;
+}) # anyNA()
+
+setMethodS3("is.na", "GenericDataFileSet", function(x) {
+  files <- getFiles(x);
+  unlist(lapply(files, FUN=is.na));
+}, appendVarArgs=FALSE) # is.na()
+
+setMethodS3("na.omit", "GenericDataFileSet", function(object, ...) {
+  extract(object, files=seq_along(object), onMissing="drop", ...);
+}) # na.omit()
 
 
 
@@ -1229,7 +1305,7 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
   private <- Arguments$getLogical(private);
 
   # Argument 'fileClass':
-  clazz <- Class$forName(fileClass);
+  clazz <- Class$forName(fileClass, envir=parent.frame());
   dfStatic <- getStaticInstance(clazz);
   dfStatic <- Arguments$getInstanceOf(dfStatic, getFileClass(static));
 
@@ -1271,18 +1347,26 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
     # Build list of GenericDataFile objects
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     verbose && enter(verbose, "Defining ", length(pathnames), " files");
+    # NOTE: Argument 'recursive' to fromFile() below should really have
+    #       been named 'subclasses', because it indicates whether also
+    #       subclasses of class(dfStatic) should be considered or not.
+    #       Looking for compatible subclasses is very slow, which is why
+    #       should avoid doing it unless really necessary. /HB 2013-11-11
+    subclasses <- recursive;
     files <- list();
     for (kk in seq_along(pathnames)) {
       if (as.logical(verbose)) cat(kk, ", ", sep="");
-      df <- fromFile(dfStatic, pathnames[kk], recursive=recursive, .checkArgs=FALSE, verbose=less(verbose));
+      df <- fromFile(dfStatic, pathnames[kk], recursive=subclasses, .checkArgs=FALSE, verbose=less(verbose));
       files[[kk]] <- df;
-      if (kk == 1) {
+      if (kk == 1L) {
         # Update the static class instance.  The reason for this is
         # that if the second file cannot be instanciated with the same
         # class as the first one, then the files are incompatible.
         # Note that 'df' might be of a subclass of 'dfStatic'.
-        clazz <- Class$forName(class(df)[1L]);
+        clazz <- Class$forName(class(df)[1L], envir=parent.frame());
         dfStatic <- getStaticInstance(clazz);
+        # SPEEDUP: Now we don't need to scan for subclasses anymore.
+        subclasses <- FALSE;
       }
     }
     if (as.logical(verbose)) cat("\n");
@@ -1337,7 +1421,8 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
 #
 # \arguments{
 #  \item{path}{The destination directory.  If missing, it is created.}
-#  \item{...}{Not used.}
+#  \item{...}{Additional arguments passed to \code{copyTo()} used to copy
+#   the individual @see "GenericDataFile":s in the set.}
 #  \item{verbose}{...}
 # }
 #
@@ -1349,9 +1434,6 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
 #   Each file is copied safely, but if this method is interrupted, it
 #   may results in a data set consisting of fewer than the original
 #   data set.
-#   FUTURE: In order to minimize the risk for this, we may consider to
-#   first copy to a temporary directory, which is then renamed, cf. how
-#   individual files are safely copied.
 # }
 #
 # @author
@@ -1389,7 +1471,7 @@ setMethodS3("copyTo", "GenericDataFileSet", function(this, path=NULL, ..., verbo
   }
 
   # Return new instance
-  res <- byPath(this, path=path, ...);
+  res <- byPath(this, path=path);
 
   verbose && exit(verbose);
 
@@ -1826,6 +1908,54 @@ setMethodS3("update2", "GenericDataFileSet", function(this, ...) {
 }, protected=TRUE)
 
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# COMPRESSION
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+###########################################################################/**
+# @RdocMethod gzip
+# @aliasmethod gunzip
+#
+# @title "Compresses/uncompresses a set of files"
+#
+# \description{
+#   @get "title" using gzip compression.
+#   When compressing (uncompressing), each of the @see GenericDataFile
+#   of the file set are compressed (uncompressed).
+# }
+#
+# \usage{
+#  @usage gzip,GenericDataFileSet
+#  @usage gunzip,GenericDataFileSet
+# }
+#
+# \arguments{
+#  \item{...}{Arguments passed to \code{gzip()/gunzip()} on each
+#    of the GenericDataFile entries.}
+# }
+#
+# \value{
+#   Returns (invisibly) itself.
+# }
+#
+# @author
+#
+# \seealso{
+#   Internally @see "R.utils::gzip" and @see "R.utils::gunzip" are used.
+#   @seeclass
+# }
+#*/###########################################################################
+setMethodS3("gunzip", "GenericDataFileSet", function(this, ...) {
+  files <- sapply(this, FUN=gunzip, ...);
+  invisible(this);
+})
+
+
+setMethodS3("gzip", "GenericDataFileSet", function(this, ...) {
+  files <- sapply(this, FUN=gzip, ...);
+  invisible(this);
+})
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # VECTOR-RELATED METHODS
@@ -1842,10 +1972,21 @@ setMethodS3("update2", "GenericDataFileSet", function(this, ...) {
 # length() + [() + c():
 # * append()
 #
+# as.list() + length():
+# * lapply(), sapply()
+#
 # ...what else?
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 setMethodS3("[", "GenericDataFileSet", function(x, i, ...) {
   extract(x, i, ...);
+}, protected=TRUE)
+
+setMethodS3("[[", "GenericDataFileSet", function(x, i, ...) {
+  if (is.numeric(i)) {
+    getFile(x, i, ...);
+  } else {
+    NextMethod("[[");
+  }
 }, protected=TRUE)
 
 
@@ -1854,6 +1995,7 @@ setMethodS3("c", "GenericDataFileSet", function(x, ...) {
   args <- list(...);
   args <- lapply(args, FUN=function(x) {
     if (inherits(x, "GenericDataFileSet")) x <- as.list(x);
+    if (inherits(x, "GenericDataFile")) x <- list(x);
     x;
   });
   args <- Reduce(c, args);
@@ -1861,6 +2003,50 @@ setMethodS3("c", "GenericDataFileSet", function(x, ...) {
   newInstance(x, files);
 }, protected=TRUE)
 
+
+setMethodS3("findDuplicated", "GenericDataFileSet", function(x, ..., fromLast=FALSE, any=FALSE) {
+  # Local functions
+  isDuplicated <- function(file, files, ...) {
+    if (length(files) == 0L) return(FALSE);
+    for (ii in seq_along(files)) {
+      if (equals(file, files[[ii]], ...)) return(TRUE);
+    }
+    FALSE;
+  } # isDuplicated()
+
+  files <- as.list(x);
+  dups <- logical(length(files));
+  if (length(dups) <= 1L) return(dups);
+
+  if (!fromLast) files <- rev(files);
+
+  for (ii in seq_along(files)) {
+    file <- files[[1L]];
+    files <- files[-1L];
+    isDup <- isDuplicated(file, files, ...);
+    dups[[ii]] <- isDup;
+    if (any) break;
+  }
+
+  if (!fromLast) dups <- rev(dups);
+  dups;
+}, protected=TRUE) # findDuplicated()
+
+
+setMethodS3("duplicated", "GenericDataFileSet", function(x, ...) {
+  findDuplicated(x, ...)
+})
+
+setMethodS3("anyDuplicated", "GenericDataFileSet", function(x, ...) {
+  any(findDuplicated(x, ..., fromLast=TRUE, firstOnly=TRUE))
+})
+
+setMethodS3("unique", "GenericDataFileSet", function(x, ...) {
+  dups <- duplicated(x, ...);
+  # Drop duplicates?
+  if (any(dups)) x <- x[!dups];
+  x;
+})
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -2035,6 +2221,29 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2014-01-13
+# o copyTo() for GenericDataFileSet no longer passes '...' to byPath().
+# 2014-01-07
+# o Added is.na() and na.omit() for GenericDataFileSet.
+# 2014-01-04
+# o Added duplicated(), anyDuplicated() and unique() for GenericDataSet,
+#   which compare GenericDataFile:s based on the equals() method.
+# o Now c() for GenericDataFileSet also works to append GenericDataFile:s.
+# 2013-11-15
+# o Now extract() for GenericDataFileSet also handles when the data set to
+#   be extracted is empty, e.g. extract(GenericDataFileSet(), NA_integer_).
+#   Also, added support for argument onMissing="dropall", which drops all
+#   files if one or more missing files where requested.
+# 2013-11-11
+# o SPEEDUP: GenericDataFileSet$byPath(..., recursive=TRUE) would be very
+#   slow setting up the individual files, especially for large data sets.
+#   Now it's only slow for the first file.
+# 2013-11-01
+# o Added "[["(x, i) for GenericDataFileSet, which gets a GenericDataFile
+#   by index 'i' in [1,length(x)].
+# o Added gzip()/gunzip() for GenericDataFileSet.
+# o Added anyNA() to GenericDataFileSet to test whether any of the
+#   pathnames are NA.
 # 2013-10-05
 # o CLEANUP: Now GenericDataFileSet() gives an error informing that
 #   argument 'alias' is defunct.

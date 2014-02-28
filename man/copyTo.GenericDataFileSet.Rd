@@ -23,7 +23,8 @@
 
 \arguments{
  \item{path}{The destination directory.  If missing, it is created.}
- \item{...}{Not used.}
+ \item{...}{Additional arguments passed to \code{copyTo()} used to copy
+  the individual \code{\link{GenericDataFile}}:s in the set.}
  \item{verbose}{...}
 }
 
@@ -35,9 +36,6 @@
   Each file is copied safely, but if this method is interrupted, it
   may results in a data set consisting of fewer than the original
   data set.
-  FUTURE: In order to minimize the risk for this, we may consider to
-  first copy to a temporary directory, which is then renamed, cf. how
-  individual files are safely copied.
 }
 
 \author{Henrik Bengtsson}

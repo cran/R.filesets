@@ -43,14 +43,9 @@ setConstructorS3("GenericTabularFile", function(..., .verify=TRUE, verbose=FALSE
 
 
 setMethodS3("as.character", "GenericTabularFile", function(x, ...) {
-  # To please R CMD check
   this <- x;
-
   s <- NextMethod("as.character");
-  class <- class(s);
   s <- c(s, sprintf("Number of data rows: %d", nbrOfRows(this, fast=TRUE)));
-
-  class(s) <- class;
   s;
 }, protected=TRUE)
 
@@ -93,6 +88,7 @@ setMethodS3("verify", "GenericTabularFile", function(this, ..., verbose=FALSE) {
 
 ###########################################################################/**
 # @RdocMethod nbrOfRows
+# @alias nbrOfColumns.GenericTabularFile
 #
 # @title "Gets the number of data rows"
 #
@@ -121,6 +117,14 @@ setMethodS3("verify", "GenericTabularFile", function(this, ..., verbose=FALSE) {
 #*/###########################################################################
 setMethodS3("nbrOfRows", "GenericTabularFile", abstract=TRUE);
 
+
+
+setMethodS3("nbrOfColumns", "GenericTabularFile", function(this, ...) {
+  ncols <- NextMethod("nbrOfColumns");
+  if (!is.na(ncols)) return(ncols);
+  data <- readDataFrame(this, colClasses=NULL, rows=1L);
+  ncol(data);
+})
 
 
 
@@ -358,6 +362,10 @@ setMethodS3("tail", "GenericTabularFile", function(x, n=6L, ...) {
 
 ############################################################################
 # HISTORY:
+# 2013-12-18
+# o Added nbrOfColumns() for GenericTabularFile, which, if the number
+#   of columns cannot be inferred from the column names, will fall back
+#   to read the first row of data and use that as the number of columns.
 # 2012-12-08
 # o GENERALIZATION: Moved "["() to GenericTabularFile (from
 #   TabularTextFile) and made it utilize readColumns().
