@@ -240,8 +240,7 @@ setMethodS3("validate", "GenericDataFileSet", function(this, ...) {
   I <- length(this);
   res <- rep(NA, times=I);
   for (ii in seq_len(I)) {
-    df <- getFile(this, ii);
-    res[ii] <- validate(df, ...);
+    res[ii] <- validate(this[[ii]], ...);
   }
 
   # Summarize across all files
@@ -446,13 +445,14 @@ setMethodS3("reorder", "GenericDataFileSet", function(x, order, ...) {
 #
 # \arguments{
 #  \item{by}{A @character string specifying the ordering scheme.}
+#  \item{decreasing}{If @TRUE the sorting is done in a decreasing manner.}
 #  \item{caseSensitive}{If @TRUE, the ordering is case sensitive,
 #        otherwise not.}
 #  \item{...}{Not used.}
 # }
 #
 # \value{
-#   Returns returns itself (invisibly) with the set ordered accordingly.
+#   Returns returns itself with the set ordered accordingly.
 # }
 #
 # \details{
@@ -469,23 +469,28 @@ setMethodS3("reorder", "GenericDataFileSet", function(x, order, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("sortBy", "GenericDataFileSet", function(this, by=c("lexicographic", "mixedsort"), caseSensitive=FALSE, ...) {
+setMethodS3("sortBy", "GenericDataFileSet", function(this, by=c("lexicographic", "mixedsort", "filesize"), decreasing=FALSE, caseSensitive=FALSE, ...) {
   # Argument 'by':
   by <- match.arg(by);
+
+  # Argument 'decreasing':
+  decreasing <- Arguments$getLogical(decreasing);
 
   # Argument 'caseSensitive':
   caseSensitive <- Arguments$getLogical(caseSensitive);
 
-  # Get the fullnames
-  fullnames <- getFullNames(this);
-  if (!caseSensitive) {
-    fullnames <- tolower(fullnames);
-  }
-
   if (by == "lexicographic") {
-    order <- order(fullnames);
+    fullnames <- getFullNames(this);
+    if (!caseSensitive) fullnames <- tolower(fullnames);
+    order <- order(fullnames, decreasing=decreasing, ...);
   } else if (by == "mixedsort") {
+    fullnames <- getFullNames(this);
+    if (!caseSensitive) fullnames <- tolower(fullnames);
     order <- gtools::mixedorder(fullnames);
+    if (decreasing) order <- rev(order);
+  } else if (by == "filesize") {
+    sizes <- sapply(this, FUN=getFileSize);
+    order <- order(sizes, decreasing=decreasing, ...);
   }
 
   # Sanity check
@@ -493,7 +498,8 @@ setMethodS3("sortBy", "GenericDataFileSet", function(this, by=c("lexicographic",
   stopifnot(length(unique(order)) == length(order));
 
   this$files <- this$files[order];
-  invisible(this);
+
+  this;
 })
 
 
@@ -557,6 +563,8 @@ setMethodS3("getFullNames", "GenericDataFileSet", function(this, ...) {
 # \arguments{
 #  \item{patterns}{A @character @vector of length K of names and/or
 #   regular expressions to be matched.}
+#  \item{by}{A @character @vector specifying how and in what order the
+#   name matching is done.}
 #  \item{...}{Not used.}
 # }
 #
@@ -580,7 +588,7 @@ setMethodS3("getFullNames", "GenericDataFileSet", function(this, ...) {
 #   @seeclass
 # }
 #*/###########################################################################
-setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns=NULL, ..., onMissing=c("NA", "error")) {
+setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns=NULL, by=c("exact", "regexp", "fixed"), ..., onMissing=c("NA", "error")) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -590,13 +598,18 @@ setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns=NULL, ..., 
     throw("Unknown argument 'names' to indexOf() for GenericDataFileSet.");
   }
 
+  # Argument 'by':
+  by <- match.arg(by, several.ok=TRUE);
+
   # Argument 'onMissing':
   onMissing <- match.arg(onMissing);
 
+
   names <- getNames(this);
 
-  # Return all indices
+  # Nothing to search for?
   if (is.null(patterns)) {
+    # Return all indices
     res <- seq_along(names);
     names(res) <- names;
     return(res);
@@ -604,12 +617,11 @@ setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns=NULL, ..., 
 
   fullnames <- getFullNames(this);
 
-  naValue <- as.integer(NA);
-
   patterns0 <- patterns;
   res <- lapply(patterns, FUN=function(pattern) {
-    # First try matching a regular expression, then a fixed string.
     pattern0 <- pattern;
+
+    # Search among fullnames or the names?
     hasTags <- (regexpr(",", pattern, fixed=TRUE) != -1L);
     if (hasTags) {
       searchStrings <- fullnames;
@@ -617,36 +629,39 @@ setMethodS3("indexOf", "GenericDataFileSet", function(this, patterns=NULL, ..., 
       searchStrings <- names;
     }
 
-    # - - - - - - - - - - - -
-    # 1. Regular expression
-    # - - - - - - - - - - - -
-    # Assert that the regular expression has a "head" and a "tail".
-    pattern <- sprintf("^%s$", pattern);
-    pattern <- gsub("\\^\\^", "^", pattern);
-    pattern <- gsub("\\$\\$", "$", pattern);
+    for (how in by) {
+      if (how == "regexp") {
+        # Regular expression:
+        # Assert that the regular expression has a "head" and a "tail".
+        pattern <- sprintf("^%s$", pattern);
+        pattern <- gsub("\\^\\^", "^", pattern);
+        pattern <- gsub("\\$\\$", "$", pattern);
 
-    # Escape '+', and '*', if needed
-    lastPattern <- "";
-    while (pattern != lastPattern) {
-      lastPattern <- pattern;
-      pattern <- gsub("(^|[^\\]{1})([+*])", "\\1\\\\\\2", pattern);
-    }
+        # Escape '+', and '*', if needed
+        lastPattern <- "";
+        while (pattern != lastPattern) {
+          lastPattern <- pattern;
+          pattern <- gsub("(^|[^\\]{1})([+*])", "\\1\\\\\\2", pattern);
+        }
 
-    # Match
-    idxs <- grep(pattern, searchStrings, fixed=FALSE);
+        # Match
+        idxs <- grep(pattern, searchStrings, fixed=FALSE);
+      } else if (how == "fixed") {
+        # Fixed string:
+        pattern <- pattern0;
+        idxs <- grep(pattern, searchStrings, fixed=TRUE);
+      } else if (how == "exact") {
+        # Fixed string:
+        pattern <- pattern0;
+        idxs <- which(pattern == searchStrings);
+      }
 
-    # - - - - - - - - - - - -
-    # 2. Fixed string?
-    # - - - - - - - - - - - -
-    if (length(idxs) == 0L) {
-      pattern <- pattern0;
-      idxs <- grep(pattern, searchStrings, fixed=TRUE);
-    }
+      # Done?
+      if (length(idxs) > 0L) break;
+    } # for (how ...)
 
-    # Nothing matched?
-    if (length(idxs) == 0L) {
-      idxs <- naValue;
-    }
+    # Nothing found?
+    if (length(idxs) == 0L) idxs <- NA_integer_;
 
     # Note that 'idxs' may return more than one match
     idxs;
@@ -841,7 +856,7 @@ setMethodS3("getOneFile", "GenericDataFileSet", function(this, default=NA, mustE
       clazz <- Class$forName(className, envir=parent.frame());
       default <- newInstance(clazz);
     } else if (is.numeric(default)) {
-      default <- getFile(this, default);
+      default <- this[[default]];
     }
     default <- Arguments$getInstanceOf(default, "GenericDataFile");
     default;
@@ -999,6 +1014,7 @@ setMethodS3("appendFiles", "GenericDataFileSet", function(this, files, clone=TRU
 ###########################################################################/**
 # @RdocMethod append
 # @aliasmethod c
+# @aliasmethod rep
 #
 # @title "Appends one data set to an existing one"
 #
@@ -1355,7 +1371,7 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
     subclasses <- recursive;
     files <- list();
     for (kk in seq_along(pathnames)) {
-      if (as.logical(verbose)) cat(kk, ", ", sep="");
+      if (as.logical(verbose)) writeRaw(verbose, kk, ", ");
       df <- fromFile(dfStatic, pathnames[kk], recursive=subclasses, .checkArgs=FALSE, verbose=less(verbose));
       files[[kk]] <- df;
       if (kk == 1L) {
@@ -1369,7 +1385,7 @@ setMethodS3("byPath", "GenericDataFileSet", function(static, path=NULL, pattern=
         subclasses <- FALSE;
       }
     }
-    if (as.logical(verbose)) cat("\n");
+    if (as.logical(verbose)) writeRaw(verbose, "\n");
     verbose && exit(verbose);
   } else {
     files <- list();
@@ -1463,7 +1479,7 @@ setMethodS3("copyTo", "GenericDataFileSet", function(this, path=NULL, ..., verbo
 
   for (kk in seq_len(nbrOfFiles)) {
     verbose && enter(verbose, sprintf("File %d of %d", kk, nbrOfFiles));
-    cf <- getFile(this, kk);
+    cf <- this[[kk]];
     if (isFile(cf)) {
       cfCopy <- copyTo(cf, path=path, ..., verbose=less(verbose));
     }
@@ -1889,8 +1905,8 @@ setMethodS3("equals", "GenericDataFileSet", function(this, other, ..., verbose=F
 
   for (kk in seq_along(this)) {
     verbose && enter(verbose, sprintf("File #%d of %d", kk, nbrOfFiles));
-    df1 <- getFile(this, kk);
-    df2 <- getFile(other, kk);
+    df1 <- this[[kk]];
+    df2 <- other[[kk]];
     eqls <- equals(df1, df2, ...);
     if (!eqls) {
       verbose && cat(verbose, "Not equal");
@@ -1957,6 +1973,7 @@ setMethodS3("gzip", "GenericDataFileSet", function(this, ...) {
 })
 
 
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # VECTOR-RELATED METHODS
 #
@@ -2001,6 +2018,13 @@ setMethodS3("c", "GenericDataFileSet", function(x, ...) {
   args <- Reduce(c, args);
   files <- c(files, args);
   newInstance(x, files);
+}, protected=TRUE)
+
+
+setMethodS3("rep", "GenericDataFileSet", function(x, ...) {
+  idxs <- seq_along(x)
+  idxs <- rep(idxs, ...)
+  x[idxs]
 }, protected=TRUE)
 
 
@@ -2101,8 +2125,7 @@ setMethodS3("getDefaultFullName", "GenericDataFileSet", function(this, parent=ge
   # Get the path of this file set
   path <- getPath(this);
   if (is.null(path) || is.na(path)) {
-    naValue <- as.character(NA);
-    return(naValue);
+    return(NA_character_);
   }
 
   if (!is.null(parent)) {
@@ -2221,6 +2244,18 @@ setMethodS3("setFullNamesTranslator", "GenericDataFileSet", function(this, ...) 
 
 ############################################################################
 # HISTORY:
+# 2014-08-26
+# o Added support for sortBy(..., by="filesize") and
+#   sortBy(..., decreasing=TRUE) for GenericDataFileSet.  Also, sortBy()
+#   is no longer returning invisibly.
+# o Added rep() for GenericDataFileSet.
+# 2014-08-17
+# o BUG FIX: byPath() for GenericDataFileSet would output verbose message
+#   enumerating files loaded to stdout instead of stderr.
+# 2014-06-11
+# o Now indexOf() first searched by exact names, then as before, i.e.
+#   by regular expression and fixed pattern matching.
+# o Added argument 'by' to indexOf() for GenericDataFileSet|List.
 # 2014-01-13
 # o copyTo() for GenericDataFileSet no longer passes '...' to byPath().
 # 2014-01-07

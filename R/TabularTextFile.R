@@ -344,7 +344,7 @@ setMethodS3("getHeader", "TabularTextFile", function(this, ..., header=TRUE, for
 
 
 
-setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, skip=this$skip, ..., verbose=FALSE) {
+setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, skip=this$skip, sep=this$sep, ..., verbose=FALSE) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -399,32 +399,34 @@ setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, skip=th
     skipUntil <- skip;
   }
 
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Header comments
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Read header comments
   comments <- c();
   ch <- getCommentChar(this);
-  if (!is.null(ch)) {
-    pattern <- sprintf("^%s", ch);
-    ready <- FALSE;
-    while (!ready) {
-      line <- readLines(con, n=1L);
-      isEmpty <- (regexpr("^$", line) != -1L);
-      if (!isEmpty) {
-        if (!is.null(skipUntil)) {
-          if (regexpr(skipUntil, line) != -1L) {
-            break;
-          }
-        }
-        isComments <- (regexpr(pattern, line) != -1L);
-        if (isComments) {
-          comments <- c(comments, line);
-          skipMax <- skipMax + 1L;
-        } else if (is.null(skipUntil)) {
+  ch <- if (is.null(ch)) "#" else ch;
+  pattern <- sprintf("^%s", ch);
+  ready <- FALSE;
+  while (!ready) {
+    line <- readLines(con, n=1L);
+    isEmpty <- (regexpr("^$", line) != -1L);
+    if (!isEmpty) {
+      if (!is.null(skipUntil)) {
+        if (regexpr(skipUntil, line) != -1L) {
           break;
         }
       }
-    } # while(!ready)
-  }
-
+      isComments <- (regexpr(pattern, line) != -1L);
+      if (isComments) {
+        comments <- c(comments, line);
+        skipMax <- skipMax + 1L;
+      } else if (is.null(skipUntil)) {
+        break;
+      }
+    }
+  } # while(!ready)
 
   verbose && cat(verbose, "Header comments:", level=-20);
   verbose && str(verbose, comments, level=-20);
@@ -447,9 +449,11 @@ setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, skip=th
   verbose && str(verbose, commentArgs, level=-20);
 
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Column separator
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Infer column separator from the first line after the header comments?
-  sep <- this$sep;
-  if (length(sep) > 1) {
+  if (length(sep) > 1L) {
     verbose && enter(verbose, "Identifying the separator that returns most columns");
     verbose && cat(verbose, "Line:");
     verbose && print(verbose, line);
@@ -471,7 +475,10 @@ setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, skip=th
   topRows <- lapply(topRows, trim);
   verbose && print(verbose, topRows);
 
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Remove quotes?
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   quote <- this$quote;
   if (!is.null(quote)) {
     for (pattern in c(sprintf("^%s", quote), sprintf("%s$", quote))) {
@@ -502,6 +509,7 @@ setMethodS3("readRawHeader", "TabularTextFile", function(this, con=NULL, skip=th
 
 
 setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NULL, colClasses=c("*"=NA, getDefaultColumnClassPatterns(this)), defColClass="NULL", stringsAsFactors=FALSE, skip=this$skip, ..., verbose=FALSE) {
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Validate arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -595,7 +603,15 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
   } else {
     # If column names cannot be inferred, use the default
     nbrOfColumns <- length(fileHeader$topRows[[1]]);
-    colClasses <- rep(colClasses["*"], times=nbrOfColumns);
+    # Where argument 'colClasses' explicitly specified?
+    if (!missing(colClasses) && !is.null(colClasses)) {
+      # Sanity check
+      if (length(colClasses) != nbrOfColumns) {
+        throw(sprintf("The number of elements in argument 'colClasses' does not match the number of column in the file: %d != %d", length(colClasses),  nbrOfColumns));
+      }
+    } else {
+      colClasses <- rep(colClasses["*"], times=nbrOfColumns);
+    }
   } # if (!is.null(columns) && hasColClassPatterns)
 
   verbose && cat(verbose, "Column classes:", level=-20);
@@ -606,6 +622,7 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
   # Setup read.table() arguments
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Inferred arguments
+  ch <- getCommentChar(this)
   args <- list(
     header       = hasColumnHeader(this),
     colClasses   = colClasses,
@@ -613,7 +630,7 @@ setMethodS3("getReadArguments", "TabularTextFile", function(this, fileHeader=NUL
     sep          = fileHeader$sep,
     quote        = fileHeader$quote,
     fill         = this$fill,
-    comment.char = getCommentChar(this),
+    comment.char = ifelse(is.null(ch), "", ch),
     check.names  = FALSE,
     na.strings   = c("---", "NA")
   );
@@ -958,11 +975,14 @@ setMethodS3("readColumns", "TabularTextFile", function(this, columns=seq_len(nco
   verbose && cat(verbose, "Column names': ", hpaste(columnNames));
   # Setup column classes, iff missing
   if (is.null(colClasses)) {
-
     if (is.null(columnNames)) {
       colClasses[-columns] <- "NULL";
     } else {
       colClasses <- rep("character", times=length(columnNames));
+      names(colClasses) <- sprintf("^%s$", columnNames);
+    }
+  } else {
+    if (is.null(names(colClasses))) {
       names(colClasses) <- sprintf("^%s$", columnNames);
     }
   }
@@ -1166,6 +1186,15 @@ setMethodS3("readLines", "TabularTextFile", function(con, ...) {
 
 ############################################################################
 # HISTORY:
+# 2014-08-25
+# o Now readColumns(..., colClasses) adds regexpr names to 'colClasses',
+#   iff missing.
+# o BUG FIX: readDataFrame() would ignore argument 'colClasses'
+#   iff it had no names.
+# 2014-08-23
+# o BUG FIX: Using commentChar=NULL for TabularTextFile:s failed.
+# 2014-08-02
+# o Added argument 'sep' to readRawHeader().
 # 2014-01-24
 # o Now readColumns() for TabularTextFile handles also header-less files.
 # 2013-12-18

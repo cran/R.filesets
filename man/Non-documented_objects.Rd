@@ -281,6 +281,9 @@
 \alias{unique.GenericDataFileSet}
 \alias{linkTo}
 \alias{is.na.GenericDataFile}
+\alias{dsApply}
+\alias{readChecksums}
+\alias{readChecksums.ChecksumFileSet}
 
 \description{
   This page contains aliases for all "non-documented" objects that

@@ -78,6 +78,23 @@ stopifnot(equals(ds6, ds5))
 ds7 <- ds[c(1,2,NA_integer_), onMissing="dropall"]
 stopifnot(length(ds7) == 0L)
 
+ds8 <- rep(ds, each=2L)
+stopifnot(length(ds8) == 2*length(ds))
+stopifnot(equals(ds8, ds[rep(seq_along(ds), each=2L)]))
+
+ds9 <- rep(ds8, times=3L)
+stopifnot(length(ds9) == 3*length(ds8))
+stopifnot(equals(ds9, ds8[rep(seq_along(ds8), times=3L)]))
+
+ds10 <- rep(ds9, length.out=1/2*length(ds9))
+stopifnot(length(ds10) == 1/2*length(ds9))
+stopifnot(equals(ds10, ds9[rep(seq_along(ds9), length.out=1/2*length(ds9))]))
+
+ds11 <- rep(ds10, length.out=2*length(ds10))
+stopifnot(length(ds11) == 2*length(ds10))
+stopifnot(equals(ds11, ds10[rep(seq_along(ds10), length.out=2*length(ds10))]))
+
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Special cases
@@ -90,3 +107,65 @@ stopifnot(length(dsEmpty) == 0L)
 
 dsExpanded <- dsEmpty[rep(NA_integer_, times=5L)]
 stopifnot(length(dsExpanded) == 5L)
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Dataset A
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+path <- system.file("exData/dataSetA,original", package="R.filesets")
+ds <- GenericDataFileSet$byPath(path)
+print(ds)
+names <- getNames(ds)
+print(names)
+
+
+# Exact matching
+by <- "exact";
+cat(sprintf("By: %s\n", paste(by, collapse=", ")))
+for (name in names) {
+  idxs <- indexOf(ds, name, by=by)
+  cat(sprintf(" %s @ %s\n", name, paste(idxs, collapse=", ")))
+  stopifnot(all(idxs == which(name == names)))
+}
+
+# Fixed regular expression matching
+by <- "fixed";
+cat(sprintf("By: %s\n", paste(by, collapse=", ")))
+for (name in names) {
+  idxs <- indexOf(ds, name, by=by)
+  cat(sprintf(" %s @ %s\n", name, paste(idxs, collapse=", ")))
+  stopifnot(all(idxs == grep(name, names)))
+}
+
+# Regular expression matching
+by <- "regexp";
+cat(sprintf("By: %s\n", paste(by, collapse=", ")))
+for (name in names) {
+  idxs <- indexOf(ds, name, by=by)
+  pattern <- sprintf("^%s$", name)
+  cat(sprintf(" %s @ %s\n", name, paste(idxs, collapse=", ")))
+  stopifnot(all(idxs == grep(pattern, names)))
+}
+
+# First regular expression matching, then fixed
+by <- c("regexp", "fixed");
+cat(sprintf("By: %s\n", paste(by, collapse=", ")))
+for (name in names) {
+  idxs <- indexOf(ds, name, by=by)
+  cat(sprintf(" %s @ %s\n", name, paste(idxs, collapse=", ")))
+}
+
+# First exact, then regular expression matching, then fixed
+by <- c("exact", "regexp", "fixed");
+cat(sprintf("By: %s\n", paste(by, collapse=", ")))
+for (name in names) {
+  idxs <- indexOf(ds, name, by=by)
+  cat(sprintf(" %s @ %s\n", name, paste(idxs, collapse=", ")))
+}
+
+# The default, which operates as previous step
+cat("By: <default>\n")
+for (name in names) {
+  idxs <- indexOf(ds, name)
+  cat(sprintf(" %s @ %s\n", name, paste(idxs, collapse=", ")))
+}

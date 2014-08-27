@@ -1,6 +1,81 @@
 Package: R.filesets
 ===================
 
+Version: 2.6.0 [2014-08-26]
+o Added support for sortBy(..., by="filesize") and
+  sortBy(..., decreasing=TRUE) for GenericDataFileSet.
+o Added rep() for GenericDataFileSet.
+o Submitted to CRAN.
+
+
+Version: 2.5.10 [2014-08-25]
+o BUG FIX: readDataFrame() would ignore argument 'colClasses'
+  iff it had no names.  Added package system test for this case.
+
+
+Version: 2.5.9 [2014-08-23]
+o BUG FIX: Using commentChar=NULL for TabularTextFile:s failed.
+
+
+Version: 2.5.8 [2014-08-19]
+o Added readChecksums() for ChecksumFileSet.
+
+
+Version: 2.5.7 [2014-08-17]
+o BUG FIX: byPath() for GenericDataFileSet would output verbose message
+  enumerating files loaded to stdout instead of stderr.
+
+
+Version: 2.5.6 [2014-08-07]
+o BUG FIX: dsApply() for GenericDataFileSet would coerce argument
+  'verbose' to logical before applying the function.
+
+
+Version: 2.5.5 [2014-08-02]
+o BUG FIX: Argument 'sep' for readDataFrame() would only work for
+  ',' and '\t'; now it works for any separator.
+o Bumped package dependencies.
+
+
+Version: 2.5.4 [2014-06-11]
+o Now indexOf() first searched by exact names, then as before, i.e.
+  by regular expression and fixed pattern matching.  Added package
+  system tests that contains particularly complicated cases for this.
+  This was triggered by a rare but real use case causing an error in
+  aroma.affymetrix.  Thanks Benilton Carvalho for reporting on this.
+o Added argument 'by' to indexOf() for GenericDataFileSet|List.
+
+
+Version: 2.5.3 [2014-06-07]
+o Added 'SuggestsNote' field to DESCRIPTION with list of packages
+  that are recommended for the most common use cases.
+o Bumped package dependencies.
+
+
+Version: 2.5.2 [2014-05-02]
+o CLEANUP: Now using ds[[idx]] instead of getFile(ds, idx) where possible.
+
+
+Version: 2.5.1 [2014-04-19]
+o dsApply(..., .parallel="none") would lower the verbose threshold
+  before applying the function resulting is less verbose output
+  in the non-parallel case.
+
+
+Version: 2.5.0 [2014-03-30]
+o Starting to add an internal framework for generic parallel/distributed
+  processing of file sets via BiocParallel etc.  When stable, this
+  will be made available part of the public API.
+
+
+Version: 2.4.1 [2014-02-28]
+o FIX / DOCUMENTATION: The system test for GenericDataFile would fail
+  with linkTo() on Windows systems without necessary privileges.  Made
+  the test less conservative.  Also, added an Rd section on privileges
+  required on Windows for linkTo() to work.  Thanks to Brian Ripley
+  for reporting on this.
+
+
 Version: 2.4.0 [2014-02-26]
 o No updates. Bumped the version for CRAN release.
 
