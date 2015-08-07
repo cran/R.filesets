@@ -1,6 +1,6 @@
-179cde3016bb850e8ede38da716b1af3 *DESCRIPTION
-d159293ab6ae9881a3d6cc3541f21fcb *NAMESPACE
-9fa69329acd360042d48501d8edbed09 *NEWS
+7079d9eac94259f5a2ba6dc87120c8ad *DESCRIPTION
+48aa7de90ed9d1aee477318720be899a *NAMESPACE
+ce416d87c9b4fd06fa78c4b38de517dc *NEWS
 4bcbb5139128447d6309d89980703e1c *R/000.R
 fa69da9caaf3e74731707d66cb4705e5 *R/006.fixVarArgs.R
 82a4ddd3d8ee3ff0315bb08a24a65add *R/999.DEPRECATED.R
@@ -16,7 +16,7 @@ ef8a2e9a5b42237983311a97523ee27d *R/GenericDataFile.ATTRS.R
 76b0048b24bfb6916e5564438253a6b8 *R/GenericDataFile.R
 c5a24f94be308d2b8f8bbab3ae70be72 *R/GenericDataFileList.R
 cb543d6a3bb08c9378c9d5f1d1eea95e *R/GenericDataFileSet.PARALLEL.R
-cb7437ee312b153fd3d5b160c28011a8 *R/GenericDataFileSet.R
+94d87223f45716f20c54e63eda570015 *R/GenericDataFileSet.R
 1e9106dbccd1cda3239eab63094af667 *R/GenericDataFileSet.getChecksum.R
 79fde327b60d57782b84ed1cc021993b *R/GenericDataFileSetList.R
 bb587e0b45350623dee723f7be5423bc *R/GenericTabularFile.R
@@ -26,7 +26,7 @@ faeafc3e7cedbd6ba2fd659e205994b4 *R/RDataFile.R
 9926c8db3882a7d9fd28c397c37deb15 *R/RDataFileSet.R
 dce8e7e17ed52b36158c1f65e55f6bd6 *R/RdsFile.R
 2746c069061090e804231e132b8d17d9 *R/RdsFileSet.R
-43479dce02b8ab3f8d7d8bb495230fbe *R/TabularTextFile.R
+828fb256e47b79860d40478a62191175 *R/TabularTextFile.R
 3e22bbded4cf8ee92f5defd20e23390e *R/TabularTextFileSet.R
 7f2e8115a119a21f6403157ec6d4b1f4 *R/dropRootPathTags.R
 45e8934b2562b51a291aad9457151f9e *R/fullname.R
@@ -139,7 +139,7 @@ e1c4af382f09672f0733ed8618c299b1 *man/setColumnNames.ColumnNamesInterface.Rd
 e4c0bf8158beb3e7429a44458127ad70 *man/setFullName.FullNameInterface.Rd
 7b30181c7314f09f86ce058138a98132 *man/setName.FullNameInterface.Rd
 dd333dc76ca54c5e482940c97ba786fb *man/setTags.FullNameInterface.Rd
-79ec567355e797a0eed19f01d07261c9 *man/sortBy.GenericDataFileSet.Rd
+c4d965efbbb4b1b9745ed470bebd0c30 *man/sortBy.GenericDataFileSet.Rd
 96db75f1c0656d4cd406cbbddeb1e148 *man/validate.ChecksumFile.Rd
 2bb6748c5a064551e7443f5e559dcc2d *man/validate.GenericDataFile.Rd
 2705c05b9743ee6d214f25f6ab2c9054 *man/validate.GenericDataFileSet.Rd
@@ -148,7 +148,7 @@ a180cc97fd5bb29df0c3c78904d84229 *man/writeChecksum.GenericDataFile.Rd
 b28d9bdc97def46d4a4f79119ef824f7 *man/writeColumnsToFiles.GenericTabularFile.Rd
 7497938b65a596d784576ad68391543c *tests/GenericDataFile.R
 a2fe737a62771f3751aa7160c0908e59 *tests/GenericDataFileSet,dsApply.R
-c48f72e34d8b3a3632ceee2110dc0383 *tests/GenericDataFileSet,sortBy.R
+09ed535443e40566132f7c927e55c3bb *tests/GenericDataFileSet,sortBy.R
 c6b165bb80544e0d5f79d5635f75f87b *tests/GenericDataFileSet.R
 38c4c1573e2b5f959e54dc0fafb39d54 *tests/RdsFileSet.R
 06795551e51089fe308d6ebc3b4a818b *tests/TabularTextFile,extend.R
