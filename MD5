@@ -1,9 +1,9 @@
-7079d9eac94259f5a2ba6dc87120c8ad *DESCRIPTION
-48aa7de90ed9d1aee477318720be899a *NAMESPACE
-ce416d87c9b4fd06fa78c4b38de517dc *NEWS
+3809d3b95f659ac818c7365a2c6cd9a0 *DESCRIPTION
+be5a726ea11c9963ef62472ec1182238 *NAMESPACE
+9a102e9e1129eacfc187882d9f2db411 *NEWS
 4bcbb5139128447d6309d89980703e1c *R/000.R
 fa69da9caaf3e74731707d66cb4705e5 *R/006.fixVarArgs.R
-82a4ddd3d8ee3ff0315bb08a24a65add *R/999.DEPRECATED.R
+07b17e750b951de0800ec0b1c708d420 *R/999.DEPRECATED.R
 dcb0e44d79e9859ee6006eb8c70b2837 *R/999.NonDocumentedObjects.R
 6cfe8210cd690821836a468749313d54 *R/999.package.R
 dc64748fd020df74e8c0f4195204efcf *R/Arguments.EXTRAS.R
@@ -15,7 +15,7 @@ c0f783f617eec07c8326dd2390e3c659 *R/FullNameInterface.appendFullNameTranslatorBy
 ef8a2e9a5b42237983311a97523ee27d *R/GenericDataFile.ATTRS.R
 76b0048b24bfb6916e5564438253a6b8 *R/GenericDataFile.R
 c5a24f94be308d2b8f8bbab3ae70be72 *R/GenericDataFileList.R
-cb543d6a3bb08c9378c9d5f1d1eea95e *R/GenericDataFileSet.PARALLEL.R
+1f1b3443112f28787d511fabbd354e67 *R/GenericDataFileSet.PARALLEL.R
 94d87223f45716f20c54e63eda570015 *R/GenericDataFileSet.R
 1e9106dbccd1cda3239eab63094af667 *R/GenericDataFileSet.getChecksum.R
 79fde327b60d57782b84ed1cc021993b *R/GenericDataFileSetList.R
@@ -50,7 +50,7 @@ a0a4fb56a9898d45990679fc8a67e77e *inst/exData/dataSetB/fileG,EOL.txt
 59fed00a600da1592ad4eb7f8e0a8b94 *man/ChecksumFile.Rd
 f3f823dd8fe4120a3a5541ebb1116074 *man/ChecksumFileSet.Rd
 2538ef2219ceb7791347615252c8c252 *man/ColumnNamesInterface.Rd
-8ffd60cf6feb47354d7651cf814a6d1f *man/Deprecated_and_defunct_objects.Rd
+28924d6dde373e8ae644d6356df657d8 *man/Deprecated_and_defunct_objects.Rd
 b3ae0b1dffcf600295dbd8844a0d66e1 *man/FullNameInterface.Rd
 b984a9b012b822ee23e90bd93f0a513c *man/GenericDataFile.Rd
 931c46c3027e7e8755feb1b59e686bf6 *man/GenericDataFileSet.Rd
@@ -77,7 +77,7 @@ a494bae28d6a4a97e60cb96d365fc1d4 *man/as.list.GenericDataFileSet.Rd
 a1e158432b3d0fa4ef040c135f6848b1 *man/copyTo.GenericDataFile.Rd
 5a90d5d546eb22f2841102de4d458d74 *man/copyTo.GenericDataFileSet.Rd
 f427c4b72c237e5779a768863734f45b *man/dim.GenericTabularFile.Rd
-5975c361bb1757b918780a96fb6b1f10 *man/dsApply.GenericDataFileSet.Rd
+ce01906fb1e6b756114d1bee25e4e57c *man/dsApply.GenericDataFileSet.Rd
 79d856c32bdc040052f4f4368b767845 *man/equals.GenericDataFile.Rd
 3b8cdd6071c0fdcd5459faf811ffc669 *man/extract.GenericDataFileSet.Rd
 78f4e03c76322120e029443b2cec19ea *man/extractMatrix.GenericTabularFile.Rd
@@ -147,7 +147,7 @@ c4d965efbbb4b1b9745ed470bebd0c30 *man/sortBy.GenericDataFileSet.Rd
 a180cc97fd5bb29df0c3c78904d84229 *man/writeChecksum.GenericDataFile.Rd
 b28d9bdc97def46d4a4f79119ef824f7 *man/writeColumnsToFiles.GenericTabularFile.Rd
 7497938b65a596d784576ad68391543c *tests/GenericDataFile.R
-a2fe737a62771f3751aa7160c0908e59 *tests/GenericDataFileSet,dsApply.R
+db65add35e1414c19c4e7f29dad32792 *tests/GenericDataFileSet,dsApply.R
 09ed535443e40566132f7c927e55c3bb *tests/GenericDataFileSet,sortBy.R
 c6b165bb80544e0d5f79d5635f75f87b *tests/GenericDataFileSet.R
 38c4c1573e2b5f959e54dc0fafb39d54 *tests/RdsFileSet.R
