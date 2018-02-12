@@ -1,11 +1,10 @@
 Package: R.filesets
-Version: 2.11.0
-Depends: R (>= 3.1.2), R.oo (>= 1.21.0)
-Imports: digest (>= 0.6.12), future (>= 1.3.0), R.methodsS3 (>= 1.7.1),
-        R.utils (>= 2.5.0), R.cache (>= 0.12.0), stats
-Suggests: BatchJobs (>= 1.6), BiocParallel (>= 1.0.3), gtools (>=
-        3.5.0)
-SuggestsNote: BioC (>= 3.0), Recommended: gtools
+Version: 2.12.0
+Depends: R (>= 3.2.0), R.oo (>= 1.21.0)
+Imports: digest (>= 0.6.13), future.apply (>= 0.1.0), R.methodsS3 (>=
+        1.7.1), R.utils (>= 2.6.0), R.cache (>= 0.12.0), stats
+Suggests: future (>= 1.6.2), gtools (>= 3.5.0)
+SuggestsNote: Recommended: gtools
 Title: Easy Handling of and Access to Files Organized in Structured
         Directories
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
@@ -21,6 +20,6 @@ LazyLoad: TRUE
 biocViews: Infrastructure, DataImport, DataRepresentation
 RoxygenNote: 6.0.1
 NeedsCompilation: no
-Packaged: 2017-02-27 21:37:47 UTC; hb
+Packaged: 2018-02-12 01:42:12 UTC; hb
 Repository: CRAN
-Date/Publication: 2017-02-28 00:34:18
+Date/Publication: 2018-02-12 15:22:04 UTC
