@@ -1,6 +1,6 @@
-30269b55aaa3b39d9a5acd172dde3221 *DESCRIPTION
+a0f650b3c39ef5a2409d8e5daeee1517 *DESCRIPTION
 3a878b954d25cdc65a30fd7f7fb02dfb *NAMESPACE
-0933f6036b0e139545e3037f45ea3088 *NEWS
+8dc24e72b3b939a7835d59d4453be6b8 *NEWS.md
 694f1ab0fbb4bb254cc3b594c0999b7a *R/000.R
 53765f163288c78b0714460761446d68 *R/006.fixVarArgs.R
 0c53f2db12b8d473a7fdda4aecb73fc0 *R/999.DEPRECATED.R
@@ -15,7 +15,7 @@ f68b87fe18056f46c5481925c14ef086 *R/FullNameInterface.appendFullNameTranslatorBy
 95e274b7c11a3c6cfdc55ad22a1899ed *R/GenericDataFile.ATTRS.R
 757cc10aed389e33f6d598ad661bf1a1 *R/GenericDataFile.R
 4085f5b7a3b421c3d85b0431ba60fa2a *R/GenericDataFileList.R
-9c3c66b687e40e658480ae204822a104 *R/GenericDataFileSet.PARALLEL.R
+bb0a7bb1d5c1fb61167e00f7b3cf5fca *R/GenericDataFileSet.PARALLEL.R
 dfc52bf7fd57b9e57c0a7dbd9e988d16 *R/GenericDataFileSet.R
 ca760cac4e522175bfc4c1538e90afab *R/GenericDataFileSet.getChecksum.R
 321482facf5bc9a9e3c5d7fa6f4e5ee8 *R/GenericDataFileSetList.R
@@ -26,7 +26,7 @@ a495ba564a6517f41c2282d90977db22 *R/GenericTabularFile.writeColumnsToFiles.R
 661cf4950104da9ae310207cd69fcb4c *R/RDataFileSet.R
 016b88ab581e6afa83b32e716eb05a6a *R/RdsFile.R
 74b65e2cb9cd835045e6349e76c3b23d *R/RdsFileSet.R
-b814912f6bc037552a9e0638a065d613 *R/TabularTextFile.R
+e9b772c6d5d4c1b89ce7ff07b0315b24 *R/TabularTextFile.R
 cd799e1ec360c901cae3b26af8c276b6 *R/TabularTextFileSet.R
 ee6a078f45aadd2c05c8416b35ad179e *R/dropRootPathTags.R
 06fac21ed72292f2918439469b902ba5 *R/fullname.R
@@ -60,7 +60,7 @@ b3ae0b1dffcf600295dbd8844a0d66e1 *man/FullNameInterface.Rd
 4e031963b038882b7d3b1d3c1692d7bd *man/GenericTabularFile.Rd
 a7883d0eff044c9896e70218daf67cbb *man/GenericTabularFileSet.Rd
 353a62184b8a3778fa436401dd9f8573 *man/Non-documented_objects.Rd
-cbfd7ab1ea0df844c1ea85203254d056 *man/R.filesets-package.Rd
+fb2195af88c158c92c3ee6a9485930a9 *man/R.filesets-package.Rd
 53ed40c49f7e536e3c18ed39116e7cc4 *man/RDataFile.Rd
 d28f59117185800e3271e2a724e03ba3 *man/RDataFileSet.Rd
 d218906b0669b8f1bc5206039f77a105 *man/RdsFile.Rd
@@ -79,7 +79,7 @@ d7a4c3355a6b59ae444f167ace5da0bf *man/compareChecksum.GenericDataFile.Rd
 00d9810c1d6d6d93b62d874b747f4820 *man/copyTo.GenericDataFile.Rd
 5a90d5d546eb22f2841102de4d458d74 *man/copyTo.GenericDataFileSet.Rd
 f427c4b72c237e5779a768863734f45b *man/dim.GenericTabularFile.Rd
-33acd8f07e6c1999f475ec840eeeb26d *man/dsApplyInPairs.GenericDataFileSet.Rd
+3cdf71f206a2df5fc24e19ddc6ca7e30 *man/dsApplyInPairs.GenericDataFileSet.Rd
 79d856c32bdc040052f4f4368b767845 *man/equals.GenericDataFile.Rd
 a2db481138d6dda11e6053fa75ddb4ef *man/extract.GenericDataFileSet.Rd
 78f4e03c76322120e029443b2cec19ea *man/extractMatrix.GenericTabularFile.Rd
@@ -157,7 +157,7 @@ e412af5a4e52e5ccf6f925fca08862d0 *tests/GenericDataFileSet,sortBy.R
 4a3dfb262bfe198bdbb552a1cab1ef5d *tests/TabularTextFile,huge.R
 6722e86b57f6c73e7160211dc2519b8b *tests/TabularTextFile.R
 8222217a4f45b7a4b975e469741b6eae *tests/TabularTextFileSet.R
-4ee2c9e4a2aa17ba47de79ef72a994c4 *tests/VectorAndListAPI.R
+0e36067ba8cc2ab8fc75199a1d0efa05 *tests/VectorAndListAPI.R
 a200c49e7db469a78d05d6ac9e63871f *tests/fullname.R
 f89d3b93cb6ce2b1bbd6930813988f79 *tests/incl/end.R
 4c426d8fe83e3fb581e0f72db567b300 *tests/incl/start,load-only.R
